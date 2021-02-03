@@ -7,7 +7,7 @@ spring:
     prefix: classpath:templates/
     check-template-location: true
     suffix: .html
-    mode: HTML5
+    mode: HTML
     cache: false
   devtools:
     livereload:
@@ -16,7 +16,7 @@ spring:
     cache: false
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: 
+    url: jdbc:mysql://localhost:3306/humble_project?serverTimezone=UTC&characterEncoding=UTF-8
     username: root  
     password: jt67f7!@
     
