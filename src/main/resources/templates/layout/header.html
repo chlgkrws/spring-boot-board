@@ -9,17 +9,22 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarCollapse">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item">
-					<a th:if="${boldType == 'home'}" class="nav-link active" href="/">Home</a>
-                    <a th:unless="${boldType == 'home'}" class="nav-link" href="/">Home</a>
-				</li>
-				<li class="nav-item" >
-				        <a th:if="${boldType == 'board'}" class="nav-link active" href="/board">Board</a>
-				        <a th:unless="${boldType == 'board'}" class="nav-link" href="/board">Board</a>
-				</li>
+				<li class="nav-item"><a th:if="${boldType == 'main'}" class="nav-link active" href="/">Home</a> <a th:unless="${boldType == 'main'}" class="nav-link" href="/">Home</a></li>
+				<li class="nav-item"><a th:if="${boldType == 'board'}" class="nav-link active" href="/board/all/1">Board</a> <a th:unless="${boldType == 'board'}" class="nav-link" href="/board/all/1">Board</a></li>
 				<li class="nav-item"><a class="nav-link disabled" href="/" tabindex="-1" aria-disabled="true">Disabled</a></li>
 				<li class="nav-item"><a class="nav-link disabled" href="/" tabindex="-1" aria-disabled="true">Disabled</a></li>
 				<li class="nav-item"><a class="nav-link disabled" href="/" tabindex="-1" aria-disabled="true">Disabled</a></li>
+				<li class="nav-item"><a class="nav-link disabled" href="/" tabindex="-1" aria-disabled="true">Disabled</a></li>
+				<li class="nav-item"><a class="nav-link disabled" href="/" tabindex="-1" aria-disabled="true">Disabled</a></li>
+				<li class="nav-item"><a class="nav-link disabled" href="/" tabindex="-1" aria-disabled="true">Disabled</a></li>
+				<li class="nav-item"><div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">더보기</button>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="#">Action</a>
+							<a class="dropdown-item" href="#">Another action</a>
+							<a class="dropdown-item" href="#">Something else here</a>
+						</div>
+					</div></li>
 			</ul>
 			<form class="form-inline mt-2 mt-md-0" action="/search" method="get">
 				<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">

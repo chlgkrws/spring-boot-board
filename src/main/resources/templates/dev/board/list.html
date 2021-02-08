@@ -1,12 +1,63 @@
 <!DOCTYPE html>
-<html
-    lang="ko"
-    xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorator="layout/default"
->
-    <div layout:fragment="content">
-        <p>This is Board-List</p>
-    </div>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/default">
+<div layout:fragment="content">
+	<div class="container">
+		<div class="board-contents">
+			<div class="board-left">
+				<div class="list-group">
+					<!-- 클릭 시 진해지는 액션주기 -->
+					<a href="/board/all/1" class="list-group-item list-group-item-action list-group-item-dark">All </a>
+					<a href="/board/community/1" class="list-group-item list-group-item-action">Community </a>
+					<a href="/board/coding/1" class="list-group-item list-group-item-action">Coding</a>
+					<a href="#" class="list-group-item list-group-item-action disabled">Disabled</a>
+				</div>
+			</div>
+
+			<div class="board-right">
+				<div class="table-responsive" style="background-color: #ffffff; padding-left: 5px; padding-right: 5px;">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col" class="board-num">no</th>
+								<th scope="col" class="board-title">제목</th>
+								<th scope="col" class="board-writer">작성자</th>
+								<th scope="col" class="board-time">작성일</th>
+								<th scope="col" class="board-look">조회수</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th scope="row" class="board-num-item">1</th>
+								<td class="board-title-item">Markㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈddddddㅇ</td>
+								<td class="board-writer-item">Otto</td>
+								<td class="board-time-item">2021-01-05</td>
+								<td class="board-look-item">4</td>
+							</tr>
+							<tr>
+								<th scope="row" class="board-num-item">1</th>
+								<td class="board-title-item">Markㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈddddddㅇ</td>
+								<td class="board-writer-item">Otto</td>
+								<td class="board-time-item">2021-01-05</td>
+								<td class="board-look-item">4</td>
+							</tr>
+						</tbody>
+					</table>
+					<nav aria-label="Page navigation example">
+						<ul class="pagination justify-content-center">
+							<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">prev</a></li>
+							<li class="page-item-cus"><a class="page-link" href="#">1</a></li>
+							<li class="page-item-cus active"><a class="page-link" href="#">2</a></li>
+							<li class="page-item-cus"><a class="page-link" href="#">3</a></li>
+							<li class="page-item-cus"><a class="page-link" href="#">next</a></li>
+						</ul>
+					</nav>
+				</div>
+
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+
 
 </html>

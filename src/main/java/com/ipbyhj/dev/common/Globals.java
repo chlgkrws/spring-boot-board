@@ -4,9 +4,10 @@ public class Globals {
 
 	/**
 	 * header bold
+	 * Header에서 화면 전환시 글씨 굵기 지정
 	 */
 	public static final String BOLD_TYPE_BOARD = "board";
-	public static final String BOLD_TYPE_HOME = "home";
+	public static final String BOLD_TYPE_MAIN = "main";
 
 	/**
 	 * Date or Time

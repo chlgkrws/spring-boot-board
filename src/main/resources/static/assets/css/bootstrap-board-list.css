@@ -1,0 +1,55 @@
+.board-title{
+    width: 40%;
+    text-align: center;
+    font-weight: 500;
+}
+
+.board-num{
+    width: 10%;
+    text-align: center;
+    font-weight: 500;
+}
+
+.board-writer{
+    width: 15%;
+    text-align: center;
+    font-weight: 500;
+}
+
+.board-time{
+    width: 25%;
+    text-align: center;
+    font-weight: 500;
+}
+
+.board-look{
+    width: 10%;
+    text-align: center;
+    font-weight: 500;
+}
+
+.board-title-item{
+    width: 40%;
+    text-align: left;
+}
+
+.board-num-item{
+    width: 10%;
+    text-align: center;
+    font-weight: 400;
+}
+
+.board-writer-item{
+    width: 15%;
+    text-align: center;
+}
+
+.board-time-item{
+    width: 25%;
+    text-align: center;
+}
+
+.board-look-item{
+    width: 10%;
+    text-align: center;
+}

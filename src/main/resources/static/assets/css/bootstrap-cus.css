@@ -39,3 +39,79 @@
   border-color: #ffffff;
 }
 /* End 버튼 마우스 오버 효과 */
+
+
+/* Footer Design */
+.footer-top { padding: 60px 0; background: #333; text-align: left; color: #aaa; }
+.footer-top h3 { padding-bottom: 10px; color: #fff; font-size: 22px; font-weight: 300;  line-height: 30px; font-style: italic;}
+
+.footer-about img.logo-footer { max-width: 74px; margin-top: 0; margin-bottom: 18px; }
+.footer-about p a { border: 0; }
+.footer-about p a:hover, .footer-about p a:focus { border: 0; }
+
+.footer-contact p { word-wrap: break-word; }
+.footer-contact i { padding-right: 10px; font-size: 18px; color: #666; }
+.footer-contact p a { border: 0; }
+.footer-contact p a:hover, .footer-contact p a:focus { border: 0; }
+
+.footer-links a { color: #aaa; border: 0; }
+.footer-links a:hover, .footer-links a:focus { color: #fff; }
+
+.footer-bottom { padding: 15px 0 17px 0; background: #444; text-align: left; color: #aaa; }
+
+.footer-social { padding-top: 3px; text-align: right; }
+.footer-social a { margin-left: 20px; color: #777; border: 0; }
+.footer-social a:hover, .footer-social a:focus { color: #79a05f; border: 0; }
+.footer-social i { font-size: 24px; vertical-align: middle; }
+
+.footer-copyright { padding-top: 5px; }
+.footer-copyright a { color: #fff; border: 0; }
+.footer-copyright a:hover, .footer-copyright a:focus { color: #aaa; border: 0; }
+
+/* End Footer */
+
+/* Slide Img */
+.first-slide{ width: 100%; height: 100%;}
+.main-icon{ width: 150px; height: 150px;}
+/* END SLIDE IMG */
+
+
+/*BOARD LIST DIV */
+.board-contents{
+    overflow: hidden;
+}
+
+.board-left{
+    width: 20%;
+    float: left;
+    padding-top: 50px;
+    margin-right: 10px;
+}
+
+.board-right{
+    width: 75%;
+    padding-top: 50px;
+    float: left;
+}
+/*END BOARD LIST DIV */
+
+.page-item-cus .page-link {
+  z-index: 3;
+  color: #000000;
+  background-color: #fff;
+}
+
+.page-item-cus .page-link:hover {
+  z-index: 2;
+  color: #ffffff;
+  text-decoration: none;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+.page-item-cus.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #c6c8ca;
+}
+
