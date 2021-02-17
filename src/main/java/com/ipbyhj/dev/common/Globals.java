@@ -22,4 +22,12 @@ public class Globals {
 	public static final String MEDIA_ROOT_PATH = "";
 	public static final String WEB_FILE_PATH = "";
 	public static final String VIDEO_ROOT_URL = "";
+
+	/**
+	 * Error Page Path
+	 */
+	private final String ERROR_404_PAGE_PATH = "error/404";
+	private final String ERROR_500_PAGE_PATH = "error/500";
+	private final String ERROR_DEFAULT_PAGE_PATH = "error/default";
+
 }

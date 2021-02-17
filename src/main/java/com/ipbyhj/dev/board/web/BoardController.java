@@ -14,17 +14,26 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ipbyhj.dev.common.Globals;
 
+import lombok.extern.log4j.Log4j2;
+
 @RestController
+@Log4j2
 public class BoardController {
 
 	/**
 	 * 처음 게시판 리스트를 조회할 때 사용
 	 */
-	@RequestMapping(value = {"/board/{name}/{page}","/board/{name}/{page}/{user}"}, method = RequestMethod.GET)
-	public ModelAndView getBaordPage(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response
-			,@PathVariable String page) {
+	@RequestMapping(value = {"/board/{name}","/board/{name}/**"}, method = RequestMethod.GET)
+	public ModelAndView getBaordPage(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response, @PathVariable String name) {
 
 		//board name로 가져오기
+		if(name.equals("all")) {
+
+		}else if(name.equals("community")) {
+
+		}else if(name.equals("coding")) {
+
+		}
 
 		modelAndView.setViewName("dev/board/list");
 		modelAndView.addObject("boldType", Globals.BOLD_TYPE_BOARD);
