@@ -26,8 +26,8 @@ public class Globals {
 	/**
 	 * Error Page Path
 	 */
-	private final String ERROR_404_PAGE_PATH = "error/404";
-	private final String ERROR_500_PAGE_PATH = "error/500";
-	private final String ERROR_DEFAULT_PAGE_PATH = "error/default";
+	public static final String ERROR_404_PAGE_PATH = "error/404";
+	public static final String ERROR_500_PAGE_PATH = "error/500";
+	public static final String ERROR_DEFAULT_PAGE_PATH = "error/default";
 
 }

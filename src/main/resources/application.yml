@@ -2,8 +2,8 @@ server:
   port: 8080
   error:
     whitelabel:
-      enabled: false
-  
+      enabled: false  # false : 기본 error 페이지 비활성화 
+
 spring: 
   thymeleaf:
     enabled: true
