@@ -13,6 +13,9 @@
         <typeAlias alias="HashMap" type="java.util.HashMap" />
         <typeAlias alias="List" type="java.util.List" />
         <typeAlias alias="ArrayList" type="java.util.ArrayList" />
+        <typeAlias alias="BoardDTO" type="com.ipbyhj.dev.board.dto.BoardDTO" />
+        <typeAlias alias="UserDTO" type="com.ipbyhj.dev.main.dto.UserDTO" />
+
     </typeAliases>
 
 

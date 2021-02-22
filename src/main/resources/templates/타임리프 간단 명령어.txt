@@ -1,0 +1,8 @@
+            <th:block th:text="${session.user }"></th:block>
+            <th:block th:if="${session.id != null}">
+            <script th:inline="javascript">
+            <div th:replace="layout/modal :: div"></div>
+            <th:block th:with="start=${page.startPageNum} , end=${page.endPageNum}">
+            <a th:href="@{/board/list(num=${page.startPageNum -1})}">
+	        location.href = '/board/list?num=1&userid='+[[${session.id}]];
+	       <th:block th:each="list : ${list}">

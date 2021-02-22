@@ -30,4 +30,11 @@ public class Globals {
 	public static final String ERROR_500_PAGE_PATH = "error/500";
 	public static final String ERROR_DEFAULT_PAGE_PATH = "error/default";
 
+	/**
+	 * code value
+	 */
+	public static final String BOARD_ALL = "4";
+	public static final String BOARD_COMMUNITY = "5";
+	public static final String BOARD_CODING = "6";
+
 }

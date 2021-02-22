@@ -25,7 +25,16 @@
 								<th scope="col" class="board-look">조회수</th>
 							</tr>
 						</thead>
+
+
 						<tbody>
+							<tr th:each="boardList : ${boardList}">
+                                <th scope="row" class="board-num-item" th:text="${boardList.boardId}"></th>
+                                <td class="board-title-item" th:text="${boardList.title}"></td>
+                                <td class="board-writer-item" th:text="${boardList.writerName}"></td>
+                                <td class="board-time-item" th:text="${boardList.createTime}"></td>
+                                <td class="board-look-item" th:text="${boardList.viewCount}"></td>
+							</tr>
 							<tr>
 								<th scope="row" class="board-num-item">1</th>
 								<td class="board-title-item">Markㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈddddddㅇ</td>
@@ -41,6 +50,8 @@
 								<td class="board-look-item">4</td>
 							</tr>
 						</tbody>
+
+
 					</table>
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center">
