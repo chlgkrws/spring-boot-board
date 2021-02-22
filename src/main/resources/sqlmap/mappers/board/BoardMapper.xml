@@ -2,13 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ipbyhj.dev.board.mapper.BoardMapper">
 
-
+    <!--게시물 조회 -->
     <select id = "selectBoardList" resultType="BoardDTO">
         /* 2021.02.21 choi.hak.jun selectBoardList*/
         SELECT board_id, title, writer_id, writer_name, content, view_count, like_count, code, create_by, date_format(create_time, '%Y-%m-%d %H:%i') as create_time
           FROM board
-         WHERE code = #{code} AND would_you_yn = 1
-      ORDER BY board_id desc;
+         WHERE <if test='code != ""'>
+                    code = #{code} AND
+               </if>would_you_yn = 1
+      ORDER BY board_id desc
+         LIMIT #{displayPost}, #{postNum}
+    </select>
+
+    <!-- 페이지를 위한 게시물 갯수 카운트 -->
+    <select id="selectBoardCount" resultType="int">
+        SELECT count(board_id)
+          FROM board
     </select>
 
 

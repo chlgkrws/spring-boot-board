@@ -6,3 +6,4 @@
             <a th:href="@{/board/list(num=${page.startPageNum -1})}">
 	        location.href = '/board/list?num=1&userid='+[[${session.id}]];
 	       <th:block th:each="list : ${list}">
+	       <a th:href="@{'/board/view/'+ ${boardList.boardId}}             restful

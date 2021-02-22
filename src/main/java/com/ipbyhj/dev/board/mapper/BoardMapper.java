@@ -13,8 +13,14 @@ import com.ipbyhj.dev.board.dto.BoardDTO;
 public interface BoardMapper {
 
 	/**
-	 * 게시판 조회
+	 * 게시물 조회
 	 * choi.hak.jun
 	 */
-	public List<BoardDTO> selectBoardList(@Param("code") String code);
+	public List<BoardDTO> selectBoardList(@Param("code") String code, int displayPost, int postNum);
+
+	/**
+	 * 게시물 갯수
+	 * choi.hak.jun
+	 */
+	public int selectBoardCount();
 }

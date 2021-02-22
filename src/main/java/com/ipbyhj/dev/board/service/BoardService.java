@@ -19,10 +19,17 @@ public class BoardService {
 	 * 테이블 조회
 	 * choi.hak.jun
 	 */
-	public List<BoardDTO> selectBoardList (String code){
-		return boardMapper.selectBoardList(code);
+	public List<BoardDTO> selectBoardList (String code, int displayPost, int postNum){
+		return boardMapper.selectBoardList(code, displayPost, postNum );
 	}
 
+	/**
+	 * 게시물 갯수
+	 * choi.hak.jun
+	 */
+	public int selectBoardCount() {
+		return boardMapper.selectBoardCount();
+	}
 
 
 }

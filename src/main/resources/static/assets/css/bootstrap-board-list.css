@@ -33,6 +33,10 @@
     text-align: left;
 }
 
+ .board-title-item a:link { color: black; text-decoration: none;}
+ .board-title-item a:visited { color: black; text-decoration: none;}
+ .board-title-item a:hover { color: black; text-decoration: underline;}
+
 .board-num-item{
     width: 10%;
     text-align: center;

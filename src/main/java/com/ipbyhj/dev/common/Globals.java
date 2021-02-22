@@ -33,7 +33,7 @@ public class Globals {
 	/**
 	 * code value
 	 */
-	public static final String BOARD_ALL = "4";
+	public static final String BOARD_ALL = "";
 	public static final String BOARD_COMMUNITY = "5";
 	public static final String BOARD_CODING = "6";
 
