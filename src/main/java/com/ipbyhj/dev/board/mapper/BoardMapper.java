@@ -22,5 +22,5 @@ public interface BoardMapper {
 	 * 게시물 갯수
 	 * choi.hak.jun
 	 */
-	public int selectBoardCount();
+	public int selectBoardCount(String code);
 }

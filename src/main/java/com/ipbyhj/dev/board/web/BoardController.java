@@ -49,10 +49,11 @@ public class BoardController {
 		}
 
 		Page page = new Page();														//페이지 네이션
+		int boardCount = boardService.selectBoardCount(code);
 		page.setNum(num);
-		page.setCount(boardService.selectBoardCount());
+		page.setCount(boardCount);
 
-		List<BoardDTO> boardList = boardService.selectBoardList(code, page.getDisplayPost(), page.getPostNum());
+		List<BoardDTO> boardList = boardService.selectBoardList(code, page.getDisplayPost(), page.getPostNum());		//게시물 조회
 
 		modelAndView.addObject("boardList", boardList);								//게시물 리스트
 		modelAndView.addObject("boldType", Globals.BOLD_TYPE_BOARD);				//네비바에서 board 진하게 만들기

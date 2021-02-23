@@ -27,8 +27,8 @@ public class BoardService {
 	 * 게시물 갯수
 	 * choi.hak.jun
 	 */
-	public int selectBoardCount() {
-		return boardMapper.selectBoardCount();
+	public int selectBoardCount(String code) {
+		return boardMapper.selectBoardCount(code);
 	}
 
 

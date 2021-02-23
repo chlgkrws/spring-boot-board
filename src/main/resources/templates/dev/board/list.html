@@ -9,10 +9,10 @@
 					<a href="/board/all/1" th:if="${selectedCategory == 'all'}" class="list-group-item list-group-item-action list-group-item-dark">All </a>
 					<a href="/board/all/1" th:if="${selectedCategory != 'all'}" class="list-group-item list-group-item-action k">All </a>
 
-					<a href="/board/community/1" th:if="${selectedCategory == 'community'}"class="list-group-item list-group-item-action list-group-item-dark">Community </a>
-					<a href="/board/community/1" th:if="${selectedCategory != 'community'}"class="list-group-item list-group-item-action">Community </a>
+					<a href="/board/community/1" th:if="${selectedCategory == 'community'}" class="list-group-item list-group-item-action list-group-item-dark">Community </a>
+					<a href="/board/community/1" th:if="${selectedCategory != 'community'}" class="list-group-item list-group-item-action">Community </a>
 
-					<a href="/board/coding/1" th:if="${selectedCategory == 'coding'}"class="list-group-item list-group-item-action list-group-item-dark">Coding</a>
+					<a href="/board/coding/1" th:if="${selectedCategory == 'coding'}" class="list-group-item list-group-item-action list-group-item-dark">Coding</a>
 					<a href="/board/coding/1" th:if="${selectedCategory != 'coding'}" class="list-group-item list-group-item-action">Coding</a>
 					<a href="#" class="list-group-item list-group-item-action disabled">Disabled</a>
 				</div>
@@ -34,42 +34,54 @@
 
 						<tbody>
 							<tr th:each="boardList : ${boardList}">
-                                <th scope="row" class="board-num-item" th:text="${boardList.boardId}"></th>
-                                <td class="board-title-item"><a th:href="@{'/board/view/'+ ${boardList.boardId}}" th:text="${boardList.title}"></a></td>
-                                <td class="board-writer-item" th:text="${boardList.writerName}"></td>
-                                <td class="board-time-item" th:text="${boardList.createTime}"></td>
-                                <td class="board-look-item" th:text="${boardList.viewCount}"></td>
-
-							</tr>
-							<tr>
-								<th scope="row" class="board-num-item">1</th>
-								<td class="board-title-item">Markㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈddddddㅇ</td>
-								<td class="board-writer-item">Otto</td>
-								<td class="board-time-item">2021-01-05</td>
-								<td class="board-look-item">4</td>
-							</tr>
-							<tr>
-								<th scope="row" class="board-num-item">1</th>
-								<td class="board-title-item">Markㅇㅈㅇㅈㅇㅈㅇㅈㅇㅈddddddㅇ</td>
-								<td class="board-writer-item">Otto</td>
-								<td class="board-time-item">2021-01-05</td>
-								<td class="board-look-item">4</td>
+								<th scope="row" class="board-num-item" th:text="${boardList.boardId}"></th>
+								<td class="board-title-item">
+									<a th:href="@{'/board/view/'+ ${boardList.boardId}}" th:text="${boardList.title}"></a>
+								</td>
+								<td class="board-writer-item" th:text="${boardList.writerName}"></td>
+								<td class="board-time-item" th:text="${boardList.createTime}"></td>
+								<td class="board-look-item" th:text="${boardList.viewCount}"></td>
 							</tr>
 						</tbody>
-
-
 					</table>
+
+					<!-- 페이지네이션 -->
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center">
-							<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">prev</a></li>
-							<li class="page-item-cus"><a class="page-link" href="#">1</a></li>
+							<!-- Prev -->
+							<th:block th:if="${page.isPrev() == false}">
+								<li class="page-item disabled"><a class="page-link" tabindex="-1">prev</a></li>
+							</th:block>
+							<th:block th:if="${page.isPrev() == true}">
+								<li class="page-item"><a class="page-link" th:href="@{'/board' + '/'+${selectedCategory}+'/'+${page.startPageNum -1}}" tabindex="-1">prev</a></li>
+							</th:block>
+
+							<!-- <li class="page-item-cus"><a class="page-link" href="#">1</a></li>
 							<li class="page-item-cus active"><a class="page-link" href="#">2</a></li>
-							<li class="page-item-cus"><a class="page-link" href="#">3</a></li>
-							<li class="page-item-cus"><a class="page-link" href="#">next</a></li>
+							<li class="page-item-cus"><a class="page-link" href="#">3</a></li>-->
+
+							<th:block th:with="start=${page.startPageNum} , end=${page.endPageNum}">
+								<th:block th:each="num : ${#numbers.sequence(start, end)}">
+									<th:block th:if="${select != num}">
+										<li class="page-item-cus"><a class="page-link" th:href="@{'/board'+'/'+${selectedCategory}+'/'+${num}}" th:text="${num}"> </a></li>
+									</th:block>
+									<th:block th:if="${select == num}">
+										<li class="page-item-cus active"><a class="page-link" th:href="@{'/board'+'/'+${selectedCategory}+'/'+${num}}" th:text="${num}"> </a></li>
+									</th:block>
+								</th:block>
+							</th:block>
+
+
+							<!-- Next -->
+							<th:block th:if="${page.isNext() == false}">
+								<li class="page-item disabled"><a class="page-link" href="#"> next</a></li>
+							</th:block>
+							<th:block th:if="${page.isNext() == true}">
+								<li class="page-item"><a class="page-link" th:href="@{'/board' + '/'+${selectedCategory}+'/'+ ${page.endPageNum +1}}">next</a></li>
+							</th:block>
 						</ul>
 					</nav>
 				</div>
-
 			</div>
 			<div class="clear"></div>
 		</div>

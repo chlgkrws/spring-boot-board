@@ -18,6 +18,9 @@
     <select id="selectBoardCount" resultType="int">
         SELECT count(board_id)
           FROM board
+               <if test='code != ""'>
+                    WHERE code = #{code}
+               </if>
     </select>
 
 
