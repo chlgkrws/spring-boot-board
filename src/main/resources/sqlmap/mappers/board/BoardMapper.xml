@@ -16,11 +16,19 @@
 
     <!-- 페이지를 위한 게시물 갯수 카운트 -->
     <select id="selectBoardCount" resultType="int">
+        /* 2021.02.22 choi.hak.jun selectBoardCount*/
         SELECT count(board_id)
           FROM board
                <if test='code != ""'>
                     WHERE code = #{code}
                </if>
+    </select>
+
+    <select id="selectView" resultType="BoardDTO">
+        /* 2021.02.24 choi.hak.jun selectView*/
+        SELECT *
+          FROM board
+         WHERE board_id = #{boardId}
     </select>
 
 

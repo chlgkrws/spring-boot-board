@@ -20,7 +20,8 @@ public class BoardDTO {
 	private String likeCount;
 	private String code;
 	private String createBy;
-	private String createTime;	
+	private String createTime;
+	private String updateTime;
 	private String wouldYouYn;
 }
 

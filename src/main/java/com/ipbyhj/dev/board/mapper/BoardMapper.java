@@ -23,4 +23,10 @@ public interface BoardMapper {
 	 * choi.hak.jun
 	 */
 	public int selectBoardCount(String code);
+
+	/**
+	 * 게시물 보기
+	 * choi.hak.jun
+	 */
+	public BoardDTO selectView(int boardId);
 }

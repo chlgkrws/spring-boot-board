@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,7 +24,7 @@ public class BoardController {
 	BoardService boardService;
 
 	/**
-	 * 게시판 리스트를 조회할 때 사용
+	 * 게시물 리스트 조회
 	 * choi.hak.jun
 	 * Start 2021-02-10
 	 */
@@ -62,6 +61,26 @@ public class BoardController {
 		modelAndView.addObject("page", page);										//페이지네이션 정보 값
 		modelAndView.setViewName("dev/board/list");
 
+		return modelAndView;
+	}
+	/**
+	 * END 2021-02-24
+	 */
+
+	/**
+	 * 게시물 자세히 보기
+	 * choi.hak.jun
+	 * Start 2021-02-24
+	 */
+	@RequestMapping(value = {"/board/view/{num}","/board/view/**"}, method = RequestMethod.GET)
+	public ModelAndView getBoardView(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
+			@PathVariable Integer num) {
+
+
+		BoardDTO board = boardService.selectView(num);
+
+		modelAndView.addObject("board", board);
+		modelAndView.setViewName("dev/board/view");
 		return modelAndView;
 	}
 	/**

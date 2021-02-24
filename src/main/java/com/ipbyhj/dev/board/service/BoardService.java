@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ipbyhj.dev.board.dto.BoardDTO;
 import com.ipbyhj.dev.board.mapper.BoardMapper;
 
 @Service
+@Transactional
 public class BoardService {
 
 	@Autowired
@@ -29,6 +31,14 @@ public class BoardService {
 	 */
 	public int selectBoardCount(String code) {
 		return boardMapper.selectBoardCount(code);
+	}
+
+	/**
+	 * 게시물 보기
+	 * choi.hak.jun
+	 */
+	public BoardDTO selectView(int boardId) {
+		return boardMapper.selectView(boardId);
 	}
 
 
