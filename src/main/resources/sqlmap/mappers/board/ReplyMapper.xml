@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipbyhj.dev.board.mapper.ReplyMapper">
+
+    <!-- 댓글 조회 -->
+    <select id="selectReply">
+    /* 2021.02.27 choi.hak.jun selectReply*/
+        SELECT reply_id, board_id, parent_rpl_id, writer_id, writer_name, content, like, create_by, create_time
+          FROM reply
+         WHERE board_id = #{boardId} AND uses_yn = 1
+    </select>
+
+</mapper>

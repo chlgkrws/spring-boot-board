@@ -29,4 +29,11 @@ public interface BoardMapper {
 	 * choi.hak.jun
 	 */
 	public BoardDTO selectView(int boardId);
+
+	/**
+	 * 조회수 증가
+	 * choi.hak.jun
+	 */
+	public void updateViewCount(int boardId);
+
 }

@@ -93,6 +93,12 @@
     padding-top: 50px;
     float: left;
 }
+
+.board-view-contents{
+    overflow: hidden;
+
+
+}
 /*END BOARD LIST DIV */
 
 .page-item-cus .page-link {

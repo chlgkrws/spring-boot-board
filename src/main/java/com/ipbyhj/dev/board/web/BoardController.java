@@ -77,7 +77,9 @@ public class BoardController {
 			@PathVariable Integer num) {
 
 
-		BoardDTO board = boardService.selectView(num);
+		BoardDTO board = boardService.selectView(num);								//게시물조회
+		
+		//if쿠키가 같지 않으면 조회수 증가시키기.
 
 		modelAndView.addObject("board", board);
 		modelAndView.setViewName("dev/board/view");

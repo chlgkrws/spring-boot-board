@@ -41,5 +41,12 @@ public class BoardService {
 		return boardMapper.selectView(boardId);
 	}
 
+	/**
+	 * 조회수 증가
+	 * choi.hak.jun
+	 */
+	public void updateViewCount(int boardId) {
+		boardMapper.updateViewCount(boardId);
+	}
 
 }

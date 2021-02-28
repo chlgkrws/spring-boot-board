@@ -24,12 +24,21 @@
                </if>
     </select>
 
+    <!-- 게시물 보기 -->
     <select id="selectView" resultType="BoardDTO">
         /* 2021.02.24 choi.hak.jun selectView*/
         SELECT *
           FROM board
          WHERE board_id = #{boardId}
     </select>
+
+    <!-- 조회수 증가 -->
+    <update id="updateViewCount">
+        /* 2021.02.25 choi.hak.jun updateViewCount*/
+        UPDATE board
+           SET view_count = view_count + 1
+         WHERE board_id = #{boardId}
+    </update>
 
 
 </mapper>

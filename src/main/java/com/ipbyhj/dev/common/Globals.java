@@ -3,6 +3,14 @@ package com.ipbyhj.dev.common;
 public class Globals {
 
 	/**
+	 * Global Server url
+	 */
+
+	public static final String LOCAL_SERVER_URL = "http://localhost:8080";
+	public static final String API_SERVER_URL = "http://localhost:";
+	public static final String BOS_SERVER_URL = "http://localhost:";
+
+	/**
 	 * header bold
 	 * Header에서 화면 전환시 글씨 굵기 지정
 	 */
