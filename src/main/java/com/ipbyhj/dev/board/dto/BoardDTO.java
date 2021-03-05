@@ -1,7 +1,5 @@
 package com.ipbyhj.dev.board.dto;
 
-import java.sql.Timestamp;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,7 +20,7 @@ public class BoardDTO {
 	private String createBy;
 	private String createTime;
 	private String updateTime;
-	private String wouldYouYn;
+	private String usesYn;
 }
 
 /*
@@ -39,7 +37,7 @@ public class BoardDTO {
 	`create_time` timestamp NOT NULL DEFAULT current_timestamp(),
 	`update_by` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT 'sys',
 	`update_time` timestamp NOT NULL DEFAULT current_timestamp(),
-	`would_you_yn` tinyint(4) NOT NULL DEFAULT 1,
+	`uses_yn` tinyint(4) NOT NULL DEFAULT 1,
 	`reserve1` varchar(300) COLLATE utf8_bin DEFAULT NULL,
 	`reserve2` varchar(300) COLLATE utf8_bin DEFAULT NULL,
 	`reserve3` varchar(300) COLLATE utf8_bin DEFAULT NULL,

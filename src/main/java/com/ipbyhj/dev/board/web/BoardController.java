@@ -75,12 +75,18 @@ public class BoardController {
 	@RequestMapping(value = {"/board/view/{num}","/board/view/**"}, method = RequestMethod.GET)
 	public ModelAndView getBoardView(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
 			@PathVariable Integer num) {
+		String category = "";
 
+		//게시물조회
+		BoardDTO board = boardService.selectView(num);
 
-		BoardDTO board = boardService.selectView(num);								//게시물조회
-		
+		//카테고리 설정
+		if(board.getCode().equals(Globals.BOARD_COMMUNITY)) category = "커뮤니티";
+		else if(board.getCode().equals(Globals.BOARD_CODING)) category ="코딩";
+
 		//if쿠키가 같지 않으면 조회수 증가시키기.
 
+		modelAndView.addObject("category", category);
 		modelAndView.addObject("board", board);
 		modelAndView.setViewName("dev/board/view");
 		return modelAndView;

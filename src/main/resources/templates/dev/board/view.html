@@ -3,33 +3,35 @@
 <div layout:fragment="content">
 	<div class="container">
 		<!-- Content here -->
-		<div class="board-view-contents" style="padding-top: 50px;">
-			<div class="row">
-				<div class="col-8">
-					<div class="row">
-						<div class="col">
-							<p>Unipo admin</p>
-						</div>
-					</div>
-					<div class="row">
-					   <div class="col"><small>2021-02-27 16:19:00</small></div>
-					</div>
-				</div>
-				<div class="col-4">
-					<p>Community</p>
-				</div>
+		<div class="board-view-contents" style="padding-top: 50px; width: 70%; margin: 0px auto;">
+			<div>
+				<b class="text-success" th:text="${category}"></b>
 			</div>
-			<div class="row">
+			<div>
+				<h1 th:text="${board.title}">Unipo text Test Board</h1>
+			</div>
+			<div class="row" style="margin: 2px; margin-top: 15px;">
+				<pre style="margin: 0px;">
+<small><th:block th:text="${board.writerId}"/> | 2021.03.01 20:17 | 조회수, 조하요,<a href="#">next</a></small>
+				</pre>
+			</div>
+			<hr>
+			<div>
+				<pre>안녕하세요 ㅎㅎ
+            </pre>
+			</div>
+
+			<!-- <div class="row">
 				<div class="col">
-					<p>col</p>
+					<p></p>
 				</div>
-				<div class="col">col</div>
-				<div class="col">col</div>
-				<div class="col">col</div>
-			</div>
+				<div class="col border">chlgkrws</div>
+				<div class="col border">조회수 </div>
+				<div class="col border">좋아요</div>
+			</div> -->
 			<div class="w-100"></div>
 
-			<div class="row"></div>
+
 		</div>
 
 

@@ -28,7 +28,7 @@ public class UserDTO {
 	private Timestamp createTime;
 	private String updateBy;
 	private Timestamp updateTime;
-	private String wouldYouYn;
+	private String usesYn;
 }
 	/*
 		CREATE TABLE `user` (
@@ -44,7 +44,7 @@ public class UserDTO {
 		  `create_time` timestamp NOT NULL DEFAULT current_timestamp(),
 		  `update_by` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT 'sys',
 		  `update_time` timestamp NOT NULL DEFAULT current_timestamp(),
-		  `would_you_yn` tinyint(4) NOT NULL DEFAULT 1,
+		  `uses_yn` tinyint(4) NOT NULL DEFAULT 1,
 		  `reserve1` varchar(300) COLLATE utf8_bin DEFAULT NULL,
 		  `reserve2` varchar(300) COLLATE utf8_bin DEFAULT NULL,
 		  `reserve3` varchar(300) COLLATE utf8_bin DEFAULT NULL,

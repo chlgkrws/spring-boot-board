@@ -4,12 +4,20 @@
 
     <!--게시물 조회 -->
     <select id = "selectBoardList" resultType="BoardDTO">
-        /* 2021.02.21 choi.hak.jun selectBoardList*/
-        SELECT board_id, title, writer_id, writer_name, content, view_count, like_count, code, create_by, date_format(create_time, '%Y-%m-%d %H:%i') as create_time
+        /* 2021.03.04 choi.hak.jun selectBoardList*/
+        SELECT board_id
+               , title
+               , writer_id
+               , writer_name
+               , view_count
+               , like_count
+               , code
+               , create_by
+               , date_format(create_time, '%Y-%m-%d %H:%i') as create_time
           FROM board
          WHERE <if test='code != ""'>
                     code = #{code} AND
-               </if>would_you_yn = 1
+               </if>uses_yn = 1
       ORDER BY board_id desc
          LIMIT #{displayPost}, #{postNum}
     </select>
@@ -26,8 +34,17 @@
 
     <!-- 게시물 보기 -->
     <select id="selectView" resultType="BoardDTO">
-        /* 2021.02.24 choi.hak.jun selectView*/
-        SELECT *
+        /* 2021.03.05 choi.hak.jun selectView*/
+        SELECT board_id
+               , title
+               , writer_id
+               , writer_name
+               , content
+               , view_count
+               , like_count
+               , code
+               , create_by
+               , date_format(create_time, '%Y-%m-%d %H:%i') as create_time
           FROM board
          WHERE board_id = #{boardId}
     </select>
