@@ -34,7 +34,7 @@
 
     <!-- 게시물 보기 -->
     <select id="selectView" resultType="BoardDTO">
-        /* 2021.03.05 choi.hak.jun selectView*/
+        /* 2021.03.04 choi.hak.jun selectView*/
         SELECT board_id
                , title
                , writer_id
