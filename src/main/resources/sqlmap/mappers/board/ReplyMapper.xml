@@ -5,9 +5,39 @@
     <!-- 댓글 조회 -->
     <select id="selectReply">
     /* 2021.02.27 choi.hak.jun selectReply*/
-        SELECT reply_id, board_id, parent_rpl_id, writer_id, writer_name, content, like, create_by, create_time
+        SELECT reply_id
+              ,board_id
+              ,parent_rpl_id
+              ,writer_id
+              ,writer_name
+              ,content
+              ,like
+              ,create_by
+              ,create_time
           FROM reply
          WHERE board_id = #{boardId} AND uses_yn = 1
     </select>
+
+    <!-- 댓글 삽입 -->
+    <insert id="insertReply">
+    /* 2021.03.08 choi.hak.jun insertReply */
+        INSERT
+          INTO reply(
+               board_id
+              ,parent_rpl_id
+              ,writer_id
+              ,writer_name
+              ,content
+              ,create_by
+              )
+        VALUES(
+              #{boardId}
+              ,#{parentRplId}
+              ,#{writerId}
+              ,#{writerName}
+              ,#{content}
+              ,#{createBy}
+              )
+    </insert>
 
 </mapper>

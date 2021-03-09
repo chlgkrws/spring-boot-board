@@ -26,7 +26,7 @@ public class BoardController {
 	/**
 	 * 게시물 리스트 조회
 	 * choi.hak.jun
-	 * Start 2021-02-10
+	 * Start 2021.02.10
 	 */
 	@RequestMapping(value = {"/board/{name}/{num}","/board/{name}/**"}, method = RequestMethod.GET)
 	public ModelAndView getBaordPage(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
@@ -64,13 +64,13 @@ public class BoardController {
 		return modelAndView;
 	}
 	/**
-	 * END 2021-02-24
+	 * END 2021.02.24
 	 */
 
 	/**
 	 * 게시물 자세히 보기
 	 * choi.hak.jun
-	 * Start 2021-02-24
+	 * Start 2021.02.24
 	 */
 	@RequestMapping(value = {"/board/view/{num}","/board/view/**"}, method = RequestMethod.GET)
 	public ModelAndView getBoardView(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
@@ -92,7 +92,7 @@ public class BoardController {
 		return modelAndView;
 	}
 	/**
-	 * END 2021-03-04
+	 * END 2021.03.04
 	 */
 
 	//url로 요청할 때는 그 정보를, 비동기 통신으로 가져올 때는 다른 정보를 준다.
