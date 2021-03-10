@@ -121,9 +121,10 @@
   background-color: #c6c8ca;
 }
 
+
 /*START REPLY CSS*/
+
 .content-item {
-    padding:30px 0;
     background-color:#FFFFFF;
 }
 
@@ -145,7 +146,7 @@
     font-weight:400;
     font-size:20px;
     color:#555555;
-    margin:10px 0 15px;
+    margin:15px 0 15px;
     padding:0;
 }
 
@@ -175,22 +176,27 @@
 
 #comments {
     box-shadow: 0 -1px 6px 1px rgba(0,0,0,0.1);
-    background-color:#FFFFFF;
+    background-color:#f9f9f9;
 }
 
-#comments form {
+#comments .form {
     margin-bottom:30px;
 }
 
 #comments .btn {
-    margin-top:7px;
+    margin-top:0px;
+    background-color: #ffffff;
+    border: 1px solid transparent;
+        border-radius: 0.25rem;
+        border-color: #808791;
+        margin-bottom: 1rem;
 }
 
-#comments form fieldset {
+#comments .form fieldset {
     clear:both;
 }
 
-#comments form textarea {
+#comments .form textarea {
     height:100px;
 }
 

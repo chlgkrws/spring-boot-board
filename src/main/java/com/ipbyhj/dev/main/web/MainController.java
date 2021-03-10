@@ -21,6 +21,9 @@ public class MainController {
 	@RequestMapping(value= "/" , method = RequestMethod.GET)
 	public ModelAndView getHome(ModelAndView modelAndView, HttpServletRequest request, HttpSession session) {
 
+		//개발 테스트 임시 세션 추가
+		session.setAttribute("id", "chlgkrws");
+
 		modelAndView.addObject("main", true);
 		modelAndView.addObject("boldType", Globals.BOLD_TYPE_MAIN);
 		modelAndView.setViewName("dev/main/index");
