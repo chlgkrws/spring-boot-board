@@ -42,21 +42,6 @@
 						</div>
 					</div>
 					<div id="mediazz2"></div>
-					<div class="form">
-                        <h3 class="pull-left">New Comment</h3>
-                        <!-- <button type="submit" class="btn btn-normal pull-right">Submit</button> -->
-                        <fieldset>
-                            <div class="row">
-                                <!-- <div class="col-sm-3 col-lg-2 hidden-xs">
-                                    <img class="img-responsive" src="/css/img/profile-reply.png" alt="">
-                                </div> -->
-                                <div class="form-group col-xs-12 col-sm-9 col-lg-10">
-                                    <textarea class="form-control" id="replyContent" name="content" placeholder="Your message" required=""></textarea>
-                                </div>
-                                <button type="button" onclick="clickPostReply();" class="btn btn-normal pull-right">Submit</button>
-                            </div>
-                        </fieldset>
-                    </div>
                     <hr>
 
 					<!-- COMMENT 1 - END -->
@@ -65,11 +50,39 @@
 		</div>
 	</section>
 	<script type="text/javascript">
+
+        //댓글 삽입(대댓글 포함 xmlHttpRequest 사용)
 	    function clickPostReply(){
 	        var content = document.getElementById("replyContent").value;
 	        console.log(content);
 
+	        //formDate or json form
+	        var data ={
+				boardId : '90',	//바꿀것
+				writerId  : 'chlgkrws',
+				content : content
+	        };
+			var formData = new FormData();
+			formData.append('boardId','90');
+			formData.append('writerId','chlgkrws');
+			formData.append('content',content);
 
+	        var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState === xhr.DONE){
+					if(xhr.status === 200 || xhr.status === 201){
+						console.log('성공');
+					}else{
+						console.log('실패');
+					}
+				}
+			};
+			console.log(data);
+
+			xhr.open('POST', '/reply/90');			//test 로직
+			//xhr.setRequestHeader('Content-Type', "application/x-www-form-urlencoded; charset=UTF-8"); // 컨텐츠타입을 json으로
+			//xhr.send(JSON.stringify(data));
+			xhr.send(formData);
 	    }
 
 	    function createReplyArea(e){
@@ -77,6 +90,7 @@
 	    	if(document.getElementById("newDiv") != null){
 	    	   	DeleteReplyArea();
 	    	}
+	    	//대댓글 창 생성
 	    	var newDiv = document.createElement("div");
 	    	newDiv.setAttribute("id","newDiv");
 	    	newDiv.setAttribute("class","form");
@@ -91,6 +105,7 @@
                     +'  </div>'
                     +'</fieldset>';
 
+            //대댓글 창이 생성되는 위치
             var parent = document.getElementById("mediazz2");
             console.log(parent);
             parent.append(newDiv);
@@ -100,6 +115,7 @@
 	    }
 
 	    function DeleteReplyArea(){
+	    	//대댓글 창 삭제
 	        var newDiv = document.getElementById("newDiv");
 	        newDiv.remove();
 	    }

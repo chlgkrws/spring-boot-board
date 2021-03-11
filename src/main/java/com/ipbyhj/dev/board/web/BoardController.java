@@ -2,6 +2,7 @@ package com.ipbyhj.dev.board.web;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -76,7 +77,7 @@ public class BoardController {
 	public ModelAndView getBoardView(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
 			@PathVariable Integer num) {
 		String category = "";
-
+		
 		//게시물조회
 		BoardDTO board = boardService.selectView(num);
 
@@ -85,7 +86,7 @@ public class BoardController {
 		else if(board.getCode().equals(Globals.BOARD_CODING)) category ="코딩";
 
 		//if쿠키가 같지 않으면 조회수 증가시키기.
-
+		
 		modelAndView.addObject("category", category);
 		modelAndView.addObject("board", board);
 		modelAndView.setViewName("dev/board/view");

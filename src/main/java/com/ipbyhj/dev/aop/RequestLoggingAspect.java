@@ -21,6 +21,8 @@ import lombok.extern.log4j.Log4j2;
 @Aspect
 @Log4j2
 public class RequestLoggingAspect {
+
+
 	@Around("within(com.ipbyhj.dev..*))") // ex. within(me.shinsunyoung.demo..*)) 1
 	public Object logging(ProceedingJoinPoint pjp) throws Throwable { // 2
 

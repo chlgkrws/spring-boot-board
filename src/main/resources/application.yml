@@ -22,7 +22,7 @@ spring:
     url: jdbc:mysql://localhost:3306/humble_project?serverTimezone=UTC&characterEncoding=UTF-8
     username: root  
     password: jt67f7!@
-    
+
 mybatis:
   config-location: classpath:sqlmap/sqlmap-config.xml
   mapper-locations: classpath*:sqlmap/mappers/**/*.xml

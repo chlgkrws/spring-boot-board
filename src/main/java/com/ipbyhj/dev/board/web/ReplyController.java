@@ -42,8 +42,17 @@ public class ReplyController {
 	 * Start 2021.03.08
 	 */
 	@RequestMapping(value = "/reply/{boardId}", method = RequestMethod.POST )
-	public int insertReply(HttpServletRequest request, @PathVariable String boardId, @RequestParam Map<String, Object> params){
-		int ret = replyService.insertReply(params);
+	public int insertReply(HttpServletRequest request, @RequestParam Map<String, Object> param){
+//		Map<String, Object> params = new HashMap<String, Object>();
+//		System.out.println(request.getParameter("boardId"));
+		System.out.println(param.toString());
+		System.out.println(param.keySet());
+		System.out.println(param.get("boardId"));
+//		params.put("boardId"  ,		request.getParameter("boardId"));
+//		params.put("writerId",		request.getParameter("userId"));
+//		params.put("cotent", 		request.getParameter("content"));
+
+		int ret = replyService.insertReply(param);
 		return ret;
 	}
 }

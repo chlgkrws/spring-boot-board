@@ -30,13 +30,15 @@
               ,content
               ,create_by
               )
-        VALUES(
+        (SELECT
               #{boardId}
               ,#{parentRplId}
               ,#{writerId}
-              ,#{writerName}
+              , user_name
               ,#{content}
-              ,#{createBy}
+              , user_name
+          FROM user
+         WHERE user_id = #{writerId}
               )
     </insert>
 
