@@ -18,6 +18,20 @@
          WHERE board_id = #{boardId} AND uses_yn = 1
     </select>
 
+    <!-- 댓글 리스트 조회 (첫 페이지 로딩 용) -->
+    <select id="selectReplyList" resultType="ReplyDTO">
+    /* 2021.03.14 choi.hak.jun selectReplyList */
+        SELECT  reply_id
+               ,board_id
+               ,parent_rpl_id
+               ,writer_id
+               ,content
+               ,create_by
+               ,DATE_FORMAT(create_time, '%Y-%m-%d %H:%i') AS create_time
+          FROM reply
+         WHERE board_id = #{boardId}
+    </select>
+
     <!-- 댓글 삽입 -->
     <insert id="insertReply">
     /* 2021.03.08 choi.hak.jun insertReply */

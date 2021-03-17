@@ -7,3 +7,8 @@
 	        location.href = '/board/list?num=1&userid='+[[${session.id}]];
 	       <th:block th:each="list : ${list}">
 	       <a th:href="@{'/board/view/'+ ${boardList.boardId}}             restful
+	       <div class="media" th:attr="id='media'+${reply.replyId}"> 속성 추가
+	       
+	       /*<![CDATA[*/
+                var current = /*[[ ${paging.getPageNo()} ]]*/;
+            /*]]>*/

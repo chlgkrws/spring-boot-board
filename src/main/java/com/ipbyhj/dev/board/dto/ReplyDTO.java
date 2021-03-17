@@ -19,7 +19,7 @@ public class ReplyDTO {
 	private String content;
 	private String like;
 	private String createBy;
-	private Timestamp createTime;
+	private String createTime;
 	private String usesYn;
 }
 /*

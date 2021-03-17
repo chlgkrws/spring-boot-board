@@ -5,8 +5,8 @@
 	<section class="content-item" id="comments">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-12">
-				    <h3>4 Comments</h3>
+				<div class="col-sm-12" id="replyArea">
+				    <h3 th:text="${replySize}"></h3>
 					<div class="form">
 						<h3 class="pull-left">New Comment</h3>
 						<!-- <button type="submit" class="btn btn-normal pull-right">Submit</button> -->
@@ -22,6 +22,27 @@
 							</div>
 						</fieldset>
                     </div>
+
+					<!-- REPLY LIST START -->
+					<th:block th:each="reply : ${reply}">
+						<div class="media" th:attr="id='media'+${reply.replyId}">
+							<div class="media-body">
+								<h4 class="media-heading" th:text="${reply.writerId}"></h4>
+								<p th:text="${reply.content}"></p>
+								<ul class="list-unstyled list-inline media-detail pull-left">
+									<li><i class="fa fa-calendar" th:text="${reply.createTime}"></i></li>
+									<li><i class="fa fa-thumbs-up"></i>13</li>
+								</ul>
+								<ul class="list-unstyled list-inline media-detail pull-right">
+									<li class=""><a href="">Like</a></li>
+									<li class=""><a href="#" onclick="return createReplyArea(this);">Reply</a></li>
+								</ul>
+							</div>
+						</div>
+						<div th:attr="id='mediaReply'+${reply.replyId}"></div>
+
+					</th:block>
+					<!-- REPLY LIST END -->
 
 					<!-- COMMENT 1 - START -->
 					<div class="media" id="mediazz">
@@ -49,41 +70,60 @@
 			</div>
 		</div>
 	</section>
-	<script type="text/javascript">
+	<script th:inline="javascript">
 
         //댓글 삽입(대댓글 포함 xmlHttpRequest 사용)
 	    function clickPostReply(){
+
 	        var content = document.getElementById("replyContent").value;
 	        console.log(content);
 
 	        //formDate or json form
 	        var data ={
-				boardId : '90',	//바꿀것
-				writerId  : 'chlgkrws',
-				content : content
-	        };
-			var formData = new FormData();
-			formData.append('boardId','90');
-			formData.append('writerId','chlgkrws');
-			formData.append('content',content);
+				boardId   : [[${boardId}]],
+				writerId  : [[${session.userId}]],
+				content   : content
+	        };//미사용
 
+	        /*<![CDATA[*/
+			var formData = new FormData();
+			formData.append('boardId',[[${board.boardId}]]);
+			formData.append('writerId',[[${session.userId}]]);
+			formData.append('content',content);
+			/*]]>*/
 	        var xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function(){
 				if(xhr.readyState === xhr.DONE){
 					if(xhr.status === 200 || xhr.status === 201){
+						createReply();						//댓글 동적 생성
 						console.log('성공');
 					}else{
 						console.log('실패');
 					}
 				}
 			};
-			console.log(data);
-
-			xhr.open('POST', '/reply/90');			//test 로직
+			/*<![CDATA[*/
+			xhr.open('POST', '/reply/'+[[${board.boardId}]]);			//test 로직
+			/*]]>*/
 			//xhr.setRequestHeader('Content-Type', "application/x-www-form-urlencoded; charset=UTF-8"); // 컨텐츠타입을 json으로
 			//xhr.send(JSON.stringify(data));
 			xhr.send(formData);
+
 	    }
+
+		//댓글 삽입 후 삽입한 내용 화면에 추가 (여기할차례)
+		function createReply(){
+			console.log('성공');
+			var newDiv = document.createElement("div");
+			newDiv.innerHTML="<div>hi</div>";
+
+			var lastnode = document.getElementById("replyArea");
+
+		    lastnode.append(newDiv);
+			/* for(var i = 0; i < document.getElementById("replyArea").childNodes.length; i++){
+				alert(document.getElementById("replyArea").childNodes[i]);
+			} */
+		}
 
 	    function createReplyArea(e){
 	    	//이미 생성 되어있는 대댓글 입력창을 삭제.

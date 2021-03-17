@@ -22,7 +22,7 @@ public class MainController {
 	public ModelAndView getHome(ModelAndView modelAndView, HttpServletRequest request, HttpSession session) {
 
 		//개발 테스트 임시 세션 추가
-		session.setAttribute("id", "chlgkrws");
+		session.setAttribute("userId", "chlgkrws");
 
 		modelAndView.addObject("main", true);
 		modelAndView.addObject("boldType", Globals.BOLD_TYPE_MAIN);

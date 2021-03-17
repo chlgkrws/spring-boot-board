@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ipbyhj.dev.board.dto.BoardDTO;
+import com.ipbyhj.dev.board.dto.ReplyDTO;
 import com.ipbyhj.dev.board.service.BoardService;
+import com.ipbyhj.dev.board.service.ReplyService;
 import com.ipbyhj.dev.common.Globals;
 import com.ipbyhj.dev.common.Page;
 
@@ -23,6 +25,9 @@ public class BoardController {
 
 	@Autowired
 	BoardService boardService;
+
+	@Autowired
+	ReplyService replyService;
 
 	/**
 	 * 게시물 리스트 조회
@@ -77,7 +82,7 @@ public class BoardController {
 	public ModelAndView getBoardView(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
 			@PathVariable Integer num) {
 		String category = "";
-		
+
 		//게시물조회
 		BoardDTO board = boardService.selectView(num);
 
@@ -86,9 +91,13 @@ public class BoardController {
 		else if(board.getCode().equals(Globals.BOARD_CODING)) category ="코딩";
 
 		//if쿠키가 같지 않으면 조회수 증가시키기.
-		
-		modelAndView.addObject("category", category);
-		modelAndView.addObject("board", board);
+
+		//첫 페이지 댓글 조회
+		List<ReplyDTO> reply = replyService.selectReplyList(num.toString());
+		modelAndView.addObject("category", category);			//게시물 카테고리
+		modelAndView.addObject("board", board);					//게시물 정보
+		modelAndView.addObject("reply",reply);					//댓글 정보
+		modelAndView.addObject("replySize",reply.size());		//댓글 갯수
 		modelAndView.setViewName("dev/board/view");
 		return modelAndView;
 	}
