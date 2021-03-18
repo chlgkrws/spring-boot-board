@@ -13,7 +13,7 @@ public class ReplyDTO {
 
 	private String replyId;
 	private String boardId;
-	private String perentRplId;
+	private String parentRplId;
 	private String writerId;
 	private String writerName;
 	private String content;

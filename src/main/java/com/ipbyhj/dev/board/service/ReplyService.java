@@ -33,12 +33,13 @@ public class ReplyService {
 		return replyMapper.selectReplyList(boardId);
 	}
 
-	/*
+	/**
 	 * 댓글 삽입
 	 * choi.hak.jun
 	 */
-	public int insertReply(Map<String, Object> params) {
-		return replyMapper.insertReply(params);
+	//public int insertReply(Map<String, Object> params) {
+	public int insertReply(ReplyDTO replyDTO) {
+		return replyMapper.insertReply(replyDTO);
 	}
 
 }

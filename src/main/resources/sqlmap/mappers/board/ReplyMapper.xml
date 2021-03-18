@@ -25,6 +25,7 @@
                ,board_id
                ,parent_rpl_id
                ,writer_id
+               ,like
                ,content
                ,create_by
                ,DATE_FORMAT(create_time, '%Y-%m-%d %H:%i') AS create_time
@@ -33,7 +34,7 @@
     </select>
 
     <!-- 댓글 삽입 -->
-    <insert id="insertReply">
+    <insert id="insertReply" parameterType="ReplyDTO" useGeneratedKeys="true" keyColumn="reply_id">
     /* 2021.03.08 choi.hak.jun insertReply */
         INSERT
           INTO reply(
@@ -53,7 +54,10 @@
               , user_name
           FROM user
          WHERE user_id = #{writerId}
-              )
+        )
+        <selectKey keyProperty="replyId" resultType="String">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
 
 </mapper>

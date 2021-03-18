@@ -30,5 +30,6 @@ public interface ReplyMapper {
 	 * 댓글 삽입
 	 * choi.hak.jun
 	 */
-	public int insertReply(Map<String, Object> params);
+	//public int insertReply(Map<String, Object> params);
+	public int insertReply(ReplyDTO replyDTO);
 }

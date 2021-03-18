@@ -6,7 +6,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12" id="replyArea">
-				    <h3 th:text="${replySize}"></h3>
+				    <h3 id="replyCount" th:text="${replySize}"></h3>
 					<div class="form">
 						<h3 class="pull-left">New Comment</h3>
 						<!-- <button type="submit" class="btn btn-normal pull-right">Submit</button> -->
@@ -30,8 +30,8 @@
 								<h4 class="media-heading" th:text="${reply.writerId}"></h4>
 								<p th:text="${reply.content}"></p>
 								<ul class="list-unstyled list-inline media-detail pull-left">
-									<li><i class="fa fa-calendar" th:text="${reply.createTime}"></i></li>
 									<li><i class="fa fa-thumbs-up"></i>13</li>
+									<li><i class="fa fa-calendar"></i><th:block th:text="${reply.createTime}"/></li>
 								</ul>
 								<ul class="list-unstyled list-inline media-detail pull-right">
 									<li class=""><a href="">Like</a></li>
@@ -40,7 +40,6 @@
 							</div>
 						</div>
 						<div th:attr="id='mediaReply'+${reply.replyId}"></div>
-
 					</th:block>
 					<!-- REPLY LIST END -->
 
@@ -63,8 +62,6 @@
 						</div>
 					</div>
 					<div id="mediazz2"></div>
-                    <hr>
-
 					<!-- COMMENT 1 - END -->
 				</div>
 			</div>
@@ -79,8 +76,12 @@
 	        console.log(content);
 
 	        //formDate or json form
+	         /*<![CDATA[*/
+	        var boardId  = [[${board.boardId}]];
+	        var writerId = [[${session.userId}]];
+	        /*]]>*/
 	        var data ={
-				boardId   : [[${boardId}]],
+				boardId   : [[${board.boardId}]],
 				writerId  : [[${session.userId}]],
 				content   : content
 	        };//미사용
@@ -95,7 +96,8 @@
 			xhr.onreadystatechange = function(){
 				if(xhr.readyState === xhr.DONE){
 					if(xhr.status === 200 || xhr.status === 201){
-						createReply();						//댓글 동적 생성
+						alert(xhr.responseText);
+						createReply(boardId, writerId, content);						//댓글 동적 생성
 						console.log('성공');
 					}else{
 						console.log('실패');
@@ -111,18 +113,33 @@
 
 	    }
 
-		//댓글 삽입 후 삽입한 내용 화면에 추가 (여기할차례)
-		function createReply(){
+		//댓글 삽입 후 삽입한 내용 화면에 추가
+		function createReply(boardId, writerId, content){
 			console.log('성공');
-			var newDiv = document.createElement("div");
-			newDiv.innerHTML="<div>hi</div>";
+			var newDiv  = document.createElement("div");
+			var newDate = now();
+
+			newDiv.innerHTML=
+				'<div class="media">'
+		       +'    <div class="media-body">'
+		       +'       <h4 class="media-heading">'+writerId+'</h4>'
+		       +'       <p>'+content+'</p>'
+		       +'       <ul class="list-unstyled list-inline media-detail pull-left">'
+		       +'           <li><i class="fa fa-thumbs-up"></i>13</li>'
+		       +'           <li><i class="fa fa-calendar"></i>'+newDate+'</li>'
+		       +'       </ul>'
+		       +'       <ul class="list-unstyled list-inline media-detail pull-right">'
+		       +'           <li class=""><a href="">Like</a></li>'
+		       +'           <li class=""><a href="#" onclick="return createReplyArea(this);">Reply</a></li>'
+		       +'       </ul>'
+		       +'   </div>'
+		       +'</div>'
+		       +'<div></div>';
+
+
 
 			var lastnode = document.getElementById("replyArea");
-
 		    lastnode.append(newDiv);
-			/* for(var i = 0; i < document.getElementById("replyArea").childNodes.length; i++){
-				alert(document.getElementById("replyArea").childNodes[i]);
-			} */
 		}
 
 	    function createReplyArea(e){
@@ -158,6 +175,21 @@
 	    	//대댓글 창 삭제
 	        var newDiv = document.getElementById("newDiv");
 	        newDiv.remove();
+	    }
+
+	    function now(){
+	    	var today = new Date();
+
+	    	var year    = today.getFullYear();          //년도
+	    	var month   = today.getMonth() + 1;         //월
+	    	var date    = today.getDate();              //일
+
+	    	var hours   = today.getHours();             //시
+	    	var minutes = today.getMinutes();            //분
+
+	    	month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+	    	date = date >= 10 ? date : '0' + date;          //day 두자리로 저장
+	    	return year+"-"+month+"-"+date+" "+hours+":"+minutes;
 	    }
 	</script>
 </div>

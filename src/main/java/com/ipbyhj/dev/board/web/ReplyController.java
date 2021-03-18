@@ -1,6 +1,5 @@
 package com.ipbyhj.dev.board.web;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ipbyhj.dev.board.dto.ReplyDTO;
 import com.ipbyhj.dev.board.service.ReplyService;
 
 @RestController
@@ -37,22 +37,19 @@ public class ReplyController {
 
 	/**
 	 * 댓글 삽입
-	 * @return 0 : 삽입 실패,  1 : 삽입 성공
+	 * @return 삽입한 댓글 pk
 	 * choi.hak.jun
 	 * Start 2021.03.08
 	 */
 	@RequestMapping(value = "/reply/{boardId}", method = RequestMethod.POST )
-	public int insertReply(HttpServletRequest request, @RequestParam Map<String, Object> param){
-//		Map<String, Object> params = new HashMap<String, Object>();
-//		System.out.println(request.getParameter("boardId"));
-		System.out.println(param.toString());
-		System.out.println(param.keySet());
-		System.out.println(param.get("boardId"));
-//		params.put("boardId"  ,		request.getParameter("boardId"));
-//		params.put("writerId",		request.getParameter("userId"));
-//		params.put("cotent", 		request.getParameter("content"));
+	public String insertReply(HttpServletRequest request, @RequestParam Map<String, Object> param){
 
-		int ret = replyService.insertReply(param);
-		return ret;
+
+		ReplyDTO reply = new ReplyDTO();
+		reply.setBoardId((String)param.get("boardId"));
+		reply.setWriterId((String)param.get("writerId"));
+		reply.setContent((String)param.get("content"));
+		int ret = replyService.insertReply(reply);
+		return reply.getReplyId();
 	}
 }
