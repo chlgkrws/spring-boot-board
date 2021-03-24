@@ -17,7 +17,7 @@ public class ReplyDTO {
 	private String writerId;
 	private String writerName;
 	private String content;
-	private String like;
+	private String likeCount;
 	private String createBy;
 	private String createTime;
 	private String usesYn;

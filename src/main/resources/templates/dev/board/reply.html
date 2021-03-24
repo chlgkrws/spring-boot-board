@@ -74,7 +74,9 @@
 
 	        var content = document.getElementById("replyContent").value;
 	        console.log(content);
-
+	           //총 댓글 개수 +1
+            var countReply = document.getElementById('replyCount').innerText;
+            console.log(countReply);
 	        //formDate or json form
 	         /*<![CDATA[*/
 	        var boardId  = [[${board.boardId}]];
@@ -137,7 +139,6 @@
 		       +'<div></div>';
 
 
-
 			var lastnode = document.getElementById("replyArea");
 		    lastnode.append(newDiv);
 		}
@@ -189,6 +190,7 @@
 
 	    	month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
 	    	date = date >= 10 ? date : '0' + date;          //day 두자리로 저장
+	    	minutes = minutes >= 10 ? minutes : '0' + minutes;
 	    	return year+"-"+month+"-"+date+" "+hours+":"+minutes;
 	    }
 	</script>
