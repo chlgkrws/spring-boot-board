@@ -83,6 +83,24 @@ public class BoardController {
 			@PathVariable Integer boardId) {
 		String category = "";
 
+		//if쿠키가 같지 않으면 조회수 증가시키기.
+		Cookie[] cookies = request.getCookies();
+		Cookie viewCookie = null;
+		if(cookies != null && cookies.length > 0) {
+			for(int i = 0; i < cookies.length; i++) {
+				//쿠키가 이미 존재하면, 해당 쿠키 저장
+				if(cookies[i].getName().equals("cookie"+boardId)) {
+					viewCookie = cookies[i];
+				}
+			}
+		}
+		//쿠키가 존재하지 않으면 조회수 업데이트 후 쿠키 추가.
+		if(viewCookie == null) {
+			boardService.updateViewCount(boardId);
+			Cookie newCookie = new Cookie("cookie"+boardId, "|"+boardId+"|");
+			response.addCookie(newCookie);
+		}
+
 		//게시물조회
 		BoardDTO board = boardService.selectView(boardId);
 
@@ -90,8 +108,6 @@ public class BoardController {
 		if(board.getCode().equals(Globals.BOARD_COMMUNITY)) category = "커뮤니티";
 		else if(board.getCode().equals(Globals.BOARD_CODING)) category ="코딩";
 
-		//if쿠키가 같지 않으면 조회수 증가시키기.
-		boardService.updateViewCount(boardId);
 
 		//첫 페이지 댓글 조회
 		List<ReplyDTO> reply = replyService.selectReplyList(boardId.toString());
