@@ -44,10 +44,10 @@
 					<!-- REPLY LIST END -->
 
 					<!-- COMMENT 1 - START -->
-					<div class="media" id="mediazz">
-						<!-- <a class="pull-left" href="#">
+					<!-- <div class="media" id="mediazz">
+						<a class="pull-left" href="#">
 							<img class="media-object" src="" alt="">
-						</a> -->
+						</a>
 						<div class="media-body">
 							<h4 class="media-heading">John Doe</h4>
 							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -61,7 +61,7 @@
 							</ul>
 						</div>
 					</div>
-					<div id="mediazz2"></div>
+					<div id="mediazz2"></div> -->
 					<!-- COMMENT 1 - END -->
 				</div>
 			</div>
@@ -74,9 +74,7 @@
 
 	        var content = document.getElementById("replyContent").value;
 	        console.log(content);
-	           //총 댓글 개수 +1
-            var countReply = document.getElementById('replyCount').innerText;
-            console.log(countReply);
+
 	        //formDate or json form
 	         /*<![CDATA[*/
 	        var boardId  = [[${board.boardId}]];
@@ -98,7 +96,6 @@
 			xhr.onreadystatechange = function(){
 				if(xhr.readyState === xhr.DONE){
 					if(xhr.status === 200 || xhr.status === 201){
-						alert(xhr.responseText);
 						createReply(boardId, writerId, content);						//댓글 동적 생성
 						console.log('성공');
 					}else{
@@ -141,6 +138,14 @@
 
 			var lastnode = document.getElementById("replyArea");
 		    lastnode.append(newDiv);
+
+		    //총 댓글 개수 +1
+            var countReply = document.getElementById('replyCount');
+            countReply.innerText = Number(countReply.innerText) + 1;
+
+            //입력창 clear
+            var inputContentArea = document.getElementById('replyContent');
+            inputContentArea.value = '';
 		}
 
 	    function createReplyArea(e){
@@ -188,9 +193,10 @@
 	    	var hours   = today.getHours();             //시
 	    	var minutes = today.getMinutes();            //분
 
-	    	month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
-	    	date = date >= 10 ? date : '0' + date;          //day 두자리로 저장
-	    	minutes = minutes >= 10 ? minutes : '0' + minutes;
+	    	month = month >= 10 ? month : '0' + month;            //month 두자리로 저장
+	    	date = date >= 10 ? date : '0' + date;                //day 두자리로 저장
+	    	minutes = minutes >= 10 ? minutes : '0' + minutes;    //minutes 두자리로 저장
+	    	hours = hours >= 10 ? hours : '0' + hours;
 	    	return year+"-"+month+"-"+date+" "+hours+":"+minutes;
 	    }
 	</script>
