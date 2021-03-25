@@ -49,4 +49,12 @@ public class BoardService {
 		boardMapper.updateViewCount(boardId);
 	}
 
+	/**
+	 * 게시물 삭제
+	 * choi.hak.jun
+	 */
+	public int deleteBoard(int boardId) {
+		return boardMapper.deleteBoard(boardId);
+}
+
 }

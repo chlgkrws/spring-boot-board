@@ -1,5 +1,6 @@
 package com.ipbyhj.dev.board.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -78,7 +79,7 @@ public class BoardController {
 	 * choi.hak.jun
 	 * Start 2021.02.24
 	 */
-	@RequestMapping(value = {"/board/view/{boardId}","/board/view/**"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/board/{boardId}","/board/**"}, method = RequestMethod.GET)
 	public ModelAndView getBoardView(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
 			@PathVariable Integer boardId) {
 		String category = "";
@@ -121,6 +122,22 @@ public class BoardController {
 	/**
 	 * END 2021.03.04
 	 */
+
+	/**
+	 * 게시물 자세히 보기
+	 * choi.hak.jun
+	 * return 1 : 삭제 , 0 : 실패
+	 * Start 2021.03.25
+	 */
+	@RequestMapping(value = {"/board/{boardId}"}, method = RequestMethod.DELETE)
+	public int deleteBoard(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
+			@PathVariable Integer boardId) {
+
+		int result = boardService.deleteBoard(boardId);
+		//삭제 후 홈으로
+		return result;
+	}
+
 
 	//url로 요청할 때는 그 정보를, 비동기 통신으로 가져올 때는 다른 정보를 준다.
 }

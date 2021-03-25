@@ -15,7 +15,7 @@
               ,create_by
               ,create_time
           FROM reply
-         WHERE board_id = #{boardId} AND uses_yn = 1
+         WHERE board_id = #{boardId} AND use_yn = 1
     </select>
 
     <!-- 댓글 리스트 조회 (첫 페이지 로딩 용) -->

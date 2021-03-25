@@ -20,7 +20,7 @@ public class BoardDTO {
 	private String createBy;
 	private String createTime;
 	private String updateTime;
-	private String usesYn;
+	private String useYn;
 }
 
 /*

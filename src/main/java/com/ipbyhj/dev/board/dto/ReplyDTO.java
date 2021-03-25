@@ -20,7 +20,7 @@ public class ReplyDTO {
 	private String likeCount;
 	private String createBy;
 	private String createTime;
-	private String usesYn;
+	private String useYn;
 }
 /*
 	CREATE TABLE `reply` (

@@ -36,4 +36,9 @@ public interface BoardMapper {
 	 */
 	public void updateViewCount(int boardId);
 
+	/**
+	 * 게시물 삭제
+	 * choi.hak.jun
+	 */
+	public int deleteBoard(int boardId);
 }

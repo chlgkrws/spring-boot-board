@@ -36,7 +36,7 @@
 							<tr th:each="boardList : ${boardList}">
 								<th scope="row" class="board-num-item" th:text="${boardList.boardId}"></th>
 								<td class="board-title-item">
-									<a th:href="@{'/board/view/'+ ${boardList.boardId}}" th:text="${boardList.title}"></a>
+									<a th:href="@{'/board/'+ ${boardList.boardId}}" th:text="${boardList.title}"></a>
 								</td>
 								<td class="board-writer-item" th:text="${boardList.writerName}"></td>
 								<td class="board-time-item" th:text="${boardList.createTime}"></td>

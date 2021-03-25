@@ -17,7 +17,7 @@
           FROM board
          WHERE <if test='code != ""'>
                     code = #{code} AND
-               </if>uses_yn = 1
+               </if>use_yn = 1
       ORDER BY board_id desc
          LIMIT #{displayPost}, #{postNum}
     </select>
@@ -54,6 +54,14 @@
         /* 2021.02.25 choi.hak.jun updateViewCount*/
         UPDATE board
            SET view_count = view_count + 1
+         WHERE board_id = #{boardId}
+    </update>
+
+    <!-- 게시물 삭제 -->
+    <update id="deleteBoard">
+        /* 2021.03.25 choi.hak.jun deleteBoard */
+        UPDATE board
+           SET use_yn = 0
          WHERE board_id = #{boardId}
     </update>
 
