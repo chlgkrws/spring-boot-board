@@ -6,7 +6,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12" id="replyArea">
-				    <h3 id="replyCount" th:text="${replySize}"></h3>
+				    <h3 id="replyCount" th:text="'Reply  ' +${replySize}"></h3>
 					<div class="form">
 						<h3 class="pull-left">New Comment</h3>
 						<!-- <button type="submit" class="btn btn-normal pull-right">Submit</button> -->
@@ -25,7 +25,7 @@
 
 					<!-- REPLY LIST START -->
 					<th:block th:each="reply : ${reply}">
-						<div class="media" th:attr="id='media'+${reply.replyId}">
+						<div class="media" th:attr="id=${reply.replyId}">
 							<div class="media-body">
 								<h4 class="media-heading" th:text="${reply.writerId}"></h4>
 								<p th:text="${reply.content}"></p>
@@ -71,9 +71,14 @@
 
         //댓글 삽입(대댓글 포함 xmlHttpRequest 사용)
 	    function clickPostReply(){
-
+	    	//댓글 내용 가져오기
 	        var content = document.getElementById("replyContent").value;
-	        console.log(content);
+
+	    	if(content == null || content == ""){
+	    		alert("내용은 필수 입니다.");
+	    		document.getElementById("replyContent").focus();
+	    		return false;
+	    	}
 
 	        //formDate or json form
 	         /*<![CDATA[*/
@@ -96,7 +101,8 @@
 			xhr.onreadystatechange = function(){
 				if(xhr.readyState === xhr.DONE){
 					if(xhr.status === 200 || xhr.status === 201){
-						createReply(boardId, writerId, content);						//댓글 동적 생성
+						var replyId = xhr.responseText;
+						createReply(boardId, writerId, content, replyId);						//댓글 동적 생성
 						console.log('성공');
 					}else{
 						console.log('실패');
@@ -113,13 +119,13 @@
 	    }
 
 		//댓글 삽입 후 삽입한 내용 화면에 추가
-		function createReply(boardId, writerId, content){
+		function createReply(boardId, writerId, content, replyId){
 			console.log('성공');
 			var newDiv  = document.createElement("div");
 			var newDate = now();
 
 			newDiv.innerHTML=
-				'<div class="media">'
+				'<div class="media" id="'+replyId+'">'
 		       +'    <div class="media-body">'
 		       +'       <h4 class="media-heading">'+writerId+'</h4>'
 		       +'       <p>'+content+'</p>'
@@ -141,7 +147,8 @@
 
 		    //총 댓글 개수 +1
             var countReply = document.getElementById('replyCount');
-            countReply.innerText = Number(countReply.innerText) + 1;
+            countReply.innerText = 'Reply  '+ (Number(countReply.innerText.substring(6)) + 1);  //Reply 0 -> Reply 1로 바꾸기 위한 처리
+
 
             //입력창 clear
             var inputContentArea = document.getElementById('replyContent');
