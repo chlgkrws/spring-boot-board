@@ -1,9 +1,74 @@
 <!DOCTYPE html>
-<html
-    lang="ko"
-    xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorator="layout/default"
->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/default">
+<div layout:fragment="content">
+	<div class="container">
+		<!-- Content here -->
+		<div class="board-view-contents" style="padding-top: 50px; width: 70%; margin: 0px auto;">
+		    <!-- 글 제목란  -->
+			<div class="input-group mb-3">
+			  <div class="input-group-prepend">
+					<select class="custom-select" id="category">
+					  <option selected value="-1">카테고리</option>
+                      <!-- code 값 참조 -->
+					  <option value="5" th:i>community</option>
+					  <option value="6">coding</option>
+					</select>
+			  </div>
+			  <input type="text" class="form-control" name='title' aria-label="Text input with dropdown button" placeholder="글 제목을 입력해주세요" th:value="${board.title}" >
+			</div>
+
+			<div class="form-group col-xs-0 col-sm-0 col-lg-0">
+                <textarea class="form-control" id="content" name="content" placeholder="Your message" required="" th:text="${board.content}">
+                </textarea>
+			</div>
+
+			<!-- 작성 / 수정 버튼 -->
+			<div class="float-right" th:if="${mode} == write"><button type="button" class="btn btn-outline-dark" onclick="createBoard();">작성</button><p></div>
+			<div class="float-right" th:if="${mode} == modify"><button type="button" class="btn btn-outline-dark" onclick="modifyBoard();">수정</button><p></div>
+		</div>
+	</div>
+
+
+    <script th:inline="javascript">
+        //에디터 창 설정
+        CKEDITOR.replace('content',{
+        	height:500
+        });
+
+        CKEDITOR.editorConfig = function(config) {
+        	  config.removePlugins = 'Image';
+        }
+        //보낼 데이터
+        function prepareData(){
+            var formData = new FormData();
+            formData.append('category');
+        }
+
+        //게시물 작성
+        function wirteBoard(){
+        	var formData = prepareData();
+            var xhr = XMLHttpRequest();
+
+            xhr.onreadystatechange = function(){
+            	if(xhr.readyState === xhr.DONE){
+                    if(xhr.status === 200 || xhr.status === 201){
+                        alert('게시물이 작성되었습니다.');
+                        location.href = '/board/all/1';
+                    }else{
+                        alert('게시물 작성에 실패했습니다.');
+                    }
+                }
+            }
+            xhr.open('POST', '/board/create');
+            xhr.send(formData);
+        }
+
+        //게시물 수정
+        function modifyBoard(){
+
+        }
+
+    </script>
+</div>
 
 </html>

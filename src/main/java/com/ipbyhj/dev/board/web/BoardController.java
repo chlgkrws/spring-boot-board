@@ -1,7 +1,8 @@
 package com.ipbyhj.dev.board.web;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;import java.util.List;
+
+import java.util.Map;import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +36,7 @@ public class BoardController {
 	 * choi.hak.jun
 	 * Start 2021.02.10
 	 */
-	@RequestMapping(value = {"/board/{name}/{num}","/board/{name}/**"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/board/{name}/{num}"}, method = RequestMethod.GET)
 	public ModelAndView getBaordPage(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String name, @PathVariable Integer num ) {
 		String code = Globals.BOARD_ALL;											//all : 4, community : 5, coding : 6  --> code값 매핑서 참조
@@ -79,7 +80,7 @@ public class BoardController {
 	 * choi.hak.jun
 	 * Start 2021.02.24
 	 */
-	@RequestMapping(value = {"/board/{boardId}","/board/**"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/board/{boardId}"}, method = RequestMethod.GET)
 	public ModelAndView getBoardView(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
 			@PathVariable Integer boardId) {
 		String category = "";
@@ -124,7 +125,50 @@ public class BoardController {
 	 */
 
 	/**
-	 * 게시물 자세히 보기
+	 * 게시물 작성 페이지
+	 * method : get
+	 * Start 2021.03.28
+	 * @throws Exception
+	 */
+	@RequestMapping(value = {"/mode/{mode}", "/mode/{mode}/{boardId}"}, method = RequestMethod.GET)
+	public ModelAndView getCreateBoardPage(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String mode, @PathVariable(required = false) Integer boardId) throws Exception {
+
+
+		//글 수정/작성 분기
+		if(mode.equals("write")) {
+			Map<String, String> board = new HashMap<>();
+			board.put("title", "");
+			board.put("content", "");
+			modelAndView.addObject("board", board);
+		}else if(mode.equals("modify")){
+			BoardDTO board = boardService.selectView(boardId);
+			modelAndView.addObject("board", board);
+		}else {
+			throw new Exception();
+		}
+		modelAndView.addObject("mode", mode);
+		modelAndView.setViewName("dev/board/write");
+		return modelAndView;
+	}
+
+	/**
+	 * 게시물  작성
+	 * method : post
+	 * choi.hak.jun
+	 * Start 2021.03.28
+	 */
+	@RequestMapping(value = {"/board/{boardId}"}, method = RequestMethod.POST)
+	public int createBoard(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
+			@PathVariable Integer boardId) {
+
+		int result = boardService.deleteBoard(boardId);
+		//
+		return result;
+	}
+
+	/**
+	 * 게시물 삭제
 	 * choi.hak.jun
 	 * return 1 : 삭제 , 0 : 실패
 	 * Start 2021.03.25
@@ -137,6 +181,21 @@ public class BoardController {
 		//삭제 후 홈으로
 		return result;
 	}
+
+	/**
+	 * 게시물 수정
+	 * choi.hak.jun
+	 * return 1 : 삭제 , 0 : 실패
+	 * Start 2021.03.25
+	 */
+	@RequestMapping(value = {"/board/{boardId}"}, method = RequestMethod.PUT)
+	public int updateBoard(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
+			@PathVariable Integer boardId) {
+
+		return 0;
+	}
+	/**
+	 */
 
 
 	//url로 요청할 때는 그 정보를, 비동기 통신으로 가져올 때는 다른 정보를 준다.
