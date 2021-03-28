@@ -8,7 +8,8 @@
 	       <th:block th:each="list : ${list}">
 	       <a th:href="@{'/board/view/'+ ${boardList.boardId}}             restful
 	       <div class="media" th:attr="id='media'+${reply.replyId}"> 속성 추가
-	       
+	       th:value=
+
 	       /*<![CDATA[*/
                 var current = /*[[ ${paging.getPageNo()} ]]*/;
             /*]]>*/
