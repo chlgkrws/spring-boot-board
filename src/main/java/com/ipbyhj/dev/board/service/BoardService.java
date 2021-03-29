@@ -55,6 +55,14 @@ public class BoardService {
 	 */
 	public int deleteBoard(int boardId) {
 		return boardMapper.deleteBoard(boardId);
-}
+	}
+
+	/**
+	 * 게시물 수정
+	 * choi.hak.jun
+	 */
+	public int modifyBoard(int boardId) {
+		return boardMapper.modifyBoard(boardId);
+	}
 
 }

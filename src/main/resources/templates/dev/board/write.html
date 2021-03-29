@@ -8,13 +8,13 @@
 			<div class="input-group mb-3">
 			  <div class="input-group-prepend">
 					<select class="custom-select" id="category">
-					  <option selected value="-1">카테고리</option>
+					  <option value="-1" selected>카테고리</option>
                       <!-- code 값 참조 -->
 					  <option value="5" th:i>community</option>
 					  <option value="6">coding</option>
 					</select>
 			  </div>
-			  <input type="text" class="form-control" name='title' aria-label="Text input with dropdown button" placeholder="글 제목을 입력해주세요" th:value="${board.title}" >
+			  <input type="text" class="form-control" id='title' name='title' aria-label="Text input with dropdown button" placeholder="글 제목을 입력해주세요" th:value="${board.title}" >
 			</div>
 
 			<div class="form-group col-xs-0 col-sm-0 col-lg-0">
@@ -38,15 +38,63 @@
         CKEDITOR.editorConfig = function(config) {
         	  config.removePlugins = 'Image';
         }
+
+
         //보낼 데이터
-        function prepareData(){
+        function prepareData(flag){
+            //data validation
+
+            //title
+            var title = document.getElementById('title').value;
+            console.log(title);
+
+            //content
+            var content = document.getElementById('content').value;
+
+            //select box
+            var s = document.getElementById('category');
+            var category = s.options[s.selectedIndex].value;
+
+            if(title == null || title == ""){
+                alert("제목을 입력해주세요 :)");
+                return false;
+            }
+
+            if(content == null || title == ""){
+                alert("내용을 입력해주세요 :)");
+                return false;
+            }
+
+            if(category == -1 || category == "-1"){
+                alert("카테고리를 정해주세요 :)");
+                s.focus();
+                return false;
+            }
+
             var formData = new FormData();
-            formData.append('category');
+            formData.append('title', title);
+            formData.append('content', content);
+            formData.append('category', category);
+            //수정일 경우 게시물 데이터 추가
+            if(flag == 0){
+	            /*<![CDATA[*/
+	            formData.append('boardId', [[${board.boardId}]]);
+	            formData.append('writerId', [[${board.writerId}]]);
+	            formData.append('writerName', [[${board.writerName}]]);
+	            /*]]>*/
+	        }
+            return formData;
         }
 
         //게시물 작성
         function wirteBoard(){
-        	var formData = prepareData();
+        	//작성 : 1
+        	var flag = 1;
+        	var formData = new prepareData(flag);
+
+        	if(formData == false){
+        		return;
+        	}
             var xhr = XMLHttpRequest();
 
             xhr.onreadystatechange = function(){
@@ -65,7 +113,29 @@
 
         //게시물 수정
         function modifyBoard(){
+        	//수정 : 0
+        	var flag = 0;
+        	var formData = prepareData(flag);
 
+        	if(formData == false){
+                return;
+            }
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState === xhr.DONE){
+                    if(xhr.status === 200 || xhr.status === 201){
+                        alert('게시물이 수정되었습니다.');
+                        location.href = '/board/all/1';
+                    }else{
+                        alert('게시물 수정에 실패했습니다.');
+                    }
+                }
+            }
+            /*<![CDATA[*/
+            xhr.open('PUT', '/board/'+[[${board.boardId}]]);
+            /*]]>*/
+            xhr.send(formData);
         }
 
     </script>

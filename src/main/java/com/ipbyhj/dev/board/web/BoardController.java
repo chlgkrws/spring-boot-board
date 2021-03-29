@@ -158,7 +158,7 @@ public class BoardController {
 	 * choi.hak.jun
 	 * Start 2021.03.28
 	 */
-	@RequestMapping(value = {"/board/{boardId}"}, method = RequestMethod.POST)
+	@RequestMapping(value = {"/board/create"}, method = RequestMethod.POST)
 	public int createBoard(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
 			@PathVariable Integer boardId) {
 
@@ -185,12 +185,16 @@ public class BoardController {
 	/**
 	 * 게시물 수정
 	 * choi.hak.jun
-	 * return 1 : 삭제 , 0 : 실패
+	 * return 1 : 성공 , 0 : 실패
 	 * Start 2021.03.25
 	 */
 	@RequestMapping(value = {"/board/{boardId}"}, method = RequestMethod.PUT)
 	public int updateBoard(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
 			@PathVariable Integer boardId) {
+
+
+		int result = boardService.modifyBoard(boardId);
+		//작성하는거 까지 하면댐
 
 		return 0;
 	}

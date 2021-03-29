@@ -65,5 +65,16 @@
          WHERE board_id = #{boardId}
     </update>
 
+    <!-- 게시물 수정 -->
+    <update id="modifyBoard">
+        /* 2021.03.29 choi.hak.jun modifyBoard */
+        UPDATE board
+           SET title       = #{title},
+               content     = #{content},
+               code        = #{category},
+               update_time = SYSDATE,
+               update_by   = #{writerId}
+         WHERE board_id    = #{boardId}
+    </update>
 
 </mapper>

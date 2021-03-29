@@ -41,4 +41,10 @@ public interface BoardMapper {
 	 * choi.hak.jun
 	 */
 	public int deleteBoard(int boardId);
+
+	/**
+	 * 게시물 수정
+	 * choi.hak.jun
+	 */
+	public int modifyBoard(int boardId);
 }
