@@ -65,6 +65,27 @@
          WHERE board_id = #{boardId}
     </update>
 
+    <insert id="insertBoard">
+        /* 2021.03.29 choi.hak.jun createBoard */
+        INSERT INTO board(
+              title
+            , writer_id
+            , writer_name
+            , content
+            , code
+            , create_by
+        )SELECT
+              #{title}
+            , #{writerId}
+            , user_name
+            , #{content}
+            , #{category}
+            , #{writerId}
+           FROM user
+          WHERE user_id = #{writerId}
+
+    </insert>
+
     <!-- 게시물 수정 -->
     <update id="modifyBoard">
         /* 2021.03.29 choi.hak.jun modifyBoard */
@@ -72,9 +93,11 @@
            SET title       = #{title},
                content     = #{content},
                code        = #{category},
-               update_time = SYSDATE,
+               update_time = now(),
                update_by   = #{writerId}
          WHERE board_id    = #{boardId}
     </update>
+
+
 
 </mapper>

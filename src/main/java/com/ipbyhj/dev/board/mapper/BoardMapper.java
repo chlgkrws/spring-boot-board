@@ -1,6 +1,7 @@
 package com.ipbyhj.dev.board.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -42,9 +43,15 @@ public interface BoardMapper {
 	 */
 	public int deleteBoard(int boardId);
 
+
+	/**
+	 * 게시물 작성
+	 */
+	public int insertBoard(Map<String, Object> param);
+
 	/**
 	 * 게시물 수정
 	 * choi.hak.jun
 	 */
-	public int modifyBoard(int boardId);
+	public int modifyBoard(Map<String, Object> param);
 }

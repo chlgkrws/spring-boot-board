@@ -16,9 +16,7 @@
                 </pre>
 			</div>
 			<hr>
-			<div>
-				<pre th:text="${board.content}">
-            </pre>
+			<div id="content">
 			</div>
 
 			<!-- <div class="row">
@@ -39,6 +37,11 @@
 	</div>
 
 	<script th:inline="javascript">
+        //게시물 컨텐츠 삽입
+        /*<![CDATA[*/
+        document.getElementById('content').innerHTML = [[${board.content}]];
+        /*]]>*/
+
 	    //게시물 삭제
         function deleteBoard(){
         	if(!confirm("정말 게시물을 삭제하시겠습니까?")){

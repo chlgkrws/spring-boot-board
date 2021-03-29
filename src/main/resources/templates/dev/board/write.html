@@ -18,12 +18,12 @@
 			</div>
 
 			<div class="form-group col-xs-0 col-sm-0 col-lg-0">
-                <textarea class="form-control" id="content" name="content" placeholder="Your message" required="" th:text="${board.content}">
+                <textarea class="form-control" id="content" name="content" placeholder="Your message" required="">
                 </textarea>
 			</div>
 
 			<!-- 작성 / 수정 버튼 -->
-			<div class="float-right" th:if="${mode} == write"><button type="button" class="btn btn-outline-dark" onclick="createBoard();">작성</button><p></div>
+			<div class="float-right" th:if="${mode} == write"><button type="button" class="btn btn-outline-dark" onclick="writeBoard();">작성</button><p></div>
 			<div class="float-right" th:if="${mode} == modify"><button type="button" class="btn btn-outline-dark" onclick="modifyBoard();">수정</button><p></div>
 		</div>
 	</div>
@@ -35,9 +35,14 @@
         	height:500
         });
 
+        //이미지 업로드 기능 삭제
         CKEDITOR.editorConfig = function(config) {
         	  config.removePlugins = 'Image';
         }
+
+        //데이터 넣기
+        CKEDITOR.instances.content.setData([[${board.content}]]);
+
 
 
         //보낼 데이터
@@ -49,7 +54,7 @@
             console.log(title);
 
             //content
-            var content = document.getElementById('content').value;
+            var content = CKEDITOR.instances.content.getData();
 
             //select box
             var s = document.getElementById('category');
@@ -75,27 +80,20 @@
             formData.append('title', title);
             formData.append('content', content);
             formData.append('category', category);
-            //수정일 경우 게시물 데이터 추가
-            if(flag == 0){
-	            /*<![CDATA[*/
-	            formData.append('boardId', [[${board.boardId}]]);
-	            formData.append('writerId', [[${board.writerId}]]);
-	            formData.append('writerName', [[${board.writerName}]]);
-	            /*]]>*/
-	        }
+            console.log(formData);
             return formData;
         }
 
         //게시물 작성
-        function wirteBoard(){
+        function writeBoard(){
         	//작성 : 1
         	var flag = 1;
-        	var formData = new prepareData(flag);
+        	var formData = prepareData(flag);
 
         	if(formData == false){
         		return;
         	}
-            var xhr = XMLHttpRequest();
+            var xhr = new XMLHttpRequest();
 
             xhr.onreadystatechange = function(){
             	if(xhr.readyState === xhr.DONE){
@@ -108,6 +106,10 @@
                 }
             }
             xhr.open('POST', '/board/create');
+
+            /*<![CDATA[*/
+            formData.append('writerId', [[${session.userId}]]);
+            /*]]>*/
             xhr.send(formData);
         }
 
@@ -116,7 +118,7 @@
         	//수정 : 0
         	var flag = 0;
         	var formData = prepareData(flag);
-
+            console.log(formData);
         	if(formData == false){
                 return;
             }
@@ -135,6 +137,13 @@
             /*<![CDATA[*/
             xhr.open('PUT', '/board/'+[[${board.boardId}]]);
             /*]]>*/
+
+            /*<![CDATA[*/
+                formData.append('boardId', [[${board.boardId}]]);
+                formData.append('writerId', [[${board.writerId}]]);
+                formData.append('writerName', [[${board.writerName}]]);
+            /*]]>*/
+
             xhr.send(formData);
         }
 

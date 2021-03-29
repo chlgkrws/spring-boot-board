@@ -96,6 +96,7 @@
 			formData.append('boardId',[[${board.boardId}]]);
 			formData.append('writerId',[[${session.userId}]]);
 			formData.append('content',content);
+			console.log(formData);
 			/*]]>*/
 	        var xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function(){

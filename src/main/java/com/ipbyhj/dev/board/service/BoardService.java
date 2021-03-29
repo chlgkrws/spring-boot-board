@@ -1,6 +1,7 @@
 package com.ipbyhj.dev.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,11 +59,18 @@ public class BoardService {
 	}
 
 	/**
+	 * 게시물 작성
+	 */
+	public int insertBoard(Map<String, Object> param) {
+		return boardMapper.insertBoard(param);
+	}
+
+	/**
 	 * 게시물 수정
 	 * choi.hak.jun
 	 */
-	public int modifyBoard(int boardId) {
-		return boardMapper.modifyBoard(boardId);
+	public int modifyBoard(Map<String, Object> param) {
+		return boardMapper.modifyBoard(param);
 	}
 
 }

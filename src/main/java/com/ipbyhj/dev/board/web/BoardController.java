@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -138,8 +139,12 @@ public class BoardController {
 		//글 수정/작성 분기
 		if(mode.equals("write")) {
 			Map<String, String> board = new HashMap<>();
+			//가짜 데이터 넣어주기(타임리프 에러 방지)
 			board.put("title", "");
 			board.put("content", "");
+			board.put("boardId", "");
+			board.put("writerId", "");
+			board.put("writerName", "");
 			modelAndView.addObject("board", board);
 		}else if(mode.equals("modify")){
 			BoardDTO board = boardService.selectView(boardId);
@@ -151,21 +156,27 @@ public class BoardController {
 		modelAndView.setViewName("dev/board/write");
 		return modelAndView;
 	}
+	/**
+	 * END 2021.03.29
+	 */
 
 	/**
 	 * 게시물  작성
 	 * method : post
 	 * choi.hak.jun
+	 * return 1 : 작성 ,  0 : 실패
 	 * Start 2021.03.28
 	 */
 	@RequestMapping(value = {"/board/create"}, method = RequestMethod.POST)
 	public int createBoard(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
-			@PathVariable Integer boardId) {
+			@RequestParam Map<String, Object> param) {
 
-		int result = boardService.deleteBoard(boardId);
-		//
+		int result = boardService.insertBoard(param);
 		return result;
 	}
+	/**
+	 * END 2021.03.29
+	 */
 
 	/**
 	 * 게시물 삭제
@@ -181,6 +192,9 @@ public class BoardController {
 		//삭제 후 홈으로
 		return result;
 	}
+	/**
+	 * END 2021.03.25
+	 */
 
 	/**
 	 * 게시물 수정
@@ -190,15 +204,16 @@ public class BoardController {
 	 */
 	@RequestMapping(value = {"/board/{boardId}"}, method = RequestMethod.PUT)
 	public int updateBoard(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
-			@PathVariable Integer boardId) {
+			@PathVariable Integer boardId, @RequestParam Map<String, Object> param) {
 
-
-		int result = boardService.modifyBoard(boardId);
+		System.out.println(param);
+		int result = boardService.modifyBoard(param);
 		//작성하는거 까지 하면댐
 
-		return 0;
+		return result;
 	}
 	/**
+	 * END 2021.03.25
 	 */
 
 
