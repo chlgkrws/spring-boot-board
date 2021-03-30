@@ -42,4 +42,19 @@ public class ReplyService {
 		return replyMapper.insertReply(replyDTO);
 	}
 
+	/**
+	 * 댓글 삭제
+	 * choi.hak.jun
+	 */
+	public int deleteReply(int replyId) {
+		return replyMapper.deleteReply(replyId);
+	}
+
+	/**
+	 * 댓글 좋아요 증가
+	 */
+	public int updateLike(int replyId) {
+		return replyMapper.updateLike(replyId);
+	}
+
 }

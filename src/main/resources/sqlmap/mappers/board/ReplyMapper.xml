@@ -11,7 +11,7 @@
               ,writer_id
               ,writer_name
               ,content
-              ,like
+              ,like_count
               ,create_by
               ,create_time
           FROM reply
@@ -30,7 +30,7 @@
                ,create_by
                ,DATE_FORMAT(create_time, '%Y-%m-%d %H:%i') AS create_time
           FROM reply
-         WHERE board_id = #{boardId}
+         WHERE board_id = #{boardId} AND use_yn = 1
     </select>
 
     <!-- 댓글 삽입 -->
@@ -59,5 +59,21 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>
+
+    <!-- 댓글 삭제 -->
+    <update id="deleteReply">
+    /* 2021.03.31 choi.hak.jun deleteReply */
+        UPDATE reply
+           SET use_yn = 0
+         WHERE reply_id = #{replyId}
+    </update>
+
+    <!-- 댓글 좋아요 증가ㅡ -->
+    <update id="updateLike">
+    /* 2021.03.31 choi.hak.jun updateLike */
+        UPDATE reply
+           SET like_count = like_count + 1
+         WHERE reply_id = #{replyId}
+    </update>
 
 </mapper>

@@ -32,4 +32,15 @@ public interface ReplyMapper {
 	 */
 	//public int insertReply(Map<String, Object> params);
 	public int insertReply(ReplyDTO replyDTO);
+
+	/**
+	 * 댓글 삭제
+	 * choi.hak.jun
+	 */
+	public int deleteReply(int replyId);
+
+	/**
+	 * 댓글 좋아요 증가
+	 */
+	public int updateLike(int replyId);
 }

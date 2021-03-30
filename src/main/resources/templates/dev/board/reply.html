@@ -30,12 +30,13 @@
 								<h4 class="media-heading" th:text="${reply.writerId}"></h4>
 								<p th:text="${reply.content}"></p>
 								<ul class="list-unstyled list-inline media-detail pull-left">
-									<li><i class="fa fa-thumbs-up"></i>13</li>
+									<li><i class="fa fa-thumbs-up"></i><th:block th:text="${reply.likeCount}"/></li>
 									<li><i class="fa fa-calendar"></i><th:block th:text="${reply.createTime}"/></li>
 								</ul>
 								<ul class="list-unstyled list-inline media-detail pull-right">
-									<li class=""><a href="">Like</a></li>
-									<li class=""><a href="#" onclick="return createReplyArea(this);">Reply</a></li>
+									<li class=""><a href="" onclick="return updateLikeCount(this);">Like</a></li>
+									<li class=""><a href="" onclick="return createReplyArea(this);">Reply</a></li>
+									<li class="" th:if="${session.userId == board.writerId}"><a href="" onclick="return deleteReply(this);">Delete</a></li>
 								</ul>
 							</div>
 						</div>
@@ -131,12 +132,13 @@
 		       +'       <h4 class="media-heading">'+writerId+'</h4>'
 		       +'       <p>'+content+'</p>'
 		       +'       <ul class="list-unstyled list-inline media-detail pull-left">'
-		       +'           <li><i class="fa fa-thumbs-up"></i>13</li>'
+		       +'           <li><i class="fa fa-thumbs-up"></i><th:block th:text="${reply.likeCount}"/></li>'
 		       +'           <li><i class="fa fa-calendar"></i>'+newDate+'</li>'
 		       +'       </ul>'
 		       +'       <ul class="list-unstyled list-inline media-detail pull-right">'
 		       +'           <li class=""><a href="">Like</a></li>'
 		       +'           <li class=""><a href="#" onclick="return createReplyArea(this);">Reply</a></li>'
+		       +'           <li class="" th:if="${session.userId == board.writerId}"><a href="#" onclick="return deleteReply(this);">Delete</a></li>'
 		       +'       </ul>'
 		       +'   </div>'
 		       +'</div>'
@@ -156,10 +158,11 @@
             inputContentArea.value = '';
 		}
 
+		//대댓글 입력창 추가
 	    function createReplyArea(e){
 	    	//이미 생성 되어있는 대댓글 입력창을 삭제.
 	    	if(document.getElementById("newDiv") != null){
-	    	   	DeleteReplyArea();
+	    	   	deleteReplyArea();
 	    	}
 	    	//대댓글 창 생성
 	    	var newDiv = document.createElement("div");
@@ -185,12 +188,74 @@
             return false;
 	    }
 
-	    function DeleteReplyArea(){
+		//대댓글 창 삭제
+	    function deleteReplyArea(){
 	    	//대댓글 창 삭제
 	        var newDiv = document.getElementById("newDiv");
 	        newDiv.remove();
 	    }
 
+		//댓글 삭제 요청
+		function deleteReply(e){
+			if(!confirm("댓글을 삭제하시겠습니까?")){
+				return;
+			}
+
+			//총 댓글 개수 +1
+            var countReply = document.getElementById('replyCount');
+            countReply.innerText = 'Reply  '+ (Number(countReply.innerText.substring(6)) - 1);  //Reply 1 -> Reply 0로 바꾸기 위한 처리
+
+
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function(){
+                if(xhr.readyState === xhr.DONE){
+                    if(xhr.status === 200 || xhr.status === 201){
+                        if(xhr.responseText == "0"){
+                        	alert("댓글 삭제에 실패했습니다.");
+                        }else{
+                        	//댓글 삭제
+                            document.getElementById(replyId).remove();
+                        }
+                    }else{
+                        console.log('삭제 실패');
+                    }
+                }
+            };
+            //replyId값
+            var replyId = e.parentNode.parentNode.parentNode.parentNode.id;
+
+            xhr.open('DELETE', '/reply/'+replyId);
+            xhr.send();
+		}
+
+		// 댓글 좋아요 증가
+		function updateLikeCount(e){
+			var replyId = e.parentNode.parentNode.parentNode.parentNode.id;
+
+		    //총 댓글 개수 +1
+            //var countReply = document.getElementById(replyId);
+            //countReply.innerText = 'Reply  '+ (Number(countReply.innerText.substring(6)) - 1);  //Reply 1 -> Reply 0로 바꾸기 위한 처리
+
+
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange =  function(){
+                if(xhr.readyState === xhr.DONE){
+                    if(xhr.status === 200 || xhr.status === 201){
+                    	console.log('댓글 좋아요 성공');
+                    }else{
+                        console.log('댓글 좋아요 실패');
+                    }
+                }
+            };
+            formData = new FormData();
+            formData.append('replyId', replyId);
+            xhr.open('POST', '/reply/sub/like');
+            xhr.send(formData);
+            return false;
+		}
+
+
+		//댓글 데이트 포맷
 	    function now(){
 	    	var today = new Date();
 
