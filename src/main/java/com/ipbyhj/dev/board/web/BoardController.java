@@ -206,9 +206,7 @@ public class BoardController {
 	public int updateBoard(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
 			@PathVariable Integer boardId, @RequestParam Map<String, Object> param) {
 
-		System.out.println(param);
 		int result = boardService.modifyBoard(param);
-		//작성하는거 까지 하면댐
 
 		return result;
 	}

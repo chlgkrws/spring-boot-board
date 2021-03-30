@@ -98,10 +98,14 @@
             xhr.onreadystatechange = function(){
             	if(xhr.readyState === xhr.DONE){
                     if(xhr.status === 200 || xhr.status === 201){
-                        alert('게시물이 작성되었습니다.');
+                    	if(xhr.responseText == "1"){
+                            alert('게시물이 작성되었습니다.');
+                    	}else{
+                    		alert('게시물 작성에 실패했습니다.(m)');
+                    	}
                         location.href = '/board/all/1';
                     }else{
-                        alert('게시물 작성에 실패했습니다.');
+                        alert('게시물 작성에 실패했습니다.(c)');
                     }
                 }
             }
