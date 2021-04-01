@@ -51,8 +51,9 @@ public class ReplyController {
 		reply.setBoardId((String)param.get("boardId"));
 		reply.setWriterId((String)param.get("writerId"));
 		reply.setContent((String)param.get("content"));
+		reply.setParentRplId((String)param.getOrDefault("parentRplId", null));
 		int ret = replyService.insertReply(reply);
-		return reply.getReplyId();
+		return ret != 0 ? reply.getReplyId() : "0" ;
 	}
 	/**
 	 * END 2021.03.08
@@ -95,7 +96,7 @@ public class ReplyController {
 		}
 		//쿠키가 존재하지 않으면 좋아요 업데이트 후 쿠키 추가
 		if(viewCookie == null) {
-			 replyService.updateLike(replyId);
+			result = replyService.updateLike(replyId);
 			Cookie newCookie = new Cookie("cookie"+replyId, "|"+replyId+"|");
 			response.addCookie(newCookie);
 			System.out.println("add cookie");
