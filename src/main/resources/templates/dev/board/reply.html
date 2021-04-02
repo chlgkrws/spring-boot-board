@@ -140,13 +140,12 @@
 		       +'       </ul>'
 		       +'       <ul class="list-unstyled list-inline media-detail pull-right">'
 		       +'           <li class=""><a href="" onclick="return updateLikeCount(this);">Like</a></li>'
-		       +'           <li class=""><a href="" onclick="return createReplyArea(this);">Reply</a></li>'
+		       +'           <li class=""><a href="javascript:void(0);" onclick="return createReplyArea(this);">Reply</a></li>'
 		       +'           <li class="" th:if="${session.userId == board.writerId}"><a href="#" onclick="return deleteReply(this);">Delete</a></li>'
 		       +'       </ul>'
 		       +'   </div>'
 		       +'</div>'
-		       +'<div></div>';
-
+		       +'<div id="mediaReply'+replyId+'"></div>';
 
 			var lastnode = document.getElementById("replyArea");
 		    lastnode.append(newDiv);
@@ -193,6 +192,11 @@
 
 		//대댓글 Post
 		function createReplyReply(e){
+			/*<![CDATA[*/
+			var writerId = [[${session.userId}]];
+			var boardId = [[${board.boardId}]];
+			/*]]>*/
+
 		    //insert/ boardId, parent_rpl_id, writer_id content,
 			//대댓글 내용 가져오기
             var content = document.getElementById("replyReplyContent").value;
@@ -209,8 +213,8 @@
             //data set
             /*<![CDATA[*/
             var formData = new FormData();
-            formData.append('boardId',[[${board.boardId}]]);
-            formData.append('writerId',[[${session.userId}]]);
+            formData.append('boardId', boardId);
+            formData.append('writerId',writerId);
             formData.append('content',content);
             formData.append('parentRplId',parentRplId);
             console.log(formData);
@@ -223,10 +227,11 @@
             xhr.onreadystatechange = function(){
                 if(xhr.readyState === xhr.DONE){
                     if(xhr.status === 200 || xhr.status === 201){
-                    	if(responseText == 0 || responseText == "0"){
+                    	if(xhr.responseText == 0 || xhr.responseText == "0"){
                     		alert("작성하지 못했습니다.");
                     	}else{
-                    		createViewReplyReply(responseText, parentRplId);
+                    		//replyId, prentRplId, writerId, content,
+                    		createViewReplyReply(xhr.responseText, parentRplId, writerId, content);
                     		//대댓글 입력(해야댐) 어떻게 처리할지 고민ㄱㄱ
                     	}
 
@@ -244,7 +249,7 @@
 
 
 		//대댓글 화면 삽입
-		public createViewReplyReply(replyId, parentRplId){
+		function createViewReplyReply(replyId, parentRplId, writerId, content){
 			var newDiv  = document.createElement("div");
             //현재 시간 가져오기
             var newDate = now();
@@ -266,6 +271,10 @@
                +'</div>'
                +'<div></div>';
 
+               //삽입할 대댓글 공간
+               var replyReplyArea = document.getElementById('mediaReply'+parentRplId);
+               console.log(replyReplyArea);
+               //대댓글 삽입 및 대댓글 입력창 삭제
 
 		}
 
