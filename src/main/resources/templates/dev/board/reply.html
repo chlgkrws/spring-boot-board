@@ -191,7 +191,7 @@
             return false;
 	    }
 
-		//대댓글 삽입
+		//대댓글 Post
 		function createReplyReply(e){
 		    //insert/ boardId, parent_rpl_id, writer_id content,
 			//대댓글 내용 가져오기
@@ -226,6 +226,7 @@
                     	if(responseText == 0 || responseText == "0"){
                     		alert("작성하지 못했습니다.");
                     	}else{
+                    		createViewReplyReply(responseText, parentRplId);
                     		//대댓글 입력(해야댐) 어떻게 처리할지 고민ㄱㄱ
                     	}
 
@@ -238,6 +239,34 @@
             xhr.open('POST', '/reply/'+[[${board.boardId}]]);           //test 로직
             /*]]>*/
             xhr.send(formData);
+		}
+
+
+
+		//대댓글 화면 삽입
+		public createViewReplyReply(replyId, parentRplId){
+			var newDiv  = document.createElement("div");
+            //현재 시간 가져오기
+            var newDate = now();
+
+            newDiv.innerHTML=
+                '<div class="media" id="'+replyId+'">'
+               +'    <div class="media-body">'
+               +'       <h4 class="media-heading">'+writerId+'</h4>'
+               +'       <p>'+content+'</p>'
+               +'       <ul class="list-unstyled list-inline media-detail pull-left">'
+               +'           <li><i class="fa fa-thumbs-up"></i>0</li>'
+               +'           <li><i class="fa fa-calendar"></i>'+newDate+'</li>'
+               +'       </ul>'
+               +'       <ul class="list-unstyled list-inline media-detail pull-right">'
+               +'           <li class=""><a href="" onclick="return updateLikeCount(this);">Like</a></li>'
+               +'           <li class="" th:if="${session.userId == board.writerId}"><a href="#" onclick="return deleteReply(this);">Delete</a></li>'
+               +'       </ul>'
+               +'   </div>'
+               +'</div>'
+               +'<div></div>';
+
+
 		}
 
 		//대댓글 창 삭제
