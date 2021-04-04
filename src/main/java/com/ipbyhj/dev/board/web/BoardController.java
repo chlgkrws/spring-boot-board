@@ -114,6 +114,7 @@ public class BoardController {
 
 		//첫 페이지 댓글 조회
 		List<ReplyDTO> reply = replyService.selectReplyList(boardId.toString());
+		
 		modelAndView.addObject("category", category);			//게시물 카테고리
 		modelAndView.addObject("board", board);					//게시물 정보
 		modelAndView.addObject("reply",reply);					//댓글 정보
