@@ -40,7 +40,7 @@
 								<ul class="list-unstyled list-inline media-detail pull-right">
 									<li class=""><a href="" onclick="return updateLikeCount(this);">Like</a></li>
 									<li class="" th:if="${reply.parentRplId == null}"><a href="" onclick="return createReplyArea(this);">Reply</a></li>
-									<li class="" th:if="${session.userId == board.writerId}"><a href="" onclick="return deleteReply(this);">Delete</a></li>
+									<li class="" th:if="${session.userId == reply.writerId}"><a href="" onclick="return deleteReply(this);">Delete</a></li>
 								</ul>
 							</div>
 						</div>
@@ -147,10 +147,11 @@
 		       +'       <ul class="list-unstyled list-inline media-detail pull-right">'
 		       +'           <li class=""><a href="" onclick="return updateLikeCount(this);">Like</a></li>'
 		       +'           <li class=""><a href="" onclick="return createReplyArea(this);">Reply</a></li>'
-		       +'           <li class="" th:if="${session.userId == board.writerId}"><a href="#" onclick="return deleteReply(this);">Delete</a></li>'
+		       +'           <li class=""><a href="" onclick="return deleteReply(this);">Delete</a></li>'
 		       +'       </ul>'
 		       +'   </div>';
 
+		    //reply Area 마지막에 댓글 추가
 			var lastnode = document.getElementById("replyEnd");
 		    lastnode.before(replyArea);
 		    lastnode.before(newDiv);
@@ -292,7 +293,7 @@
                +'       </ul>'
                +'       <ul class="list-unstyled list-inline media-detail pull-right">'
                +'           <li class=""><a href="" onclick="return updateLikeCount(this);">Like</a></li>'
-               +'           <li class="" th:if="${session.userId == board.writerId}"><a href="#" onclick="return deleteReply(this);">Delete</a></li>'
+               +'           <li class=""><a href="#" onclick="return deleteReply(this);">Delete</a></li>'
                +'       </ul>'
                +'   </div>';
 
