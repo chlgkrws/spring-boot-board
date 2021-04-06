@@ -32,15 +32,15 @@
 						<a class="pull-left" href="" th:if="${reply.parentRplId != null}"><img class="media-object" src="/assets/img/reply.png" alt=""></a>
 							<div class="media-body">
 								<h4 class="media-heading" th:text="${reply.writerId}"></h4>
-								<p th:text="${reply.content}"></p>
+								<p th:attr="id='content'+${reply.replyId}" th:text="${reply.content}"></p>
 								<ul class="list-unstyled list-inline media-detail pull-left">
 									<li><i class="fa fa-thumbs-up"></i><th:block th:text="${reply.likeCount}"/></li>
 									<li><i class="fa fa-calendar"></i><th:block th:text="${reply.createTime}"/></li>
 								</ul>
 								<ul class="list-unstyled list-inline media-detail pull-right">
-									<li class=""><a href="" onclick="return updateLikeCount(this);">Like</a></li>
-									<li class="" th:if="${reply.parentRplId == null}"><a href="" onclick="return createReplyArea(this);">Reply</a></li>
-									<li class="" th:if="${session.userId == reply.writerId}"><a href="" onclick="return deleteReply(this);">Delete</a></li>
+									<li class="text-align-right"><a href="" onclick="return updateLikeCount(this);">Like</a></li>
+									<li class="text-align-right" th:if="${reply.parentRplId == null}"><a href="" onclick="return createReplyArea(this);">Reply</a></li>
+									<li class="text-align-right" th:if="${session.userId == reply.writerId}"><a href="" onclick="return updateReply(this);">Update</a>/<a href="" onclick="return deleteReply(this);">Delete</a></li>
 								</ul>
 							</div>
 						</div>
@@ -139,15 +139,15 @@
 			newDiv.innerHTML=
 		       '    <div class="media-body">'
 		       +'       <h4 class="media-heading">'+writerId+'</h4>'
-		       +'       <p>'+content+'</p>'
+		       +'       <p id="content'+replyId+'">'+content+'</p>'
 		       +'       <ul class="list-unstyled list-inline media-detail pull-left">'
 		       +'           <li><i class="fa fa-thumbs-up"></i>0</li>'
 		       +'           <li><i class="fa fa-calendar"></i>'+newDate+'</li>'
 		       +'       </ul>'
 		       +'       <ul class="list-unstyled list-inline media-detail pull-right">'
-		       +'           <li class=""><a href="" onclick="return updateLikeCount(this);">Like</a></li>'
-		       +'           <li class=""><a href="" onclick="return createReplyArea(this);">Reply</a></li>'
-		       +'           <li class=""><a href="" onclick="return deleteReply(this);">Delete</a></li>'
+		       +'           <li class="text-align-right"><a href="" onclick="return updateLikeCount(this);">Like</a></li>'
+		       +'           <li class="text-align-right"><a href="" onclick="return createReplyArea(this);">Reply</a></li>'
+		       +'           <li class="text-align-right" th:if="${session.userId == reply.writerId}"><a href="" onclick="return updateReply(this);">Update</a>/<a href="" onclick="return deleteReply(this);">Delete</a></li>'
 		       +'       </ul>'
 		       +'   </div>';
 
@@ -260,7 +260,6 @@
                     		createViewReplyReply(xhr.responseText, parentRplId, writerId, content);
                     		//대댓글 입력(해야댐) 어떻게 처리할지 고민ㄱㄱ
                     	}
-
                     }else{
                         console.log('실패');
                     }
@@ -286,14 +285,14 @@
                '<a class="pull-left" href=""><img class="media-object" src="/assets/img/reply.png" alt=""></a>'
                +'    <div class="media-body">'
                +'       <h4 class="media-heading">'+writerId+'</h4>'
-               +'       <p>'+content+'</p>'
+               +'       <p id="content'+replyId+'">'+content+'</p>'
                +'       <ul class="list-unstyled list-inline media-detail pull-left">'
                +'           <li><i class="fa fa-thumbs-up"></i>0</li>'
                +'           <li><i class="fa fa-calendar"></i>'+newDate+'</li>'
                +'       </ul>'
                +'       <ul class="list-unstyled list-inline media-detail pull-right">'
-               +'           <li class=""><a href="" onclick="return updateLikeCount(this);">Like</a></li>'
-               +'           <li class=""><a href="#" onclick="return deleteReply(this);">Delete</a></li>'
+               +'           <li class="text-align-right"><a href="" onclick="return updateLikeCount(this);">Like</a></li>'
+               +'           <li class="text-align-right"><a href="" onclick="return updateReply(this);">Update</a>/<a href="" onclick="return deleteReply(this);">Delete</a></li>'
                +'       </ul>'
                +'   </div>';
 
@@ -302,6 +301,7 @@
                console.log(replyReplyArea);
                //대댓글 삽입 및 대댓글 입력창 삭제
                replyReplyArea.before(newDiv);
+               replyReplyArea.remove();
 
 		}
 
@@ -312,10 +312,113 @@
 	        newDiv.remove();
 	    }
 
+		//댓글 수정 입력창
+		function updateReply(e){
+			//이미 생성 되어있는 대댓글 입력창을 삭제.
+            if(document.getElementById("newDiv") != null){
+                deleteReplyArea();
+            }
+			//댓글 id값 찾기
+			var replyId = e.parentNode.parentNode.parentNode.parentNode.id;
+
+			//댓글 데이터
+			var content = document.getElementById("content"+replyId).innerText;
+
+			//댓글 수정 입력창
+			var newDiv = document.createElement("div");
+            newDiv.setAttribute("id","newDiv");
+            newDiv.setAttribute("class","form");
+            newDiv.innerHTML=
+                    '<h3 class="pull-left"></h3>'
+                    +'<fieldset>'
+                    +'    <div class="row" id="submit'+replyId+'">'
+                    +'        <div class="form-group col-xs-12 col-sm-9 col-lg-10">'
+                    +'            <textarea class="form-control" id="replyReplyContent" name="content" placeholder="Your message" required="">'+content+'</textarea>'
+                    +'       </div>'
+                    +'      <button type="button" onclick="postUpdateReply(this);" class="btn btn-normal pull-right">Submit</button>'
+                    +'  </div>'
+                    +'</fieldset>';
+
+            //댓글 자리에 수정 입력창 삽입 후 댓글 삭제
+            var replyArea = document.getElementById(replyId);
+            replyArea.before(newDiv);
+            replyArea.remove()
+
+            return false;
+		}
+
+		//댓글 수정내용 POST
+		function postUpdateReply(e){
+			//댓글 id값 찾기
+			var replyId = e.parentNode.id.replace(/[^0-9]/g,'');
+
+			//댓글 내용
+            var content = document.getElementById('replyReplyContent').value;
+            alert(content);
+
+			//data set
+            var formData = new FormData();
+            formData.append('replyId', replyId);
+            formData.append('content',content);
+            /*<![CDATA[*/
+            formData.append('writerId',[[${session.userId}]]);
+            /*]]>*/
+
+            //데이터 삽입
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState === xhr.DONE){
+                    if(xhr.status === 200 || xhr.status === 201){
+                        if(xhr.responseText == 0 || xhr.responseText == "0"){
+                            alert("작성하지 못했습니다.");
+                        }else{
+                            alert("수정성공")
+                            //여기 할차례 화면에 데이터 넣어야함
+                        }
+                    }else{
+                        console.log('실패');
+                    }
+                }
+            };
+            /*<![CDATA[*/
+            xhr.open('PUT', '/reply/'+replyId);           //test 로직
+            /*]]>*/
+            xhr.send(formData);
+		}
+
+
+		//댓글 수정내용 화면 입력
+        function createViewUpdateReply(){
+        	//댓글 수정창
+            var newDiv  = document.createElement("div");
+            newDiv.setAttribute("id",replyId);
+            newDiv.setAttribute("class","media");
+            //현재 시간 가져오기
+            var newDate = now();
+
+            /*<![CDATA[*/
+            newDiv.innerHTML=
+               '<a class="pull-left" href=""><img class="media-object" src="/assets/img/reply.png" alt=""></a>'
+               +'    <div class="media-body">'
+               +'       <h4 class="media-heading">'+[[${session.userId}]]+'</h4>'
+               +'       <p id="content'+replyId+'">'+content+'</p>'
+               +'       <ul class="list-unstyled list-inline media-detail pull-left">'
+               +'           <li><i class="fa fa-thumbs-up"></i>0</li>'
+               +'           <li><i class="fa fa-calendar"></i>'+newDate+'</li>'
+               +'       </ul>'
+               +'       <ul class="list-unstyled list-inline media-detail pull-right">'
+               +'           <li class="text-align-right"><a href="" onclick="return updateLikeCount(this);">Like</a></li>'
+               +'           <li class="text-align-right"><a href="" onclick="return updateReply(this);">Update</a>/<a href="" onclick="return deleteReply(this);">Delete</a></li>'
+               +'       </ul>'
+               +'   </div>';
+            /*]]>*/
+
+
+		}
 		//댓글 삭제 요청
 		function deleteReply(e){
 			if(!confirm("댓글을 삭제하시겠습니까?")){
-				return;
+				return false;
 			}
 
 			//총 댓글 개수 +1

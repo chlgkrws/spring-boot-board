@@ -34,6 +34,12 @@ public interface ReplyMapper {
 	public int insertReply(ReplyDTO replyDTO);
 
 	/**
+	 * 댓글 수정
+	 * choi.hak.jun
+	 */
+	public int updateReply(String replyId, String writerId, String content);
+
+	/**
 	 * 댓글 삭제
 	 * choi.hak.jun
 	 */

@@ -60,6 +60,20 @@ public class ReplyController {
 	 */
 
 	/**
+	 * 댓글 수정
+	 * return 1 : 성공, 0 : 실패
+	 * choi.hak.jun
+	 * Start 2021.04.06
+	 */
+	@RequestMapping(value="/reply/{reply}", method = RequestMethod.PUT)
+	public int updateReply(HttpServletRequest request, @RequestParam Map<String, Object> param) {
+		String replyId = (String) param.get("replyId");
+		String writerId = (String) param.get("writerId");
+		String content = (String) param.get("content");
+		return replyService.updateReply(replyId, writerId, content);
+	}
+
+	/**
 	 * 댓글 삭제
 	 * @return 삭제한 댓글 pk : 성공,  0 : 실패
 	 * choi.hak.jun
@@ -73,6 +87,9 @@ public class ReplyController {
 
 		return result != 0 ? replyId : 0;
 	}
+	/**
+	 * END 2021.03.08
+	 */
 
 	/**
 	 * 댓글 좋아요 증가
@@ -102,7 +119,9 @@ public class ReplyController {
 			System.out.println("add cookie");
 		}
 
-
 		return result != 0 ? replyId : 0;
 	}
+	/**
+	 * END 2021.03.30
+	 */
 }

@@ -236,7 +236,7 @@
 #comments .media-detail li {
     color:#AAAAAA;
     font-size:12px;
-    padding-right: 10px;
+    padding-right: 0px;
     font-weight:600;
 }
 
@@ -252,6 +252,11 @@
     color:#666666;
     font-size:15px;
     margin-right:10px;
+}
+
+.text-align-right{
+    text-align: right;
+    padding-right : 0px;
 }
 
 /*END REPLY CSS*/
