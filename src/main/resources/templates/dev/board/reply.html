@@ -3,6 +3,8 @@
 <div th:fragment="replyFragment">
 
 	<section class="content-item" id="comments">
+	<!-- 좋아요 버튼 -->
+	<a href="" onclick="likeBoard();"><img src="/assets/img/like.png" width="30" style="margin-top: 10px;" id="likeBoard"/></a>
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12" id="replyArea">
@@ -324,6 +326,15 @@
 			//댓글 데이터
 			var content = document.getElementById("content"+replyId).innerText;
 
+			//좋아요 개수
+			var like = e.parentNode.parentNode.previousSibling.previousSibling.firstChild.nextSibling.innerText;
+
+			//댓글/대댓글 판별 1 - 댓글   2 - 대댓글
+			var mainOrSub = document.getElementById(replyId).childElementCount;
+
+			//게시물 작성 시각
+            var date = e.parentNode.parentNode.previousSibling.previousSibling.firstChild.nextSibling.nextSibling.nextElementSibling.innerText;
+
 			//댓글 수정 입력창
 			var newDiv = document.createElement("div");
             newDiv.setAttribute("id","newDiv");
@@ -335,14 +346,15 @@
                     +'        <div class="form-group col-xs-12 col-sm-9 col-lg-10">'
                     +'            <textarea class="form-control" id="replyReplyContent" name="content" placeholder="Your message" required="">'+content+'</textarea>'
                     +'       </div>'
-                    +'      <button type="button" onclick="postUpdateReply(this);" class="btn btn-normal pull-right">Submit</button>'
+                    +'      <input type="hidden" id="date" value="'+date+'" />'
+                    +'      <button type="button" onclick="postUpdateReply(this);" class="btn btn-normal pull-right" id="'+mainOrSub+"@"+like+'">Submit</button>'
                     +'  </div>'
                     +'</fieldset>';
 
             //댓글 자리에 수정 입력창 삽입 후 댓글 삭제
             var replyArea = document.getElementById(replyId);
             replyArea.before(newDiv);
-            replyArea.remove()
+            replyArea.remove();
 
             return false;
 		}
@@ -354,7 +366,12 @@
 
 			//댓글 내용
             var content = document.getElementById('replyReplyContent').value;
-            alert(content);
+
+            //좋아요 개수
+            var like = e.id.split("@")[0];
+
+            //댓글/대댓글 판별
+            var mainOrSub = e.id.split("@")[1];
 
 			//data set
             var formData = new FormData();
@@ -372,8 +389,8 @@
                         if(xhr.responseText == 0 || xhr.responseText == "0"){
                             alert("작성하지 못했습니다.");
                         }else{
-                            alert("수정성공")
-                            //여기 할차례 화면에 데이터 넣어야함
+                        	//화면에 데이터 삽입
+                            createViewUpdateReply(replyId, content, like, mainOrSub);
                         }
                     }else{
                         console.log('실패');
@@ -388,23 +405,27 @@
 
 
 		//댓글 수정내용 화면 입력
-        function createViewUpdateReply(){
+        function createViewUpdateReply(replyId, content, like, mainOrSub){
         	//댓글 수정창
             var newDiv  = document.createElement("div");
             newDiv.setAttribute("id",replyId);
             newDiv.setAttribute("class","media");
-            //현재 시간 가져오기
-            var newDate = now();
 
+            //게시물 작성시간 가져오기
+            var date = document.getElementById('date').value;
+
+            //대댓글이면 ->표시 추가
+            if(mainOrSub == 2 || mainOrSub == "2"){
+            	newDiv.innerHTML += '<a class="pull-left" href=""><img class="media-object" src="/assets/img/reply.png" alt=""></a>';
+            }
             /*<![CDATA[*/
-            newDiv.innerHTML=
-               '<a class="pull-left" href=""><img class="media-object" src="/assets/img/reply.png" alt=""></a>'
-               +'    <div class="media-body">'
+            newDiv.innerHTML +=
+            	'    <div class="media-body">'
                +'       <h4 class="media-heading">'+[[${session.userId}]]+'</h4>'
                +'       <p id="content'+replyId+'">'+content+'</p>'
                +'       <ul class="list-unstyled list-inline media-detail pull-left">'
-               +'           <li><i class="fa fa-thumbs-up"></i>0</li>'
-               +'           <li><i class="fa fa-calendar"></i>'+newDate+'</li>'
+               +'           <li><i class="fa fa-thumbs-up"></i>'+like+'</li>'
+               +'           <li><i class="fa fa-calendar"></i>'+date+'</li>'
                +'       </ul>'
                +'       <ul class="list-unstyled list-inline media-detail pull-right">'
                +'           <li class="text-align-right"><a href="" onclick="return updateLikeCount(this);">Like</a></li>'
@@ -412,6 +433,11 @@
                +'       </ul>'
                +'   </div>';
             /*]]>*/
+
+            //댓글수정 입력창 전에 newDiv 삽입 후 댓글수정 입력창 삭제
+            var updateReplyArea = document.getElementById('newDiv');
+            updateReplyArea.before(newDiv);
+            updateReplyArea.remove();
 
 
 		}
