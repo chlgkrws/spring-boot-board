@@ -46,12 +46,13 @@ public class ReplyController {
 	@RequestMapping(value = "/reply/{boardId}", method = RequestMethod.POST )
 	public String insertReply(HttpServletRequest request, @RequestParam Map<String, Object> param){
 
+		ReplyDTO reply = ReplyDTO.builder()
+				.boardId((String)param.get("boardId"))
+				.writerId((String)param.get("writerId"))
+				.content((String)param.get("content"))
+				.parentRplId((String)param.getOrDefault("parentRplId", null))
+				.build();
 
-		ReplyDTO reply = new ReplyDTO();
-		reply.setBoardId((String)param.get("boardId"));
-		reply.setWriterId((String)param.get("writerId"));
-		reply.setContent((String)param.get("content"));
-		reply.setParentRplId((String)param.getOrDefault("parentRplId", null));
 		int ret = replyService.insertReply(reply);
 		return ret != 0 ? reply.getReplyId() : "0" ;
 	}
@@ -84,7 +85,6 @@ public class ReplyController {
 
 		int result = replyService.deleteReply(replyId);
 
-
 		return result != 0 ? replyId : 0;
 	}
 	/**
@@ -116,7 +116,6 @@ public class ReplyController {
 			result = replyService.updateLike(replyId);
 			Cookie newCookie = new Cookie("cookie"+replyId, "|"+replyId+"|");
 			response.addCookie(newCookie);
-			System.out.println("add cookie");
 		}
 
 		return result != 0 ? replyId : 0;
