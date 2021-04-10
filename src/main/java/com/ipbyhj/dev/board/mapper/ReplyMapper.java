@@ -25,7 +25,6 @@ public interface ReplyMapper {
 	 */
 	public List<ReplyDTO> selectReplyList(@Param("boardId")String boardId);
 
-
 	/**
 	 * 댓글 삽입
 	 * choi.hak.jun
@@ -47,6 +46,8 @@ public interface ReplyMapper {
 
 	/**
 	 * 댓글 좋아요 증가
+	 * choi.hak.jun
+	 *
 	 */
 	public int updateLike(int replyId);
 }
