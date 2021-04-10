@@ -36,5 +36,7 @@ public class SampleSpringBootTest {
                 .andExpect(content().string("hello saelobi"))
                 .andDo(print());
     }
+    
+    
 }
 

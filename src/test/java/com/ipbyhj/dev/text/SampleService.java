@@ -9,5 +9,3 @@ public class SampleService {
         return "saelobi";
     }
 }
-
-
