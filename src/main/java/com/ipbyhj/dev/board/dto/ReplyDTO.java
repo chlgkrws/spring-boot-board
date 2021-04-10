@@ -1,16 +1,15 @@
 package com.ipbyhj.dev.board.dto;
 
-import java.sql.Timestamp;
-
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Setter
 @Getter
 @ToString
-@Builder
+@NoArgsConstructor
 public class ReplyDTO {
 
 	private String replyId;
@@ -23,6 +22,23 @@ public class ReplyDTO {
 	private String createBy;
 	private String createTime;
 	private String useYn;
+
+	@Builder
+	public ReplyDTO(String replyId, String boardId, String parentRplId, String writerId, String writerName,
+			String content, String likeCount, String createBy, String createTime, String useYn) {
+		super();
+		this.replyId = replyId;
+		this.boardId = boardId;
+		this.parentRplId = parentRplId;
+		this.writerId = writerId;
+		this.writerName = writerName;
+		this.content = content;
+		this.likeCount = likeCount;
+		this.createBy = createBy;
+		this.createTime = createTime;
+		this.useYn = useYn;
+	}
+
 }
 /*
 	CREATE TABLE `reply` (
