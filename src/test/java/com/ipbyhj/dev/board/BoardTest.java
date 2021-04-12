@@ -26,8 +26,7 @@ public class BoardTest {
 
 	/**
 	 * 게시물 조회(성공 케이스)
-	 * boardId : 1,
-	 * @throws Exception
+	 * boardId : 101,
 	 */
 	 @Test
 	 public void selectBoard() throws Exception {
