@@ -3,6 +3,7 @@ package com.ipbyhj.dev.board.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiPredicate;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class ReplyService {
 	 */
 	public List<ReplyDTO> selectReplyList(String boardId){
 		List<ReplyDTO> replyList = replyMapper.selectReplyList(boardId);
+		BiPredicate<ReplyDTO, ReplyDTO> equals = (parent, child) -> {return parent.getReplyId().equals(child.getParentRplId());};
 
 		//부모 댓글
 		List<ReplyDTO> parentReply = new ArrayList<ReplyDTO>();
@@ -50,11 +52,12 @@ public class ReplyService {
 			}
 		}
 
+
 		//순서 정렬하기
 		for(ReplyDTO parent : parentReply) {
 			resultReply.add(parent);
 			for(ReplyDTO child : childReply){
-				if(parent.getReplyId().equals(child.getParentRplId())){
+				if(equals.test(parent, child)){
 					resultReply.add(child);
 				}
 			}
