@@ -21,7 +21,8 @@ public class ReplyService {
 	ReplyMapper replyMapper;
 
 	/**
-	 * 댓글 조회 choi.hak.jun
+	 * 댓글 조회
+	 * choi.hak.jun
 	 */
 	public Map<String, Object> selectReply(String boardId) {
 		return replyMapper.selectReply(boardId);
@@ -52,7 +53,6 @@ public class ReplyService {
 			}
 		}
 
-
 		//순서 정렬하기
 		for(ReplyDTO parent : parentReply) {
 			resultReply.add(parent);
@@ -63,11 +63,11 @@ public class ReplyService {
 			}
 		}
 		return resultReply;
-
 	}
 
 	/**
-	 * 댓글 삽입 choi.hak.jun
+	 * 댓글 삽입
+	 * choi.hak.jun
 	 */
 	// public int insertReply(Map<String, Object> params) {
 	public int insertReply(ReplyDTO replyDTO) {
@@ -83,7 +83,8 @@ public class ReplyService {
 	}
 
 	/**
-	 * 댓글 삭제 choi.hak.jun
+	 * 댓글 삭제
+	 * choi.hak.jun
 	 */
 	public int deleteReply(int replyId) {
 		return replyMapper.deleteReply(replyId);
@@ -91,6 +92,7 @@ public class ReplyService {
 
 	/**
 	 * 댓글 좋아요 증가
+	 * choi.hak.jun
 	 */
 	public int updateLike(int replyId) {
 		return replyMapper.updateLike(replyId);
