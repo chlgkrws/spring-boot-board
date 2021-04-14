@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.ipbyhj.dev.board.dto.BoardDTO;
 
 @Mapper
-@Repository
 public interface BoardMapper {
 
 	/**
