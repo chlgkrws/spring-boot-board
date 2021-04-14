@@ -14,7 +14,7 @@
         <typeAlias alias="List" type="java.util.List" />
         <typeAlias alias="ArrayList" type="java.util.ArrayList" />
         <typeAlias alias="BoardDTO" type="com.ipbyhj.dev.board.dto.BoardDTO" />
-        <typeAlias alias="UserDTO" type="com.ipbyhj.dev.main.dto.UserDTO" />
+        <typeAlias alias="UserDTO" type="com.ipbyhj.dev.common.dto.UserDTO" />
         <typeAlias alias="ReplyDTO" type="com.ipbyhj.dev.board.dto.ReplyDTO" />
 
     </typeAliases>
