@@ -25,8 +25,9 @@ public class UserTest {
     MockMvc mockMvc;
 
 	/**
-	 * 게시물 조회(성공 케이스)
-	 * boardId : 101,
+	 * 회원가입 (성공 케이스)
+	 * choi.hak.jun
+	 * 2021-04-14
 	 */
 	 @Test
 	 public void signUpUser() throws Exception {
