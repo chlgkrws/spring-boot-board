@@ -33,7 +33,7 @@ public class UserTest {
 	 public void signUpUser() throws Exception {
 		 MultiValueMap<String, String> info = new LinkedMultiValueMap<>();
 
-		 info.add("userId", "insertUserTest");
+		 info.add("userId", "insertUserTest2");
 		 info.add("userPass", "1234");
 		 info.add("userName", "회학문");
 		 info.add("sex", "?");
