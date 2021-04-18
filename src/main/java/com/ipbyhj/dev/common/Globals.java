@@ -44,5 +44,7 @@ public class Globals {
 	public static final String BOARD_ALL = "";
 	public static final String BOARD_COMMUNITY = "5";
 	public static final String BOARD_CODING = "6";
+	public static final String MAN = "7";
+	public static final String WOMAN = "8";
 
 }

@@ -1,5 +1,8 @@
 package com.ipbyhj.dev.common;
 
+/**
+ *	페이지네이션 기능
+ */
 public class Page {
 	// 현재 페이지 번호
 	private int num;
