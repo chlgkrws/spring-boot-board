@@ -7,7 +7,7 @@
 				<div class="login100-form validate-form flex-sb flex-w">
 					<span class="login100-form-title p-b-32"> Account Login </span> <span class="txt1 p-b-11"> Email </span>
 					<div class="wrap-input100 validate-input m-b-36" data-validate="Username is required">
-						<input class="input100" type="text" name="username">
+						<input class="input100" type="text" name="email" id="email">
 						<!-- <span class="focus-input100"></span> -->
 					</div>
 
@@ -15,8 +15,7 @@
 					<div class="wrap-input100 validate-input m-b-12" data-validate="Password is required">
 						<span class="btn-show-pass"></i>
 						</span>
-						<input class="input100" type="password" name="pass">
-						<!-- <span class="focus-input100"></span> -->
+						<input class="input100" type="password" name="userPass" id="userPass" onkeyup="if(window.event.keyCode==13){signIn()}"/>
 					</div>
 
 					<div class="flex-sb-m w-full p-b-48">
@@ -38,7 +37,7 @@
                         </div> -->
                         <div class="col-md">
                             <div class="container-login100-form-btn">
-		                        <button class="login100-form-btn">Sing-in</button>
+		                        <button class="login100-form-btn" onclick="signIn();">Sing-in</button>
 		                    </div>
                         </div>
                     </div>
@@ -54,10 +53,45 @@
 		</div>
 	</div>
 	<script th:inline="javascript">
+
+	   //로그인
+	   function signIn(){
+		   var email = document.getElementById('email').value;
+		   var userPass = document.getElementById('userPass').value;
+
+		   var formData = new FormData();
+		   formData.append('email', email);
+		   formData.append('userPass', userPass);
+
+		   var xhr = new XMLHttpRequest();
+           xhr.onreadystatechange = function(){
+               if(xhr.readyState === xhr.DONE){
+                   if(xhr.status === 200 || xhr.status === 201){
+                	   if(xhr.responseText == 1 || xhr.responseText == "1"){
+                		   alert("로그인 성공!");
+                		   location.href = "/";
+                	   }else{
+                		    alert("없는 계정이거나, 회원정보가 일치하지 않습니다.");
+                		    return false;
+                	   }
+                   }else{
+                	   alert("에러");
+                       console.log('실패');
+                   }
+               }
+           };
+
+           xhr.open('POST', '/sign-in');
+           xhr.send(formData);
+
+	   }
+
+	   //회원가입 페이지로 이동
 	   function signUp(){
 		   location.href = "sign-up";
 	   }
 
+	   //회원가입(email) 페이지로 이동
 	   function signUpByEmail(){
 		   location.href = "sign-up-email";
 	   }
