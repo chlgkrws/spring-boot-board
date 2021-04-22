@@ -1,33 +1,38 @@
 package com.ipbyhj.dev.security.entity;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.DynamicUpdate;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 @DynamicInsert
-@Entity(name="user")
+@DynamicUpdate
+@Entity
 @Table(name = "user")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserEntity {
 
 	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
 	@Column(name = "user_id")
 	private String userId;
 
@@ -45,11 +50,23 @@ public class UserEntity {
 	@Column(name = "role")
 	@ColumnDefault("ROLE_USER")
 	private String role;
-	private String useYn;
+
+	private Byte useYn;
+
+
+
+	@OneToMany(mappedBy = "userAuthorities", fetch = FetchType.LAZY)
+	private List<UserRole> userRoleList = new ArrayList<>();
+
+
+
+//	@PrePersist
+//	public void PrePersist() {
+//	}
 
 	@Builder
 	public UserEntity(String userId, String userPass, String userName, String sex, String phone, String email,
-			String identity, String role, String useYn) {
+			String identity, String role, Byte useYn) {
 		super();
 		this.userId = userId;
 		this.userPass = userPass;
