@@ -30,7 +30,6 @@ import com.ipbyhj.dev.security.repository.UserRepository;
  * 해당 구현체를 선언하면 스트링 부트 실행 초기 시큐리티 비밀번호를 할당받지 못함.
  */
 @Service
-@Component
 @Transactional
 public class UserDetailsServiceimpl implements UserDetailsService{
 
