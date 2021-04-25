@@ -46,4 +46,21 @@ public class UserTest {
 		 		 .andExpect(status().isOk())
 	             .andDo(print());
 	}
+
+	/**
+	 * 유저 조회 테스트(JPA)
+	 * choi.hak.jun
+	 * 2021-04-23
+	 */
+	 @Test
+	 public void getUser() throws Exception {
+		 MultiValueMap<String, String> info = new LinkedMultiValueMap<>();
+
+
+		 mockMvc.perform(get("/jpatest")
+				 .params(info))
+		 		 .andExpect(status().isOk())
+	             .andDo(print());
+	}
+
 }
