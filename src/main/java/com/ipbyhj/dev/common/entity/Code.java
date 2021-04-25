@@ -29,7 +29,6 @@ import lombok.ToString;
 @Table(name = "code")
 @Getter
 @Setter
-@ToString
 public class Code {
 
 	@Id

@@ -24,7 +24,6 @@ import lombok.ToString;
 
 @Setter
 @Getter
-@ToString
 @DynamicInsert
 @DynamicUpdate
 @Entity

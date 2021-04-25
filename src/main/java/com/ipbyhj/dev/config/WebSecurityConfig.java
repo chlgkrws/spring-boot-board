@@ -10,8 +10,16 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
+import com.ipbyhj.dev.security.handler.LoginSuccessHandler;
 
+/**
+ * 스프링 시큐리티 설정
+ * choi.hak.jun
+ * 2021.04.18
+ * @EnableWebSecurity : springSecurityFilterChain 포함시킴(자바기반)
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -39,9 +47,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				//실제 뷰에서 요청(Post)보내는 url
 				.loginProcessingUrl("/sign-in")
 				.failureUrl("/")
-				.defaultSuccessUrl("/",true)
 				.usernameParameter("email")
 				.passwordParameter("userPass")
+				.successHandler(new LoginSuccessHandler())
 				.and()
 			.logout()
 				.permitAll();

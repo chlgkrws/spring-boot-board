@@ -13,6 +13,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * 스프링 시큐리티가 로그인 인증에 사용하는 객체
+ * choi.hak.jun
+ * 2021.04.18
+ *
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -52,11 +58,11 @@ public class CustomUserDetails implements UserDetails{
      */
     @Override
     public String getUsername() {
-         return userId;
+         return userName;
     }
 
     /**
-     * 계정이 만료되지 않았는 지 리턴
+     * 계정이 만료되지 않았는지 리턴
      */
     @Override
     public boolean isAccountNonExpired() {
@@ -64,7 +70,7 @@ public class CustomUserDetails implements UserDetails{
     }
 
     /**
-     * 계정이 잠겨있지 않았는 지 리턴
+     * 계정이 잠겨있지 않았는지 리턴
      */
     @Override
     public boolean isAccountNonLocked() {
@@ -72,7 +78,7 @@ public class CustomUserDetails implements UserDetails{
     }
 
     /**
-     * 비밀번호가 만료되지 않았는 지 리턴
+     * 비밀번호가 만료되지 않았는지 리턴
      */
     @Override
     public boolean isCredentialsNonExpired() {
@@ -80,7 +86,7 @@ public class CustomUserDetails implements UserDetails{
     }
 
     /**
-     *  계정이 활성화(사용가능)인 지 리턴
+     *  계정이 활성화(사용가능)인지 리턴
      */
     @Override
     public boolean isEnabled() {
