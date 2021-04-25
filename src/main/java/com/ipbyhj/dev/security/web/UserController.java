@@ -1,15 +1,12 @@
 package com.ipbyhj.dev.security.web;
 
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,38 +30,17 @@ public class UserController {
 	@RequestMapping(value = {"/sign-in"}, method = RequestMethod.GET)
 	public ModelAndView getSignIn(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) {
 
+		//스프링 시큐리티 인증 성공 시 이전 페이지로 이동 시키기 위한 세션
+		String referer = request.getHeader("Referer");
+		request.getSession().setAttribute("prevPage", referer);
+
 		modelAndView.setViewName("dev/sign/sign-in");
 		return modelAndView;
 	}
-
-//	/**
-//	 * 로그인
-//	 * choi.hak.jun
-//	 *  return 1 - 성공, 0 - 실패
-//	 * Start 2021.04.18
-//	 */
-//	@RequestMapping(value = {"/sign-in"}, method = RequestMethod.POST)
-//	public int setSignIn(HttpServletRequest request, HttpServletResponse response,
-//			Map<String, Object> params) {
-//		String email = (String) params.get("email");
-//		String userPass = (String) params.get("userPass");
-//		System.out.println(email + userPass+" zzz");
-//		try {
-//			Optional<UserEntity> user = userService.findById(email);
-//
-//			String password = user.get().getUserPass();
-//
-//			//비밀번호가 일치하면 1(성공) 반환
-//			if(password.equals(userPass)) {
-//				return 1;
-//			}
-//
-//		}catch (Exception e) {
-//			//유저 없음
-//			return 0;
-//		}
-//		return 0;
-//	}
+	/**
+	 * End 2021.04.25
+	 * 2021.04.25 Add session prevPage(referer)
+	 */
 
 	/**
 	 * 회원가입 페이지
@@ -77,6 +53,9 @@ public class UserController {
 		modelAndView.setViewName("dev/sign/sign-up");
 		return modelAndView;
 	}
+	/**
+	 * End 2021.04.13
+	 */
 
 	/**
 	 * 회원가입
@@ -108,6 +87,9 @@ public class UserController {
 
 		return 0;
 	}
+	/**
+	 * End 2021.04.14
+	 */
 
 	/**
 	 * 회원가입(email) 페이지
@@ -119,6 +101,9 @@ public class UserController {
 		modelAndView.setViewName("dev/sign/sign-up-by-email");
 		return modelAndView;
 	}
+	/**
+	 * End 2021.04.17
+	 */
 
 	/**
 	 * 회원가입(email)
@@ -129,6 +114,18 @@ public class UserController {
 	public int setSignUpEmail(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) {
 
 		return 1;
+	}
+	/**
+	 * End 2021.04.17
+	 */
+
+	/**
+	 * 로그인 권한 가져오기 테스트
+	 */
+	@GetMapping(value = "/jpatest")
+	public String jpaJoinTest(HttpServletRequest request) {
+		System.out.println(userService.jpaJoinTest(("cgw981@naver.com" )).getUserRoleList().get(1).getUser_role_code());
+		return "jpaTest";
 	}
 
 
