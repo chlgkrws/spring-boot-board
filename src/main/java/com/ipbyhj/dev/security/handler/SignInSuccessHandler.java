@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.ipbyhj.dev.common.Globals;
+
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -18,7 +20,7 @@ import lombok.extern.log4j.Log4j2;
  * 2021.04.25
  */
 @Log4j2
-public class LoginSuccessHandler  implements AuthenticationSuccessHandler{
+public class SignInSuccessHandler  implements AuthenticationSuccessHandler{
 
 	/**
 	 * 로그인 성공 시 호출되는 메서드
@@ -44,8 +46,8 @@ public class LoginSuccessHandler  implements AuthenticationSuccessHandler{
 				return;
 			}
 		}
-		
+
 		//로그인 성공 시 홈 화면으로 이동
-		response.sendRedirect("/");
+		response.sendRedirect(Globals.SECURITY_SIGNIN_SUCCESS_URL);
 	}
 }
