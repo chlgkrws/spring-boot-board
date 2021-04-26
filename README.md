@@ -54,16 +54,16 @@
 
 
 
-## 적용 예정 기술(계속 추가 예정 / * 완료)
+## 적용 예정 기술(계속 추가 예정 / * 완료/ ~ 진행)
 |분류|상세|
 |------|---|
 |Basic|Board CRUD*|
-||Login(Oauth2.0)|
+||Sign-in(Oauth2.0)|
+||Sign-up(email, form)|
 ||Excel download(poi)|
 ||HTTPS(TLS)|
-|Spring|Security|
-||JMS|
-||JPA|
+|Spring|Security~|
+||JPA~|
 ||AOP*|
 |Message Queue|kafka|
 |Open API|문자 인증|
@@ -121,7 +121,7 @@
 - 모든 Controller는 @RestContoller 어노테이션을 사용한다.
 - Service는 impl를 구현하지 않는다.(필요 시 구현)
 - @Transactional 어노테이션을 Class에 붙인다.
-역할별 suffix
+#### 역할별 suffix
 
 - Controller : *Controller (RestController 포함)
 - Service : *Service
@@ -133,4 +133,4 @@
 - Util : *Util
 
 ## 마지막 README 업데이트
-2021.04.12
+2021.04.26
