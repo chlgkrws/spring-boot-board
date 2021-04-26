@@ -58,7 +58,8 @@
 |분류|상세|
 |------|---|
 |Basic|Board CRUD*|
-||Login(Oauth2.0)|
+||Sign-in(Oauth2.0)|
+||Sign-up(email, form)|
 ||Excel download(poi)|
 ||HTTPS(TLS)|
 |Spring|Security~|
