@@ -63,7 +63,6 @@
 ||Excel download(poi)|
 ||HTTPS(TLS)|
 |Spring|Security~|
-||JMS|
 ||JPA~|
 ||AOP*|
 |Message Queue|kafka|
