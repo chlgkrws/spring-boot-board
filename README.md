@@ -54,16 +54,16 @@
 
 
 
-## 적용 예정 기술(계속 추가 예정 / * 완료)
+## 적용 예정 기술(계속 추가 예정 / * 완료/ ~ 진행)
 |분류|상세|
 |------|---|
 |Basic|Board CRUD*|
 ||Login(Oauth2.0)|
 ||Excel download(poi)|
 ||HTTPS(TLS)|
-|Spring|Security|
+|Spring|Security~|
 ||JMS|
-||JPA|
+||JPA~|
 ||AOP*|
 |Message Queue|kafka|
 |Open API|문자 인증|
@@ -133,4 +133,4 @@
 - Util : *Util
 
 ## 마지막 README 업데이트
-2021.04.12
+2021.04.26
