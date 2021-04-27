@@ -34,7 +34,7 @@ public class MainController {
 	 * 자기 소개 페이지
 	 * @return
 	 */
-	@RequestMapping(value = "/intoduce", method = RequestMethod.GET)
+	@RequestMapping(value = "/introduce", method = RequestMethod.GET)
 	public String getIntroduce(HttpServletRequest request) {
 
 		return "dev/main/introduce";

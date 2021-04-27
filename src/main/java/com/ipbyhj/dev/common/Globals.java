@@ -5,7 +5,6 @@ public class Globals {
 	/**
 	 * Global Server url
 	 */
-
 	public static final String LOCAL_SERVER_URL = "http://localhost:8080";
 	public static final String API_SERVER_URL = "http://localhost:";
 	public static final String BOS_SERVER_URL = "http://localhost:";
@@ -39,7 +38,7 @@ public class Globals {
 	public static final String ERROR_DEFAULT_PAGE_PATH = "error/default";
 
 	/**
-	 * code value
+	 * Code value
 	 */
 	public static final String BOARD_ALL = "";
 	public static final String BOARD_COMMUNITY = "5";
@@ -47,4 +46,13 @@ public class Globals {
 	public static final String MAN = "7";
 	public static final String WOMAN = "8";
 
+	/**
+	 * Security
+	 */
+	public static final String SECURITY_ERROR_MSG = "아이디와 비밀번호를 확인해주세요.";
+	public static final String SECURITY_SIGN_IN_URL ="/sign-in";
+	public static final String SECURITY_SIGNIN_SUCCESS_URL = "/";
+	public static final String SECURITY_SIGNIN_FAILURE_URL = "/sign-in";
+	public static final String SECURITY_SIGNOUT_URL = "/sign-out";
+	public static final String SECURITY_SIGNOUT_SUCCESS_URL = "/";
 }
