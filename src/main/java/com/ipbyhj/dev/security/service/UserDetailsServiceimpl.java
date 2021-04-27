@@ -21,6 +21,9 @@ import com.ipbyhj.dev.security.entity.UserEntity;
 import com.ipbyhj.dev.security.entity.UserRole;
 import com.ipbyhj.dev.security.repository.UserRepository;
 
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
+
 /**
  * UserDetailsService 구현체
  * choi.hak.jun
@@ -31,6 +34,7 @@ import com.ipbyhj.dev.security.repository.UserRepository;
  */
 @Service
 @Transactional
+@Log4j2
 public class UserDetailsServiceimpl implements UserDetailsService{
 
 	@Autowired
@@ -46,7 +50,7 @@ public class UserDetailsServiceimpl implements UserDetailsService{
 		if(!userRepository.existsByUserIdAndUseYn(username, (byte) 1)) {
 			return null;
 		}
-
+		log.info("Start loadUserByUsername findByUserId");
 		UserEntity userFromDB = userRepository.findByUserId(username);
 		CustomUserDetails userToSecurity = CustomUserDetails.builder()
 											.userId( 	userFromDB.getEmail())
@@ -55,6 +59,7 @@ public class UserDetailsServiceimpl implements UserDetailsService{
 											.useYn( 	userFromDB.getUseYn())
 											.authorities(getAuthorities(userFromDB))
 											.build();
+		log.info("End loadUserByUsername findByUserId");
 		return userToSecurity;
 	}
 

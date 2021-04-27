@@ -49,7 +49,7 @@ public class UserEntity {
 	@Column(name = "role")
 	@ColumnDefault("ROLE_USER")
 	private String role;
-
+	
 	private Byte useYn;
 
 

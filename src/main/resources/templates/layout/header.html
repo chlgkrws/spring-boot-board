@@ -35,10 +35,21 @@
 				<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
 				<button class="btn-cus btn-outline-success-cus my-2 my-sm-0" type="submit">Search</button>
 			</form>
-			<form class="form-inline mt-2 mt-md-0" action="/sign-in" method="get">
-				<button class="btn-cus btn-outline-success-cus my-2 my-sm-0" type="submit">Login</button>
+			<form class="form-inline mt-2 mt-md-0" action="/sign-in" method="get" th:if="${session.userId == null}">
+				<button class="btn-cus btn-outline-success-cus my-2 my-sm-0" type="submit">Sign-in</button>
 			</form>
+			<form class="form-inline mt-2 mt-md-0" action="/sign-out" method="post" onsubmit="return checkSignOut();" th:if="${session.userId != null}">
+                <button class="btn-cus btn-outline-success-cus my-2 my-sm-0" type="submit">Sign-out</button>
+            </form>
 		</div>
+		<script th:inline="javascript">
+	        function checkSignOut(){
+	            if(!confirm("로그아웃 하시겠습니까?")){
+	                return false;
+	            }
+	            return true;
+	        }
+        </script>
 	</nav>
 </header>
 

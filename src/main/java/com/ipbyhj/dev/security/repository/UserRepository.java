@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.ipbyhj.dev.security.domain.CustomUserDetails;
 import com.ipbyhj.dev.security.entity.UserEntity;
@@ -15,6 +16,7 @@ import com.ipbyhj.dev.security.entity.UserEntity;
  * choi.hak.jun
  * 2021.04.18
  */
+@Repository
 public interface UserRepository extends JpaRepository<UserEntity, String>{
 	public Optional<UserEntity> findById(String email);
 

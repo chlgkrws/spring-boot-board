@@ -34,6 +34,10 @@ public class UserController {
 		String referer = request.getHeader("Referer");
 		request.getSession().setAttribute("prevPage", referer);
 
+		//AuthenticationFailureHandler 에러메세지 세션 값 동기화
+		request.setAttribute("errMsg", request.getAttribute("errMsg"));
+
+
 		modelAndView.setViewName("dev/sign/sign-in");
 		return modelAndView;
 	}
@@ -93,7 +97,8 @@ public class UserController {
 
 	/**
 	 * 회원가입(email) 페이지
-	 * Start 2021-04-17
+	 *
+	 * Start 2021.04.17
 	 */
 	@RequestMapping(value= {"/sign-up-email"}, method = RequestMethod.GET)
 	public ModelAndView getSignUpEmail(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) {
@@ -107,6 +112,7 @@ public class UserController {
 
 	/**
 	 * 회원가입(email)
+	 * choi.hak.jun
 	 * return 1 - 성공, 0 - 실패
 	 * Start 2021.04.17
 	 */
@@ -118,6 +124,15 @@ public class UserController {
 	/**
 	 * End 2021.04.17
 	 */
+
+	/**
+	 * 로그아웃
+	 * choi.hak.jun
+	 * String 2021.04.17
+	 */
+//	@RequestMapping(value= {"/logout"}, method = RequestMethod.POST)
+//	public
+
 
 	/**
 	 * 로그인 권한 가져오기 테스트
