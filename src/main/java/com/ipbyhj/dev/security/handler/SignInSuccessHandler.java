@@ -40,7 +40,7 @@ public class SignInSuccessHandler  implements AuthenticationSuccessHandler{
 		//시큐리티로 인증하기 전 페이지로 이동 (prevPage - userController와 연동)
 		if(session != null) {
 			String redirectUrl = (String) session.getAttribute("prevPage");
-			if(redirectUrl != null) {
+			if(redirectUrl != null && !redirectUrl.equals(Globals.SECURITY_SIGN_IN_URL)) {
 				session.removeAttribute("prevPage");
 				response.sendRedirect(redirectUrl);
 				return;
