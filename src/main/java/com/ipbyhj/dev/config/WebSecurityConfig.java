@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
+import com.ipbyhj.dev.common.Globals;
 import com.ipbyhj.dev.security.handler.SignInFailureHandler;
 import com.ipbyhj.dev.security.handler.SignInSuccessHandler;
 import com.ipbyhj.dev.security.handler.SignOutSuccessHandler;
@@ -45,16 +46,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 			.formLogin()
 				//로그인 폼 커스터마이징
-				.loginPage("/sign-in")
+				.loginPage(Globals.SECURITY_SIGN_IN_URL)
 				//실제 뷰에서 요청(Post)보내는 url
-				.loginProcessingUrl("/sign-in")
+				.loginProcessingUrl(Globals.SECURITY_SIGN_IN_URL)
 				.usernameParameter("email")
 				.passwordParameter("userPass")
 				.successHandler(new SignInSuccessHandler())
 				.failureHandler(new SignInFailureHandler())
 				.and()
 			.logout()
-				.logoutUrl("/sign-out")
+				.logoutUrl(Globals.SECURITY_SIGNOUT_URL)
 				.logoutSuccessHandler(new SignOutSuccessHandler())
 				.permitAll();
 	}
