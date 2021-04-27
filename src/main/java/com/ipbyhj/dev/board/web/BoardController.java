@@ -1,12 +1,13 @@
 package com.ipbyhj.dev.board.web;
 
-import java.util.HashMap;import java.util.List;
-
-import java.util.Map;import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ipbyhj.dev.board.dto.BoardDTO;
 import com.ipbyhj.dev.board.dto.ReplyDTO;
 import com.ipbyhj.dev.board.service.BoardService;
+import com.ipbyhj.dev.board.service.JPABoardService;
 import com.ipbyhj.dev.board.service.ReplyService;
 import com.ipbyhj.dev.common.Globals;
 import com.ipbyhj.dev.common.Page;
@@ -31,6 +33,9 @@ public class BoardController {
 
 	@Autowired
 	ReplyService replyService;
+
+	@Autowired
+	JPABoardService jpaBoardService;
 
 	/**
 	 * 게시물 리스트 조회
@@ -82,7 +87,7 @@ public class BoardController {
 	 * Start 2021.02.24
 	 */
 	@RequestMapping(value = {"/board/{boardId}"}, method = RequestMethod.GET)
-	public ModelAndView getBoardView(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
+	public ModelAndView getBoardView(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response, HttpSession session,
 			@PathVariable Integer boardId) {
 		String category = "";
 
@@ -107,6 +112,12 @@ public class BoardController {
 		//게시물조회
 		BoardDTO board = boardService.selectView(boardId);
 
+		//조회 계정에 대한 게시물 좋아요 여부 (1 - 이미 좋아요 누름, 0 - 아직 누르지 않음)
+		String boardLikeFlag = "0";
+		if(jpaBoardService.existsBoardLikeByUserId(boardId, (String)session.getAttribute("userId"))) {
+			boardLikeFlag = "1";
+		}
+
 		//카테고리 설정
 		if(board.getCode().equals(Globals.BOARD_COMMUNITY)) category = "커뮤니티";
 		else if(board.getCode().equals(Globals.BOARD_CODING)) category ="코딩";
@@ -117,6 +128,7 @@ public class BoardController {
 
 		modelAndView.addObject("category", category);			//게시물 카테고리
 		modelAndView.addObject("board", board);					//게시물 정보
+		modelAndView.addObject("boardLike", boardLikeFlag);		//게시물 좋아요 여부
 		modelAndView.addObject("reply",reply);					//댓글 정보
 		modelAndView.addObject("replySize",reply.size());		//댓글 갯수
 		modelAndView.setViewName("dev/board/view");
@@ -214,6 +226,17 @@ public class BoardController {
 	/**
 	 * END 2021.03.25
 	 */
+
+	/**
+	 * 게시판 좋아요 버튼 클릭
+	 * choi.hak.jun
+	 * return 1 : 성공, 0 : 이미 좋아요 눌러져있음
+	 * Start 2021.04.27
+	 */
+	@RequestMapping(value = {"/like-board"}, method = RequestMethod.POST)
+	public int likeBoard(HttpServletRequest request) {
+		return 0;
+	}
 
 
 	//url로 요청할 때는 그 정보를, 비동기 통신으로 가져올 때는 다른 정보를 준다.
