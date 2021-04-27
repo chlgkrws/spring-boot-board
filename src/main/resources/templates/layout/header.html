@@ -31,6 +31,9 @@
 						</div>
 					</div></li>
 			</ul>
+			<div class="">
+			    <p th:if="${session.userId != null}" th:text="${session.userName}+'님 어서오세요'" class="p mr-2 mb-0 text-white"></p>
+			</div>
 			<form class="form-inline mt-2 mt-md-0" action="/search" method="get">
 				<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
 				<button class="btn-cus btn-outline-success-cus my-2 my-sm-0" type="submit">Search</button>
