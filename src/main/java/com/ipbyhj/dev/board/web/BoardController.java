@@ -3,6 +3,9 @@ package com.ipbyhj.dev.board.web;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ipbyhj.dev.board.dto.BoardDTO;
 import com.ipbyhj.dev.board.dto.ReplyDTO;
+import com.ipbyhj.dev.board.entity.BoardEntity;
+import com.ipbyhj.dev.board.entity.BoardLikeEntity;
 import com.ipbyhj.dev.board.service.BoardService;
 import com.ipbyhj.dev.board.service.JPABoardService;
 import com.ipbyhj.dev.board.service.ReplyService;
@@ -112,6 +117,10 @@ public class BoardController {
 		//게시물조회
 		BoardDTO board = boardService.selectView(boardId);
 
+		//JPA 반영시 수정
+		BoardEntity boardEntity = jpaBoardService.findByBoardId(boardId);
+		Integer likeCount = boardEntity.getBoardLikeSet().size();
+
 		//조회 계정에 대한 게시물 좋아요 여부 (1 - 이미 좋아요 누름, 0 - 아직 누르지 않음)
 		String boardLikeFlag = "0";
 		if(jpaBoardService.existsBoardLikeByUserId(boardId, (String)session.getAttribute("userId"))) {
@@ -128,6 +137,7 @@ public class BoardController {
 
 		modelAndView.addObject("category", category);			//게시물 카테고리
 		modelAndView.addObject("board", board);					//게시물 정보
+		modelAndView.addObject("likeCount", likeCount);			//좋아요 수
 		modelAndView.addObject("boardLike", boardLikeFlag);		//게시물 좋아요 여부
 		modelAndView.addObject("reply",reply);					//댓글 정보
 		modelAndView.addObject("replySize",reply.size());		//댓글 갯수
@@ -147,7 +157,6 @@ public class BoardController {
 	@RequestMapping(value = {"/mode/{mode}", "/mode/{mode}/{boardId}"}, method = RequestMethod.GET)
 	public ModelAndView getCreateBoardPage(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String mode, @PathVariable(required = false) Integer boardId) throws Exception {
-
 
 		//글 수정/작성 분기
 		if(mode.equals("write")) {
@@ -228,16 +237,39 @@ public class BoardController {
 	 */
 
 	/**
-	 * 게시판 좋아요 버튼 클릭
+	 * 게시판 좋아요 버튼 클릭(추후 Board에 대한 JPA 적용 시 한 번에 적용)
 	 * choi.hak.jun
-	 * return 1 : 성공, 0 : 이미 좋아요 눌러져있음
+	 * input 1 : 좋아요, 0 : 좋아요 취소
+	 * return 1 : 성공, 0 : 취소
 	 * Start 2021.04.27
 	 */
-	@RequestMapping(value = {"/like-board"}, method = RequestMethod.POST)
-	public int likeBoard(HttpServletRequest request) {
+	@RequestMapping(value = {"/like/{boardId}/{userId}/{like}"}, method = RequestMethod.POST)
+	public int like(HttpServletRequest request, @PathVariable Integer boardId, @PathVariable String userId, @PathVariable String like) {
+		BiFunction<String, String, Boolean> equals = (String::equals);
+
+		//게시물 좋아요(에러있음 반복삽입 에러 있음)
+		if(equals.apply(like, "1")) {
+			try {
+				BoardLikeEntity boardLikeEntity = BoardLikeEntity.builder()
+															.boardId(boardId)
+															.userId(userId)
+															.build();
+				jpaBoardService.saveBoardLike(boardLikeEntity);
+				return 1;
+			}catch (Exception e) {
+				return 0;
+			}
+		}
+
+		//게시물 좋아요 취소
+		if(equals.apply(like, "0")) {
+			try {
+				jpaBoardService.deleteByBoardIdAndUserId(boardId, userId);
+				return 1;
+			}catch (Exception e) {
+				return 0;
+			}
+		}
 		return 0;
 	}
-
-
-	//url로 요청할 때는 그 정보를, 비동기 통신으로 가져올 때는 다른 정보를 준다.
 }

@@ -12,7 +12,7 @@
 			</div>
 			<div class="row" style="margin: 2px; margin-top: 15px;">
 				<pre style="margin: 0px;">
-<small><th:block th:text="${board.writerId}"/> | <th:block th:text="${board.createTime}"/> | <img src="/assets/img/view-count.ico" width="10"/> <th:block th:text="${board.viewCount}"/>  <i class="fa fa-thumbs-up"></i> <th:block th:text="${board.likeCount}"/><th:block th:if="${board.writerId == session.userId}"> | <a href="" onclick="return updateBoard();">수정</a> <a href="" onclick="return deleteBoard();">삭제</a></th:block></small>
+<small><th:block th:text="${board.writerId}"/> | <th:block th:text="${board.createTime}"/> | <img src="/assets/img/view-count.ico" width="10"/> <th:block th:text="${board.viewCount}"/>  <i class="fa fa-thumbs-up"></i> <a id="likeCount"><th:block th:text="${likeCount}"/></a><th:block th:if="${board.writerId == session.userId}"> | <a href="" onclick="return updateBoard();">수정</a> <a href="" onclick="return deleteBoard();">삭제</a></th:block></small>
                 </pre>
 			</div>
 			<hr>

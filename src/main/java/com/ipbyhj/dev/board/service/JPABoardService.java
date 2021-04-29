@@ -30,4 +30,18 @@ public class JPABoardService {
 	public boolean existsBoardLikeByUserId(Integer boardId, String userId){
 		return boardLikeRepository.existsByBoardIdAndUserId(boardId, userId);
 	}
+
+	/**
+	 * 게시물 좋아요
+	 */
+	public void saveBoardLike(BoardLikeEntity boardLikeEntity) {
+		 boardLikeRepository.save(boardLikeEntity);
+	}
+
+	/**
+	 * 게시물 좋아요 취소
+	 */
+	public void deleteByBoardIdAndUserId(Integer boardId, String userId) {
+		boardLikeRepository.deleteByBoardIdAndUserId(boardId, userId);
+	}
 }

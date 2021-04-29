@@ -4,7 +4,8 @@
 
 	<section class="content-item" id="comments">
 	<!-- 좋아요 버튼 -->
-	<a href="" onclick="likeBoard();"><img src="/assets/img/like.png" width="30" style="margin-top: 10px;" id="likeBoard"/></a>
+	<a th:if="${boardLike == '0'}" id="likeA" onclick="like();"><img src="/assets/img/like.png"id="likeBoard" width="30" style="margin-top: 10px;" /></a>
+	<a th:if="${boardLike == '1'}" id="likeA" onclick="likeCancel();"><img src="/assets/img/liked.png"id="likeBoard" width="30" style="margin-top: 10px;" /></a>
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12" id="replyArea">
@@ -501,6 +502,56 @@
             return false;
 		}
 
+		//게시물 좋아요 클릭
+		function like(){
+			var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange =  function(){
+                if(xhr.readyState === xhr.DONE){
+                    if(xhr.status === 200 || xhr.status === 201){
+                        if(xhr.responseText == "1" || xhr.responseText == 1){
+                            document.getElementById('likeBoard').src = '/assets/img/liked.png';
+                            document.getElementById('likeA').setAttribute('onclick','likeCancel()');
+                            document.getElementById('likeCount').innerHTML = Number(document.getElementById('likeCount').innerHTML) + 1;
+                            return false;
+                        }else{
+                            alert('좋아요  실패');
+                        }
+                    }else{
+                        alert('좋아요  실패')
+                    }
+                }
+            };
+            /*<![CDATA[*/
+            xhr.open('POST', '/like/'+ [[${board.boardId}]] +'/'+ [[${session.userId}]] +'/1');
+            /*]]>*/
+            xhr.send();
+		}
+
+		//게시물 좋아요 취소 클릭
+        function likeCancel(){
+        	 var xhr = new XMLHttpRequest();
+             xhr.onreadystatechange =  function(){
+                 if(xhr.readyState === xhr.DONE){
+                     if(xhr.status === 200 || xhr.status === 201){
+                         if(xhr.responseText == "1" || xhr.responseText == 1){
+                        	 document.getElementById('likeBoard').src = '/assets/img/like.png';
+                        	 document.getElementById('likeA').setAttribute('onclick','like()');
+                        	 document.getElementById('likeCount').innerHTML = Number(document.getElementById('likeCount').innerHTML) - 1;
+                        	 return false;
+                         }else{
+                        	 alert('좋아요 취소 실패');
+                         }
+                     }else{
+                    	 alert('좋아요 취소 실패')
+                     }
+                 }
+             };
+
+             /*<![CDATA[*/
+             xhr.open('POST', '/like/'+ [[${board.boardId}]] +'/'+ [[${session.userId}]] +'/0');
+             /*]]>*/
+             xhr.send();
+        }
 
 		//댓글 데이트 포맷
 	    function now(){
