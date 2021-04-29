@@ -32,6 +32,7 @@ public class SignInFailureHandler implements AuthenticationFailureHandler{
 		/**
 		 * 에러 부분 수정하기 2021.04.27
 		 */
+		log.info(request.getUserPrincipal()+" : in SignInFailureHandler");
 		request.getRequestDispatcher(Globals.SECURITY_SIGNIN_FAILURE_URL).forward(request, response);
 	}
 }

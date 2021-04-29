@@ -27,7 +27,7 @@ public class UserController {
 	 * choi.hak.jun
 	 * Start 2021.04.13
 	 */
-	@RequestMapping(value = {"/sign-in"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/sign-in"})
 	public ModelAndView getSignIn(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) {
 
 		//스프링 시큐리티 인증 성공 시 이전 페이지로 이동 시키기 위한 세션
