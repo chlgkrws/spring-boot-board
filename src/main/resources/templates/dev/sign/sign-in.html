@@ -11,7 +11,7 @@
 						<input class="input100" type="text" name="email" id="email">
 						<!-- <span class="focus-input100"></span> -->
 					</div>
-
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 					<span class="txt1 p-b-11"> Password </span>
 					<div class="wrap-input100 validate-input m-b-12" data-validate="Password is required">
 						<span class="btn-show-pass"></i>

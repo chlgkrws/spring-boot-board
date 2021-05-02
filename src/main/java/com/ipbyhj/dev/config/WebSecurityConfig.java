@@ -1,5 +1,7 @@
 package com.ipbyhj.dev.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,7 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import com.ipbyhj.dev.common.Globals;
 import com.ipbyhj.dev.security.handler.SignInFailureHandler;
@@ -29,6 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	UserDetailsService userDetailsService;
+
+	@Autowired
+	DataSource dataSource;
 
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -57,8 +63,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 			.logout()
 				.logoutUrl(Globals.SECURITY_SIGNOUT_URL)
-				.logoutSuccessHandler(new SignOutSuccessHandler())
-				.permitAll();
+				.logoutSuccessHandler(new SignOutSuccessHandler()).permitAll()
+				.invalidateHttpSession(true)
+				.and()
+			//자동 로그인 기능
+			.rememberMe()
+				.key("HashRememberMeKey")
+				.rememberMeCookieName("remember-me")
+				.tokenValiditySeconds(60000)
+				.tokenRepository(getJDBCRepository())
+				.rememberMeParameter("remember-me");
+
 	}
 
 	@Override
@@ -72,5 +87,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	public PasswordEncoder passwordEncoder() {
 		return this.passwordEncoder;
+	}
+
+	/**
+	 * 자동로그인을 위한 jdbcTokenRepository
+	 * choi.hak.jun
+	 * 2021.05.02
+	 */
+	private PersistentTokenRepository getJDBCRepository() {
+		JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+		jdbcTokenRepository.setDataSource(dataSource);
+		return jdbcTokenRepository;
 	}
 }
