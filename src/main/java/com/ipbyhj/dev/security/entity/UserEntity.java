@@ -46,10 +46,6 @@ public class UserEntity {
 	private String email;
 	private String identity;
 
-	@Column(name = "role")
-	@ColumnDefault("ROLE_USER")
-	private String role;
-	
 	private Byte useYn;
 
 
@@ -65,7 +61,7 @@ public class UserEntity {
 
 	@Builder
 	public UserEntity(String userId, String userPass, String userName, String sex, String phone, String email,
-			String identity, String role, Byte useYn) {
+			String identity, Byte useYn) {
 		super();
 		this.userId = userId;
 		this.userPass = userPass;
@@ -74,7 +70,6 @@ public class UserEntity {
 		this.phone = phone;
 		this.email = email;
 		this.identity = identity;
-		this.role = role;
 		this.useYn = useYn;
 	}
 }

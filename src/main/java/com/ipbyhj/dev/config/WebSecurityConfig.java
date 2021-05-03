@@ -1,5 +1,7 @@
 package com.ipbyhj.dev.config;
 
+
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +11,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import com.ipbyhj.dev.common.Globals;
+import com.ipbyhj.dev.security.handler.RememberMeSuccessHandler;
 import com.ipbyhj.dev.security.handler.SignInFailureHandler;
 import com.ipbyhj.dev.security.handler.SignInSuccessHandler;
 import com.ipbyhj.dev.security.handler.SignOutSuccessHandler;
@@ -70,6 +75,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.rememberMe()
 				.key("HashRememberMeKey")
 				.rememberMeCookieName("remember-me")
+				.rememberMeServices(new RememberMeSuccessHandler("HashRememberMeKey", userDetailsService))
 				.tokenValiditySeconds(60000)
 				.tokenRepository(getJDBCRepository())
 				.rememberMeParameter("remember-me");
@@ -99,4 +105,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		jdbcTokenRepository.setDataSource(dataSource);
 		return jdbcTokenRepository;
 	}
+
+
 }

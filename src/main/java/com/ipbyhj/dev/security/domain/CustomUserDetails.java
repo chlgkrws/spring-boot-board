@@ -33,7 +33,7 @@ public class CustomUserDetails implements UserDetails{
 
 	private String userId;
     private String userPass;
-    private String userName;
+    private String name;				//Spring Security userName과 충돌하여 바꿔줌.
     private Byte useYn;
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -93,7 +93,7 @@ public class CustomUserDetails implements UserDetails{
          return useYn == 1 ? true : false;
     }
 
-    public String getUserName() {
-    	return userName;
+    public String getSpringUserName() {
+    	return name;
     }
 }

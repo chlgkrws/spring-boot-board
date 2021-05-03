@@ -52,10 +52,11 @@ public class UserDetailsServiceimpl implements UserDetailsService{
 		}
 		log.info("Start loadUserByUsername findByUserId");
 		UserEntity userFromDB = userRepository.findByUserId(username);
+		log.info("userName : "+userFromDB.getUserName());
 		CustomUserDetails userToSecurity = CustomUserDetails.builder()
 											.userId( 	userFromDB.getEmail())
 											.userPass(	userFromDB.getUserPass())
-											.userName(  userFromDB.getUserName())
+											.name(  	userFromDB.getUserName())
 											.useYn( 	userFromDB.getUseYn())
 											.authorities(getAuthorities(userFromDB))
 											.build();
