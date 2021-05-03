@@ -61,7 +61,6 @@ public class UserService {
 	 */
 	public UserEntity findByEmail(String email) {
 		UserEntity user =  userRepository.findByUserId(email);
-
 		return user;
 	}
 
@@ -101,11 +100,9 @@ public class UserService {
 
 	/**
 	 * 로그인 권한 가져오기 테스트
+	 * choi.hak.jun
 	 */
 	public UserEntity jpaJoinTest(String email) {
 		return userRepository.findByUserId(email);
 	}
-
-
-
 }
