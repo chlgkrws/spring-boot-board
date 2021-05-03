@@ -47,6 +47,11 @@ public class Globals {
 	public static final String WOMAN = "8";
 
 	/**
+	 * URL Mapping
+	 */
+	public static final String HOME = "/";
+
+	/**
 	 * Security
 	 */
 	public static final String SECURITY_ERROR_MSG = "아이디와 비밀번호를 확인해주세요.";
