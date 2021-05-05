@@ -71,6 +71,10 @@ public class RememberMeSuccessHandler extends TokenBasedRememberMeServices{
 					+ "' but expected '" + expectedTokenSignature + "'");
 		}
 
+		/**
+		 * Remember-me 로그인 시 세션이 잡히지 않는 에러 해결 구문
+		 * 아래와 같이 uesrDetails를 이용해서 이름을 가져온 뒤, session에 추가.
+		 */
 		//Custom RememberMe Action Start
 		HttpSession session = request.getSession();
 
