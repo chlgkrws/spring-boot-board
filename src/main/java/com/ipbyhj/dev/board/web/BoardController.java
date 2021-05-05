@@ -149,6 +149,68 @@ public class BoardController {
 	 */
 
 	/**
+	 * 게시물 자세히 보기(test)
+	 * choi.hak.jun
+	 * Start 2021.05.04
+	 */
+	@RequestMapping(value = {"/board/{boardId}/test"}, method = RequestMethod.GET)
+	public ModelAndView getBoardViewTest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response, HttpSession session,
+			@PathVariable Integer boardId) {
+		String category = "";
+
+		//if쿠키가 같지 않으면 조회수 증가시키기.
+		Cookie[] cookies = request.getCookies();
+		Cookie viewCookie = null;
+		if(cookies != null && cookies.length > 0) {
+			for(int i = 0; i < cookies.length; i++) {
+				//쿠키가 이미 존재하면, 해당 쿠키 저장
+				if(cookies[i].getName().equals("cookie"+boardId)) {
+					viewCookie = cookies[i];
+				}
+			}
+		}
+		//쿠키가 존재하지 않으면 조회수 업데이트 후 쿠키 추가.
+		if(viewCookie == null) {
+			boardService.updateViewCount(boardId);
+			Cookie newCookie = new Cookie("cookie"+boardId, "|"+boardId+"|");
+			response.addCookie(newCookie);
+		}
+
+		//게시물조회
+		BoardDTO board = boardService.selectView(boardId);
+
+		//JPA 반영시 수정
+		BoardEntity boardEntity = jpaBoardService.findByBoardId(boardId);
+		Integer likeCount = boardEntity.getBoardLikeSet().size();
+
+		//조회 계정에 대한 게시물 좋아요 여부 (1 - 이미 좋아요 누름, 0 - 아직 누르지 않음)
+		String boardLikeFlag = "0";
+		if(jpaBoardService.existsBoardLikeByUserId(boardId, (String)session.getAttribute("userId"))) {
+			boardLikeFlag = "1";
+		}
+
+		//카테고리 설정
+		if(board.getCode().equals(Globals.BOARD_COMMUNITY)) category = "커뮤니티";
+		else if(board.getCode().equals(Globals.BOARD_CODING)) category ="코딩";
+
+
+		//첫 페이지 댓글 조회
+		List<ReplyDTO> reply = replyService.selectReplyList(boardId.toString());
+
+		modelAndView.addObject("category", category);			//게시물 카테고리
+		modelAndView.addObject("board", board);					//게시물 정보
+		modelAndView.addObject("likeCount", likeCount);			//좋아요 수
+		modelAndView.addObject("boardLike", boardLikeFlag);		//게시물 좋아요 여부
+		modelAndView.addObject("reply",reply);					//댓글 정보
+		modelAndView.addObject("replySize",reply.size());		//댓글 갯수
+		modelAndView.setViewName("dev/board/view-test");
+		return modelAndView;
+	}
+	/**
+	 * END 2021.03.04
+	 */
+
+	/**
 	 * 게시물 작성 페이지
 	 * method : get
 	 * Start 2021.03.28

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<div th:fragment="replyFragment">
+
+    <section class="content-item" id="comments">
+    <!-- 좋아요 버튼 -->
+    <a th:if="${boardLike == '0'}" id="likeA" onclick="like();"><img src="/assets/img/like.png"id="likeBoard" width="30" style="margin-top: 10px;" /></a>
+    <a th:if="${boardLike == '1'}" id="likeA" onclick="likeCancel();"><img src="/assets/img/liked.png"id="likeBoard" width="30" style="margin-top: 10px;" /></a>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12" id="replyArea">
+                    <h3 id="replyCount" th:text="'Reply  ' +${replySize}"></h3>
+                    <div class="form">
+                        <h3 class="pull-left">New Comment</h3>
+                        <!-- <button type="submit" class="btn btn-normal pull-right">Submit</button> -->
+                        <fieldset>
+                            <div class="row">
+                                <!-- <div class="col-sm-3 col-lg-2 hidden-xs">
+                                    <img class="img-responsive" src="/css/img/profile-reply.png" alt="">
+                                </div> -->
+                                <div class="form-group col-xs-12 col-sm-9 col-lg-10">
+                                    <textarea class="form-control" id="replyContent" name="content" placeholder="Your message" required=""></textarea>
+                                </div>
+                                <button type="button" onclick="clickPostReply();" class="btn btn-normal pull-right">Submit</button>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <!-- REPLY LIST START -->
+                    <th:block th:each="reply : ${reply}">
+                        <th:block th:if="${reply.parentRplId == null}">
+                            <div class="media" th:id="${reply.replyId}" th:reply="main">
+	                            <div class="media-body">
+                                    <h4 class="media-heading" th:text="${reply.writerId}"></h4>
+                                    <p th:attr="id='content'+${reply.replyId}" th:text="${reply.content}"></p>
+                                    <ul class="list-unstyled list-inline media-detail pull-left">
+                                        <li><i class="fa fa-thumbs-up"></i><th:block th:text="${reply.likeCount}"/></li>
+                                        <li><i class="fa fa-calendar"></i><th:block th:text="${reply.createTime}"/></li>
+                                    </ul>
+                                    <ul class="list-unstyled list-inline media-detail pull-right">
+                                        <li class="text-align-right"><a href="" onclick="return likeReply(this);">Like</a></li>
+                                        <li class="text-align-right" th:if="${reply.parentRplId == null}"><a href="" th:id="'a'+ ${reply.replyId}" onclick="return createReplyReplyArea(this);">Reply</a></li>
+                                        <li class="text-align-right" th:if="${session.userId == reply.writerId}"><a href="" onclick="return updateReply(this);">Update</a>/<a href="" onclick="return deleteReply(this);">Delete</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </th:block>
+
+                        <th:block th:if="${reply.parentRplId != null}">
+                            <div class="media" th:id="${reply.replyId}" th:reply="sub">
+	                            <a class="pull-left" href=""><img class="media-object" src="/assets/img/reply.png" alt=""></a>
+	                            <div class="media-body">
+	                                <h4 class="media-heading" th:text="${reply.writerId}"></h4>
+	                                <p th:attr="id='content'+${reply.replyId}" th:text="${reply.content}"></p>
+	                                <ul class="list-unstyled list-inline media-detail pull-left">
+	                                    <li><i class="fa fa-thumbs-up"></i><th:block th:text="${reply.likeCount}"/></li>
+	                                    <li><i class="fa fa-calendar"></i><th:block th:text="${reply.createTime}"/></li>
+	                                </ul>
+	                                <ul class="list-unstyled list-inline media-detail pull-right">
+	                                    <li class="text-align-right"><a href="" onclick="return likeReply(this);">Like</a></li>
+	                                    <li class="text-align-right" th:if="${reply.parentRplId == null}"><a href="" th:id="'a'+ ${reply.replyId}" onclick="return createReplyReplyArea(this);">Reply</a></li>
+	                                    <li class="text-align-right" th:if="${session.userId == reply.writerId}"><a href="" onclick="return updateReply(this);">Update</a>/<a href="" onclick="return deleteReply(this);">Delete</a></li>
+	                                </ul>
+	                            </div>
+                            </div>
+                        </th:block>
+                    </th:block>
+                    <!-- REPLY LIST END -->
+                    <div id="replyEnd"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script th:inline="javascript">
+
+        <!-- 댓글 부분에서 지속적인 에러 발생 확인 -->
+        <!-- 2021.05.04 댓글 부분 리펙토링 -->
+        <!-- 에러해결 중 nextElementSibling 발견 -> 리펙토링은 다음으로 -->
+
+        //댓글 삽입
+        //input  : boardId, writerId, content
+        //output : 삽입한 댓글 PK : 성공,   0 : 실패
+        function insertReply(){
+
+        }
+
+        //댓글 수정
+        //input : replyId, writerId, content
+        //output : 1 : 성공 , 0 : 실패
+        function updateReply(){
+
+        }
+
+        //댓글 삭제
+        //input : replyId
+        //output :  삭제한 댓글 PK : 성공 , 0 : 실패
+        function deleteReply(){
+
+        }
+
+        //댓글 좋아요
+        //input : replyId
+        //output : 좋아요 누른 replyId : 성공,  0 : 실패
+        function likeReply(e){
+
+        }
+
+
+
+        <!-- ===================여기부터 대댓글 관련 함수==================== -->
+
+
+        //대댓글 입력창
+        function createReplyReplyArea(e){
+        	//대댓글 창 삭제
+        	if(document.getElementById("replyReplyArea") != null){
+        		deleteReplyReplyArea();
+            }
+
+        	//대댓글의 부모댓글(=부모댓글)
+            var parentId = String(e.id).substring(1);           //a431 -> 431
+            var parent = document.getElementById(parentId);
+
+
+        	//대댓글 창 생성
+        	var replyReplyArea = document.createElement("div");
+        	replyReplyArea.setAttribute("id","replyReplyArea");
+        	replyReplyArea.setAttribute("class","form");
+        	replyReplyArea.innerHTML=
+                    '<h3 class="pull-left"></h3>'
+                    +'<fieldset>'
+                    +'    <div class="row" id="submit'+parent.id+'">'
+                    +'        <div class="form-group col-xs-12 col-sm-9 col-lg-10">'
+                    +'            <textarea class="form-control" id="replyReplyContent" name="content" placeholder="Your message" required=""></textarea>'
+                    +'       </div>'
+                    +'      <button type="button" onclick="insertReplyReply(this);" class="btn btn-normal pull-right">Submit</button>'
+                    +'  </div>'
+                    +'</fieldset>';
+
+            console.info(parent.nextElementSibling);
+            //대댓글 입력창 생성 위치
+            //while(parent.nextSibling.getAttribute('reply') == 'sub'){
+            //}
+
+
+
+            parent.after(replyReplyArea);
+            //대댓글 창 포커스
+            document.getElementById('replyReplyContent').focus();
+
+            return false;
+        }
+
+        //대댓글 삽입
+        //input  : boardId, writerId, content, parentRplId
+        //output : 삽입한 대댓글 PK : 성공,   0 : 실패
+        function insertReplyReply(){
+
+        }
+
+        //대댓글 수정
+        //input : replyId, writerId, content
+        //output : 1 : 성공 , 0 : 실패
+        function updateReplyReply(){
+
+        }
+
+        //대댓글 삭제
+        //input : replyId
+        //output :  삭제한 대댓글 PK : 성공 , 0 : 실패
+        function deleteReplyReply(){
+
+        }
+
+
+        //대댓글 창 삭제
+        function deleteReplyReplyArea(){
+            //대댓글 창 삭제
+            var replyReplyArea = document.getElementById("replyReplyArea");
+            replyReplyArea.remove();
+        }
+
+
+
+        //게시물 좋아요 클릭
+        function like(){
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange =  function(){
+                if(xhr.readyState === xhr.DONE){
+                    if(xhr.status === 200 || xhr.status === 201){
+                        if(xhr.responseText == "1" || xhr.responseText == 1){
+                            document.getElementById('likeBoard').src = '/assets/img/liked.png';
+                            document.getElementById('likeA').setAttribute('onclick','likeCancel()');
+                            document.getElementById('likeCount').innerHTML = Number(document.getElementById('likeCount').innerHTML) + 1;
+                            return false;
+                        }else{
+                            alert('좋아요  실패');
+                        }
+                    }else{
+                        alert('좋아요  실패')
+                    }
+                }
+            };
+            /*<![CDATA[*/
+            xhr.open('POST', '/like/'+ [[${board.boardId}]] +'/'+ [[${session.userId}]] +'/1');
+            /*]]>*/
+            xhr.send();
+        }
+
+        //게시물 좋아요 취소 클릭
+        function likeCancel(){
+             var xhr = new XMLHttpRequest();
+             xhr.onreadystatechange =  function(){
+                 if(xhr.readyState === xhr.DONE){
+                     if(xhr.status === 200 || xhr.status === 201){
+                         if(xhr.responseText == "1" || xhr.responseText == 1){
+                             document.getElementById('likeBoard').src = '/assets/img/like.png';
+                             document.getElementById('likeA').setAttribute('onclick','like()');
+                             document.getElementById('likeCount').innerHTML = Number(document.getElementById('likeCount').innerHTML) - 1;
+                             return false;
+                         }else{
+                             alert('좋아요 취소 실패');
+                         }
+                     }else{
+                         alert('좋아요 취소 실패')
+                     }
+                 }
+             };
+
+             /*<![CDATA[*/
+             xhr.open('POST', '/like/'+ [[${board.boardId}]] +'/'+ [[${session.userId}]] +'/0');
+             /*]]>*/
+             xhr.send();
+        }
+
+        //댓글 데이트 포맷
+        function now(){
+            var today = new Date();
+
+            var year    = today.getFullYear();          //년도
+            var month   = today.getMonth() + 1;         //월
+            var date    = today.getDate();              //일
+
+            var hours   = today.getHours();             //시
+            var minutes = today.getMinutes();            //분
+
+            month = month >= 10 ? month : '0' + month;            //month 두자리로 저장
+            date = date >= 10 ? date : '0' + date;                //day 두자리로 저장
+            minutes = minutes >= 10 ? minutes : '0' + minutes;    //minutes 두자리로 저장
+            hours = hours >= 10 ? hours : '0' + hours;
+            return year+"-"+month+"-"+date+" "+hours+":"+minutes;
+        }
+
+    </script>
+</div>
+</html>

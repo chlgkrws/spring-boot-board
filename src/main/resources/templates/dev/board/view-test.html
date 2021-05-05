@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/default">
+<div layout:fragment="content">
+    <div class="container">
+        <!-- Content here -->
+        <div class="board-view-contents" style="padding-top: 50px; width: 70%; margin: 0px auto;">
+            <div>
+                <b class="text-success" th:text="${category}"></b>
+            </div>
+            <div>
+                <h1 th:text="${board.title}">Unipo text Test Board</h1>
+            </div>
+            <div class="row" style="margin: 2px; margin-top: 15px;">
+                <pre style="margin: 0px;">
+<small><th:block th:text="${board.writerId}"/> | <th:block th:text="${board.createTime}"/> | <img src="/assets/img/view-count.ico" width="10"/> <th:block th:text="${board.viewCount}"/>  <i class="fa fa-thumbs-up"></i> <a id="likeCount"><th:block th:text="${likeCount}"/></a><th:block th:if="${board.writerId == session.userId}"> | <a href="" onclick="return updateBoard();">수정</a> <a href="" onclick="return deleteBoard();">삭제</a></th:block></small>
+                </pre>
+            </div>
+            <hr>
+            <div id="content">
+            </div>
+
+            <div class="w-100"></div>
+            <br>
+
+            <!-- Reply Start -->
+            <div th:replace="dev/board/reply-test :: replyFragment"></div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        //게시물 컨텐츠 삽입
+        /*<![CDATA[*/
+        document.getElementById('content').innerHTML = [[${board.content}]];
+        /*]]>*/
+
+        //게시물 삭제
+        function deleteBoard(){
+            if(!confirm("정말 게시물을 삭제하시겠습니까?")){
+                return;
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState === xhr.DONE){
+                    if(xhr.status === 200 || xhr.status === 201){
+                        if(xhr.responseText == 1){
+                            console.log('삭제 성공');
+                            location.href = '/board/all/1';
+                        }
+                    }else{
+                        alert('게시물 삭제에 실패하였습니다.')
+                    }
+                }
+            };
+            /*<![CDATA[*/
+            xhr.open('DELETE', '/board/'+[[${board.boardId}]]);
+            /*]]>*/
+            xhr.send();
+        }
+
+        //게시물 수정
+        function updateBoard(){
+            /*<![CDATA[*/
+            location.href = '/mode/modify/'+[[${board.boardId}]];
+            /*]]>*/
+            return false;
+        }
+    </script>
+</div>
+</html>

@@ -31,7 +31,7 @@
 					    <div class="mediaReply" th:attr="id='mediaReply'+${reply.replyId}" th:if="${reply.parentRplId == null}">
                           <!--대댓글 들어올 구역 -->
                         </div>
-                        <div class="media" th:attr="id=${reply.replyId}" >
+                        <div class="media" th:attr="id=${reply.replyId}"  >
 						<a class="pull-left" href="" th:if="${reply.parentRplId != null}"><img class="media-object" src="/assets/img/reply.png" alt=""></a>
 							<div class="media-body">
 								<h4 class="media-heading" th:text="${reply.writerId}"></h4>
@@ -193,21 +193,21 @@
                     +'  </div>'
                     +'</fieldset>';
 
-
             //test
-            //console.log(parent);
+            console.log("nextSibling");
             //console.log(parent.nextSibling);
             //console.log(parent.nextSibling.nextSibling);
-
             //대댓글 작성 버튼을 누른 div가 부모댓글이라면,
-            if(parent.nextSibling.nextSibling.className == "mediaReply" || parent.nextSibling.nextSibling.id == "replyEnd"){
+            //console.log(parent.nextSibling.nextSibling.id);
+            if(parent.nextElementSibling.className == "mediaReply" || parent.nextElementSibling.id == "replyEnd"){
                 //부모 바로 밑임.
                 console.log('부모 바로 밑에 대댓글 창 추가');
             }else if(parent.nextSibling.id =="replyEnd"){
                 //마지막 댓글는 parent.nextSibling.nextSibling의 값이 없어서 else if문 추가
             }else{
-                while(parent.nextSibling.nextSibling.className != "mediaReply" && parent.nextSibling.nextSibling.id != "replyEnd"){
-                    parent = parent.nextSibling.nextSibling;
+            	console.log("반복");
+                while(parent.nextElementSibling.className != "mediaReply" && parent.nextElementSibling.id != "replyEnd"){
+                    parent = parent.nextElementSibling;
                 }
             }
 
@@ -235,7 +235,7 @@
 
             if(content == null || content == ""){
                 alert("내용은 필수 입니다.");
-                document.getElementById("replyContent").focus();
+                document.getElementById("replyReplyContent").focus();
                 return false;
             }
 
