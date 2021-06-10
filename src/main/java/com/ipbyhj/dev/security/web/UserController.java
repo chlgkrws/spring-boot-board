@@ -16,11 +16,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ipbyhj.dev.security.entity.UserEntity;
 import com.ipbyhj.dev.security.service.UserService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 public class UserController {
 
-	@Autowired
-	UserService userService;
+	private final UserService userService;
 
 	/**
 	 * 로그인 페이지
