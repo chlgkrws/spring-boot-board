@@ -16,6 +16,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,8 @@ import lombok.ToString;
 @Entity
 @Table(name = "user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class UserEntity {
 
 	@Id
@@ -50,7 +53,7 @@ public class UserEntity {
 
 
 
-	@OneToMany(mappedBy = "userAuthorities", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "userAuthorities")
 	private List<UserRole> userRoleList = new ArrayList<>();
 
 

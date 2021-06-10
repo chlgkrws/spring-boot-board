@@ -60,4 +60,9 @@ public class Globals {
 	public static final String SECURITY_SIGNIN_FAILURE_URL = "/sign-in";
 	public static final String SECURITY_SIGNOUT_URL = "/sign-out";
 	public static final String SECURITY_SIGNOUT_SUCCESS_URL = "/";
+
+	/**
+	 * Board
+	 */
+	public static final Integer PAGING_SIZE = 7;
 }

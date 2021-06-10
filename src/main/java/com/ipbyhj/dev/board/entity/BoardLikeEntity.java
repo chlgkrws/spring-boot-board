@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import com.ipbyhj.dev.security.entity.UserEntity;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class BoardLikeEntity {
 
 	@Id
@@ -44,16 +47,5 @@ public class BoardLikeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "board_id", referencedColumnName = "board_id", insertable = false, updatable = false)
 	private BoardEntity boardLike;
-
-	@Builder
-	public BoardLikeEntity(Integer boardLikeId, Integer boardId, String userId, BoardEntity boardLike) {
-		super();
-		this.boardLikeId = boardLikeId;
-		this.boardId = boardId;
-		this.userId = userId;
-		this.boardLike = boardLike;
-	}
-
-
 
 }

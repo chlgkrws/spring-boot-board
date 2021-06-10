@@ -20,7 +20,7 @@ import com.ipbyhj.dev.security.entity.UserEntity;
 public interface UserRepository extends JpaRepository<UserEntity, String>{
 	public Optional<UserEntity> findById(String email);
 
-	@EntityGraph(type = EntityGraphType.LOAD, attributePaths = {"userRoleList","userRoleList.userAuthorities"})
+	@EntityGraph(type = EntityGraphType.LOAD, attributePaths = {"userRoleList","userRoleList.userAuthorities", "userRoleList.userAuthoritiesCode"})
 	public UserEntity findByUserId(String userId);
 
 	public List<UserEntity> findByIdentity(String identity);

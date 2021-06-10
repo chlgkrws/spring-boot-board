@@ -16,6 +16,8 @@ import com.ipbyhj.dev.security.domain.CustomUserDetails;
 import com.ipbyhj.dev.security.entity.UserEntity;
 import com.ipbyhj.dev.security.repository.UserRepository;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * 유저 인증/가입/탈퇴 서비스
  * choi.hak.jun
@@ -23,10 +25,10 @@ import com.ipbyhj.dev.security.repository.UserRepository;
  */
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserService {
 
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 
 	/**
 	 * 패스워드 암호화 방식

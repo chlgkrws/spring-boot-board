@@ -21,6 +21,7 @@ import com.ipbyhj.dev.security.entity.UserEntity;
 import com.ipbyhj.dev.security.entity.UserRole;
 import com.ipbyhj.dev.security.repository.UserRepository;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j2;
 
@@ -35,10 +36,10 @@ import lombok.extern.log4j.Log4j2;
 @Service
 @Transactional
 @Log4j2
+@RequiredArgsConstructor
 public class UserDetailsServiceimpl implements UserDetailsService{
 
-	@Autowired
-	UserRepository userRepository;
+	private final UserRepository userRepository;
 
 	/**
 	 * loadUserByUsername

@@ -1,5 +1,7 @@
 package com.ipbyhj.dev.board.entity;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,7 +13,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
+
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +35,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class BoardEntity {
 
 	@Id
@@ -34,52 +44,19 @@ public class BoardEntity {
 	@GeneratedValue
 	private Integer boardId;
 
-	@Column
 	private String title;
-
-	@Column
 	private String writerId;
-
-	@Column
 	private String writerName;
-
-	@Column
 	private String content;
-
-	@Column
 	private Integer viewCount;
-
-	@Column
 	private Integer likeCount;
-
-	@Column
 	private Integer code;
-
-	@Column
 	private String createBy;
 
-	@Column
+	private String createTime;
+	private String updateTime;
 	private Byte useYn;
 
 	@OneToMany(mappedBy = "boardLike", fetch = FetchType.LAZY)
 	private Set<BoardLikeEntity> boardLikeSet = new HashSet<>();
-
-	@Builder
-	public BoardEntity(Integer boardId, String title, String writerId, String writerName, String content,
-			Integer viewCount, Integer likeCount, Integer code, String createBy, Byte useYn) {
-		super();
-		this.boardId = boardId;
-		this.title = title;
-		this.writerId = writerId;
-		this.writerName = writerName;
-		this.content = content;
-		this.viewCount = viewCount;
-		this.likeCount = likeCount;
-		this.code = code;
-		this.createBy = createBy;
-		this.useYn = useYn;
-	}
-
-
-
 }
