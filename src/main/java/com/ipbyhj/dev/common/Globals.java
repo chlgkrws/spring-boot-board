@@ -47,6 +47,13 @@ public class Globals {
 	public static final String WOMAN = "8";
 
 	/**
+	 * category
+	 */
+	public static final String COMMUNITY = "커뮤니티";
+	public static final String CODING = "코딩";
+
+
+	/**
 	 * URL Mapping
 	 */
 	public static final String HOME = "/";
