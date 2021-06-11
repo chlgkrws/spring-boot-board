@@ -15,7 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,27 +54,21 @@ public class BoardController {
 	 * choi.hak.jun
 	 * Start 2021.02.10
 	 */
-	@RequestMapping(value = {"/board/{name}/{num}"}, method = RequestMethod.GET)
+	@GetMapping("/board/{name}/{num}")
 	public ModelAndView getBaordPage(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String name, @PathVariable Integer num ) {
 		String code = Globals.BOARD_ALL;											//all : 4, community : 5, coding : 6  --> code값 매핑서 참조
 		String selectedCategory = "all";											//카테고리 선택 시 버튼 진하게 만들기.
-
 
 		if(name.equals("all")) {  													//board name로 가져오기
 			code = Globals.BOARD_ALL;
 		}else if(name.equals("community")) {
 			code = Globals.BOARD_COMMUNITY;
 			selectedCategory = "community";
-
 		}else if(name.equals("coding")) {
 			code = Globals.BOARD_CODING;
 			selectedCategory = "coding";
-
 		}
-
-
-
 
 		Page page = new Page();														//페이지 네이션
 		int boardCount = jpaBoardService.countBoard(code);
@@ -97,7 +96,7 @@ public class BoardController {
 	 * choi.hak.jun
 	 * Start 2021.02.24
 	 */
-	@RequestMapping(value = {"/board/{boardId}"}, method = RequestMethod.GET)
+	@GetMapping("/board/{boardId}")
 	public ModelAndView getBoardView(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response, HttpSession session,
 			@PathVariable Integer boardId) {
 		String category = "";
@@ -134,9 +133,8 @@ public class BoardController {
 		}
 
 		//카테고리 설정
-		if(board.getCode().equals(Globals.BOARD_COMMUNITY)) category = "커뮤니티";
-		else if(board.getCode().equals(Globals.BOARD_CODING)) category ="코딩";
-
+		if(board.getCode().equals(Globals.BOARD_COMMUNITY)) category = Globals.COMMUNITY;
+		else if(board.getCode().equals(Globals.BOARD_CODING)) category = Globals.CODING;
 
 		//첫 페이지 댓글 조회
 		List<ReplyDTO> reply = replyService.selectReplyList(boardId.toString());
@@ -158,7 +156,7 @@ public class BoardController {
 	 * method : get
 	 * Start 2021.03.28
 	 */
-	@RequestMapping(value = {"/mode/{mode}", "/mode/{mode}/{boardId}"}, method = RequestMethod.GET)
+	@GetMapping(value = {"/mode/{mode}", "/mode/{mode}/{boardId}"})
 	public ModelAndView getCreateBoardPage(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String mode, @PathVariable(required = false) Integer boardId) throws Exception {
 
@@ -190,7 +188,7 @@ public class BoardController {
 	 * return 1 : 작성 ,  0 : 실패
 	 * Start 2021.03.28
 	 */
-	@RequestMapping(value = {"/board/create"}, method = RequestMethod.POST)
+	@PostMapping("/board/create")
 	public int createBoard(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
 			@RequestParam Map<String, Object> param) {
 
@@ -204,7 +202,7 @@ public class BoardController {
 	 * return 1 : 삭제 , 0 : 실패
 	 * Start 2021.03.25
 	 */
-	@RequestMapping(value = {"/board/{boardId}"}, method = RequestMethod.DELETE)
+	@DeleteMapping("/board/{boardId}")
 	public int deleteBoard(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
 			@PathVariable Integer boardId) {
 
@@ -219,7 +217,7 @@ public class BoardController {
 	 * return 1 : 성공 , 0 : 실패
 	 * Start 2021.03.25
 	 */
-	@RequestMapping(value = {"/board/{boardId}"}, method = RequestMethod.PUT)
+	@PutMapping("/board/{boardId}")
 	public int updateBoard(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
 			@PathVariable Integer boardId, @RequestParam Map<String, Object> param) {
 
@@ -229,13 +227,13 @@ public class BoardController {
 	}
 
 	/**
-	 * 게시판 좋아요 버튼 클릭(추후 Board에 대한 JPA 적용 시 한 번에 적용)
+	 * 게시판 좋아요 버튼 클릭
 	 * choi.hak.jun
 	 * input 1 : 좋아요, 0 : 좋아요 취소
 	 * return 1 : 성공, 0 : 취소
 	 * Start 2021.04.27
 	 */
-	@RequestMapping(value = {"/like/{boardId}/{userId}/{like}"}, method = RequestMethod.POST)
+	@PostMapping(value = {"/like/{boardId}/{userId}/{like}"})
 	public int like(HttpServletRequest request, @PathVariable Integer boardId, @PathVariable String userId, @PathVariable String like) {
 		BiFunction<String, String, Boolean> equals = (String::equals);
 

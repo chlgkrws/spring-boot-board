@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +30,7 @@ public class UserController {
 	 * choi.hak.jun
 	 * Start 2021.04.13
 	 */
-	@RequestMapping(value = {"/sign-in"})
+	@GetMapping("/sign-in")
 	public ModelAndView getSignIn(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) {
 
 		//스프링 시큐리티 인증 성공 시 이전 페이지로 이동 시키기 위한 세션
@@ -43,25 +44,18 @@ public class UserController {
 		modelAndView.setViewName("dev/sign/sign-in");
 		return modelAndView;
 	}
-	/**
-	 * End 2021.04.25
-	 * 2021.04.25 Add session prevPage(referer)
-	 */
 
 	/**
 	 * 회원가입 페이지
 	 * choi.hak.jun
 	 * Start 2021.04.13
 	 */
-	@RequestMapping(value= {"/sign-up"}, method = RequestMethod.GET)
+	@GetMapping("/sign-up")
 	public ModelAndView getSignUp(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) {
 
 		modelAndView.setViewName("dev/sign/sign-up");
 		return modelAndView;
 	}
-	/**
-	 * End 2021.04.13
-	 */
 
 	/**
 	 * 회원가입
@@ -69,7 +63,7 @@ public class UserController {
 	 * return 1 - 성공, 0 - 실패
 	 * Start 2021.04.14
 	 */
-	@RequestMapping(value= {"/sign-up"}, method = RequestMethod.POST)
+	@PostMapping("/sign-up")
 	public int setSignUp(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
 			@RequestParam Map<String, Object> params) {
 		String email = (String) params.get("email");
@@ -93,24 +87,18 @@ public class UserController {
 
 		return 0;
 	}
-	/**
-	 * End 2021.04.14
-	 */
 
 	/**
 	 * 회원가입(email) 페이지
 	 *
 	 * Start 2021.04.17
 	 */
-	@RequestMapping(value= {"/sign-up-email"}, method = RequestMethod.GET)
+	@GetMapping("/sign-up-email")
 	public ModelAndView getSignUpEmail(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) {
 
 		modelAndView.setViewName("dev/sign/sign-up-by-email");
 		return modelAndView;
 	}
-	/**
-	 * End 2021.04.17
-	 */
 
 	/**
 	 * 회원가입(email)
@@ -118,7 +106,7 @@ public class UserController {
 	 * return 1 - 성공, 0 - 실패
 	 * Start 2021.04.17
 	 */
-	@RequestMapping(value= {"/sign-up-email"}, method = RequestMethod.POST)
+	@PostMapping("/sign-up-email")
 	public int setSignUpEmail(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) {
 
 		return 1;
@@ -126,14 +114,6 @@ public class UserController {
 	/**
 	 * End 2021.04.17
 	 */
-
-	/**
-	 * 로그아웃
-	 * choi.hak.jun
-	 * String 2021.04.17
-	 */
-//	@RequestMapping(value= {"/logout"}, method = RequestMethod.POST)
-//	public
 
 
 	/**
