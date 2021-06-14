@@ -40,15 +40,16 @@ public class Globals {
 	/**
 	 * Code value
 	 */
-	public static final String BOARD_ALL = "";
-	public static final String BOARD_COMMUNITY = "5";
-	public static final String BOARD_CODING = "6";
+	public static final Integer BOARD_ALL = null;
+	public static final Integer BOARD_COMMUNITY = 5;
+	public static final Integer BOARD_CODING = 6;
 	public static final String MAN = "7";
 	public static final String WOMAN = "8";
 
 	/**
 	 * category
 	 */
+	public static final String ALL = "전체";
 	public static final String COMMUNITY = "커뮤니티";
 	public static final String CODING = "코딩";
 
