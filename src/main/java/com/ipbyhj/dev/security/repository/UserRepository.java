@@ -3,12 +3,13 @@ package com.ipbyhj.dev.security.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.ibatis.annotations.Param;
+import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.ipbyhj.dev.security.domain.CustomUserDetails;
 import com.ipbyhj.dev.security.entity.UserEntity;
 
 /**
@@ -26,6 +27,7 @@ public interface UserRepository extends JpaRepository<UserEntity, String>{
 	public List<UserEntity> findByIdentity(String identity);
 
 	public List<UserEntity> findByUserNameLike(String keyword);
+
 
 	/**
 	 * 계정이 활성화 된 유저 조회

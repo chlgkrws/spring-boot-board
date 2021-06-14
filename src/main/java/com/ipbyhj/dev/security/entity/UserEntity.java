@@ -62,17 +62,4 @@ public class UserEntity {
 //	public void PrePersist() {
 //	}
 
-	@Builder
-	public UserEntity(String userId, String userPass, String userName, String sex, String phone, String email,
-			String identity, Byte useYn) {
-		super();
-		this.userId = userId;
-		this.userPass = userPass;
-		this.userName = userName;
-		this.sex = sex;
-		this.phone = phone;
-		this.email = email;
-		this.identity = identity;
-		this.useYn = useYn;
-	}
 }
