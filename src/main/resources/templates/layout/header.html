@@ -12,21 +12,9 @@
 				<li class="nav-item"><a th:if="${boldType == 'main'}" class="nav-link active" href="/">Home</a> <a th:unless="${boldType == 'main'}" class="nav-link" href="/">Home</a></li>
 				<li class="nav-item"><a th:if="${boldType == 'board'}" class="nav-link active" href="/board/all/1">Board</a> <a th:unless="${boldType == 'board'}" class="nav-link" href="/board/all/1">Board</a></li>
 				<li class="nav-item"><a class="nav-link disabled" href="/" tabindex="-1" aria-disabled="true">Disabled</a></li>
-				<li class="nav-item"><a class="nav-link disabled" href="/" tabindex="-1" aria-disabled="true">Disabled</a></li>
-				<li class="nav-item"><a class="nav-link disabled" href="/" tabindex="-1" aria-disabled="true">Disabled</a></li>
-				<li class="nav-item"><a class="nav-link disabled" href="/" tabindex="-1" aria-disabled="true">Disabled</a></li>
-				<li class="nav-item"><a class="nav-link disabled" href="/" tabindex="-1" aria-disabled="true">Disabled</a></li>
-				<li class="nav-item"><a class="nav-link disabled" href="/" tabindex="-1" aria-disabled="true">Disabled</a></li>
 				<li class="nav-item"><div class="dropdown">
 						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">더보기</button>
 						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">Disabled</a>
-							<a class="dropdown-item" href="#">Disabled</a>
-							<a class="dropdown-item" href="#">Disabled</a>
-							<a class="dropdown-item" href="#">Disabled</a>
-							<a class="dropdown-item" href="#">Disabled</a>
-							<a class="dropdown-item" href="#">Disabled</a>
-							<a class="dropdown-item" href="#">Disabled</a>
 							<a class="dropdown-item" href="#">Disabled</a>
 						</div>
 					</div></li>
@@ -34,10 +22,10 @@
 			<div class="">
 			    <p th:if="${session.userId != null}" th:text="${session.userName}+'님 어서오세요'" class="p mr-2 mb-0 text-white"></p>
 			</div>
-			<form class="form-inline mt-2 mt-md-0" action="/search" method="get">
+			<!-- <form class="form-inline mt-2 mt-md-0" action="/search" method="get">
 				<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
 				<button class="btn-cus btn-outline-success-cus my-2 my-sm-0" type="submit">Search</button>
-			</form>
+			</form> -->
 			<form class="form-inline mt-2 mt-md-0" action="/sign-in" method="get" th:if="${session.userId == null}">
 				<button class="btn-cus btn-outline-success-cus my-2 my-sm-0" type="submit">Sign-in</button>
 			</form>
