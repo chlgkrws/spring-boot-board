@@ -30,7 +30,12 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer>{
 	@Query("SELECT count(b) FROM board b WHERE code = :code")
 	public long countByCode(@Param("code") Integer code);
 
+
+
 	//게시물 페이징
-	public Page<BoardEntity> findByCode(Integer code, Pageable pageable);
+	public Page<BoardEntity> findByCodeAndUseYn(Integer code, byte useYn, Pageable pageable);
+
+	//게시물 페이징
+	public Page<BoardEntity> findAllByUseYn(byte useYn, Pageable pageable);
 
 }
