@@ -348,7 +348,7 @@
                     +'            <textarea class="form-control" id="replyReplyContent" name="content" placeholder="Your message" required="">'+content+'</textarea>'
                     +'       </div>'
                     +'      <input type="hidden" id="date" value="'+date+'" />'
-                    +'      <button type="button" onclick="postUpdateReply(this);" class="btn btn-normal pull-right" id="'+mainOrSub+"@"+like+'">Submit</button>'
+                    +'      <button type="button" onclick="postUpdateReply(this);" class="btn btn-normal pull-right" id="'+like+"@"+mainOrSub+'">Submit</button>'
                     +'  </div>'
                     +'</fieldset>';
 
@@ -373,7 +373,6 @@
 
             //댓글/대댓글 판별
             var mainOrSub = e.id.split("@")[1];
-
 			//data set
             var formData = new FormData();
             formData.append('replyId', replyId);
