@@ -51,8 +51,6 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class BoardController {
 
-	private final ReplyService replyService;
-
 	private final JPABoardService jpaBoardService;
 
 	private final JPAReplyService jpaReplyService;
@@ -167,11 +165,9 @@ public class BoardController {
 	 */
 	@PostMapping("/board/create")
 	public int createBoard(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response,
-			@RequestParam Map<String, Object> param,
 			@ModelAttribute BoardEntity boardEntity) {
 
 		int result = jpaBoardService.saveBoard(boardEntity);
-		//int result = boardService.insertBoard(param);
 		return result;
 	}
 

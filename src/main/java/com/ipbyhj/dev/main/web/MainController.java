@@ -20,11 +20,4 @@ public class MainController {
 		modelAndView.setViewName("dev/main/index");
 		return modelAndView;
 	}
-
-	@GetMapping("/introduce")
-	public String getIntroduce(HttpServletRequest request) {
-
-		return "dev/main/introduce";
-	}
-
 }

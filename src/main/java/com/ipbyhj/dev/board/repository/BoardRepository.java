@@ -13,11 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import com.ipbyhj.dev.board.entity.BoardEntity;
 
-/**
- * 게시물 JPA Repository
- * choi.hak.jun
- * 2021.04.27
- */
 @Repository
 public interface BoardRepository extends JpaRepository<BoardEntity, Integer>{
 
@@ -30,12 +25,11 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer>{
 	@Query("SELECT count(b) FROM board b WHERE code = :code")
 	public long countByCode(@Param("code") Integer code);
 
+	//게시물 리스트 페이징(all)
+	public Page<BoardEntity> findAllByUseYn(byte useYn, Pageable pageable);
 
-
-	//게시물 페이징
+	//게시물 리스트 페이징(code)
 	public Page<BoardEntity> findByCodeAndUseYn(Integer code, byte useYn, Pageable pageable);
 
-	//게시물 페이징
-	public Page<BoardEntity> findAllByUseYn(byte useYn, Pageable pageable);
 
 }
