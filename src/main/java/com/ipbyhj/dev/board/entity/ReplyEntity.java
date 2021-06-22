@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -25,7 +26,7 @@ import lombok.Setter;
 @Table(name = "reply")
 public class ReplyEntity extends BaseEntity{
 
-	@Id @GeneratedValue
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "reply_id")
 	private Integer replyId;
 
@@ -34,6 +35,10 @@ public class ReplyEntity extends BaseEntity{
 	private String writerId;
 	private String writerName;
 	private String content;
+
+	@Column(insertable = false)
 	private String likeCount;
+
+	@Column(insertable = false)
 	private String useYn;
 }

@@ -1,5 +1,7 @@
 package com.ipbyhj.dev.board.web;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ipbyhj.dev.board.dto.ReplyDTO;
+import com.ipbyhj.dev.board.entity.ReplyEntity;
+import com.ipbyhj.dev.board.service.JPAReplyService;
 import com.ipbyhj.dev.board.service.ReplyService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,17 +33,7 @@ public class ReplyController {
 
 	private final ReplyService replyService;
 
-	/**
-	 * 댓글 조회
-	 * choi.hak.jun
-	 * Start 2021.03.08
-	 */
-	@GetMapping("/reply/{boardId}")
-	public Map<String, Object> selectReply(HttpServletRequest request, @PathVariable String boardId){
-
-		Map<String, Object> ret = replyService.selectReply(boardId);
-		return ret;
-	}
+	private final JPAReplyService jpaReplyService;
 
 	/**
 	 * 댓글 삽입
@@ -47,17 +42,11 @@ public class ReplyController {
 	 * Start 2021.03.08
 	 */
 	@PostMapping("/reply/{boardId}")
-	public String insertReply(HttpServletRequest request, @RequestParam Map<String, Object> param){
+	public int insertReply(HttpServletRequest request, @ModelAttribute ReplyEntity replyEntity){
 
-		ReplyDTO reply = ReplyDTO.builder()
-				.boardId((String)param.get("boardId"))
-				.writerId((String)param.get("writerId"))
-				.content((String)param.get("content"))
-				.parentRplId((String)param.getOrDefault("parentRplId", null))
-				.build();
+		replyEntity.BeforefirstInsert((String) request.getSession().getAttribute("userId"));
 
-		int ret = replyService.insertReply(reply);
-		return ret != 0 ? reply.getReplyId() : "0" ;
+		return jpaReplyService.saveReply(replyEntity);
 	}
 
 	/**
@@ -67,11 +56,12 @@ public class ReplyController {
 	 * Start 2021.04.06
 	 */
 	@PutMapping("/reply/{reply}")
-	public int updateReply(HttpServletRequest request, @RequestParam Map<String, Object> param) {
-		String replyId = (String) param.get("replyId");
-		String writerId = (String) param.get("writerId");
-		String content = (String) param.get("content");
-		return replyService.updateReply(replyId, writerId, content);
+	public int updateReply(HttpServletRequest request, @RequestParam Map<String, Object> param, @ModelAttribute ReplyEntity replyEntity) {
+//		String replyId = (String) param.get("replyId");
+//		String writerId = (String) param.get("writerId");
+//		String content = (String) param.get("content");
+		return jpaReplyService.updateReply(replyEntity);
+//		return replyService.updateReply(replyId, writerId, content);
 	}
 
 	/**
